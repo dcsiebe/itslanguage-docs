@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Speech Recordings - ITSLanguage API</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Speech Recordings";
+    var mkdocs_page_input_path = "api/recordings.md";
+    var mkdocs_page_url = "/api/recordings/index.html";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="icon icon-home"> ITSLanguage API</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Home</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../index.html">ITSLanguage Speech API</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API basics</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../index.html">The REST API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../authentication/index.html">Authentication</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../permissions/index.html">Roles and Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../errors/index.html">Error handling</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../oauth2/index.html">OAuth2</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../organisations/index.html">Organisations</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../students/index.html">Students</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../challenges/index.html">Challenges</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">Speech Recordings</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#recordings">Recordings</a></li>
+                
+                    <li><a class="toctree-l4" href="#list-all-speech-recordings">List all speech recordings</a></li>
+                
+                    <li><a class="toctree-l4" href="#get-a-single-speech-recording">Get a single speech recording</a></li>
+                
+                    <li><a class="toctree-l4" href="#create-a-speech-recording">Create a speech recording</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../analyses/index.html">Speech Analysis</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../recognitions/index.html">Speech Recognition</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Websocket API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/index.html">Websocket API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/speech_recording/index.html">Speech Recording</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/pronunciation_analyses/index.html">Pronunciation Analyses</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/choice_recognitions/index.html">Choice Recognitions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/audio/index.html">Audio</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Internal API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../permissions/index.html">Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../architecture/index.html">Infrastructure Architecture</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">ITSLanguage API</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>REST API &raquo;</li>
+        
+      
+    
+    <li>Speech Recordings</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/itslanguage/itslanguage-docs/edit/master/docs/api/recordings.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="recordings"><a class="toclink" href="#recordings">Recordings</a></h1>
+<p>Audio can be stored using the ITSLanguage Speech API.
+It can optionally be retrieved for processing or playback at a later time.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>speech</code></td>
+<td>Record user submitted audio for a speech challenge.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="list-all-speech-recordings"><a class="toclink" href="#list-all-speech-recordings">List all speech recordings</a></h2>
+<h3 id="url"><a class="toclink" href="#url">URL</a></h3>
+<pre><code class="http">GET /challenges/speech/:challenge/recordings HTTP/1.1
+</code></pre>
+
+<ul>
+<li>challenge - <strong>Required</strong> The challenge identifier.</li>
+</ul>
+<h3 id="request"><a class="toclink" href="#request">Request</a></h3>
+<pre><code class="http">GET /challenges/speech/test/recordings HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response"><a class="toclink" href="#response">Response</a></h3>
+<p>The response is a JSON list with speech recordings.</p>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;id&quot;: &quot;recording_1&quot;,
+    &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;,
+    &quot;studentId&quot;: &quot;24&quot;
+  },
+  {
+    &quot;id&quot;: &quot;14&quot;,
+    &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-Xaq&quot;,
+    &quot;studentId&quot;: &quot;24&quot;
+  }
+]
+</code></pre>
+
+<h2 id="get-a-single-speech-recording"><a class="toclink" href="#get-a-single-speech-recording">Get a single speech recording</a></h2>
+<h3 id="url_1"><a class="toclink" href="#url_1">URL</a></h3>
+<pre><code class="http">GET /challenges/speech/:challenge/recordings/:recording HTTP/1.1
+</code></pre>
+
+<ul>
+<li>challenge - <strong>Required</strong> The challenge identifier.</li>
+<li>recording - <strong>Required</strong> The recording identifier.</li>
+</ul>
+<h3 id="request_1"><a class="toclink" href="#request_1">Request</a></h3>
+<pre><code class="http">GET /challenges/speech/speech_1/recordings/recording_1 HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response_1"><a class="toclink" href="#response_1">Response</a></h3>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;speech_1&quot;,
+  &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;,
+  &quot;studentId&quot;: &quot;24&quot;
+}
+</code></pre>
+
+<h2 id="create-a-speech-recording"><a class="toclink" href="#create-a-speech-recording">Create a speech recording</a></h2>
+<p>Submit a new audio recording to persist without immediate analysis.</p>
+<h3 id="url_2"><a class="toclink" href="#url_2">URL</a></h3>
+<pre><code class="http">POST /challenges/speech/:challenge/recordings HTTP/1.1
+</code></pre>
+
+<ul>
+<li>challenge - <strong>Required</strong> The challenge identifier.</li>
+</ul>
+<h3 id="request-parameters"><a class="toclink" href="#request-parameters">Request parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> The recording identifier. If none is given, one is generated.</td>
+</tr>
+<tr>
+<td>studentId</td>
+<td><code>string</code></td>
+<td><strong>Required</strong> The id of the student that supplied the audio.</td>
+</tr>
+<tr>
+<td>audio</td>
+<td><code>blob</code></td>
+<td><strong>Required</strong> The actual audio. (Ogg Opus or WAV)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request_2"><a class="toclink" href="#request_2">Request</a></h3>
+<p>The request should be a <code>multipart/form-data</code>.</p>
+<pre><code class="http">POST /challenges/speech/test/recordings HTTP/1.1
+Accept: application/json
+Content-Type: multipart/form-data; boundary=&quot;YvHKkjjzXfysYJVHMoOAoNczae&quot;
+
+--YvHKkjjzXfysYJVHMoOAoNczae
+Content-Disposition: form-data; name=&quot;audio&quot;; filename=&quot;blob&quot;
+Content-Type: audio/ogg
+
+&lt;audio blob&gt;
+--YvHKkjjzXfysYJVHMoOAoNczae
+Content-Disposition: form-data; name=&quot;studentId&quot;
+
+24
+--YvHKkjjzXfysYJVHMoOAoNczae--
+</code></pre>
+
+<h3 id="response_2"><a class="toclink" href="#response_2">Response</a></h3>
+<p>If the audio was persisted correctly:</p>
+<pre><code class="http">HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;34&quot;,
+  &quot;updated&quot;: &quot;2014-02-13T09:39:40Z&quot;,
+  &quot;created&quot;: &quot;2014-02-13T09:39:37Z&quot;,
+  &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;,
+  &quot;studentId&quot;: &quot;24&quot;
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../analyses/index.html" class="btn btn-neutral float-right" title="Speech Analysis">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../challenges/index.html" class="btn btn-neutral" title="Challenges"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2013-2015</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/itslanguage/itslanguage-docs/" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../challenges/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../analyses/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

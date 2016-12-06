@@ -1,0 +1,1279 @@
+{
+    "docs": [
+        {
+            "location": "/index.html",
+            "text": "Welcome\n\n\nThis is a work-in-progress help site for \nITSLanguage\n.\n\n\nImproving This Help\n\n\nJust drop us an \nemail\n.",
+            "title": "ITSLanguage Speech API"
+        },
+        {
+            "location": "/index.html#welcome",
+            "text": "This is a work-in-progress help site for  ITSLanguage .",
+            "title": "Welcome"
+        },
+        {
+            "location": "/index.html#improving-this-help",
+            "text": "Just drop us an  email .",
+            "title": "Improving This Help"
+        },
+        {
+            "location": "/api/index.html",
+            "text": "URLs\n\n\nAPI actions are usually performed by accessing our production servers on the \napi.itslanguage.nl\n domain.\nFor example:\n\n\ncurl -i https://api.itslanguage.nl/organisations\n\n\n\n\nHTTP/1.1 200 OK\nCache-Control: no-cache\nContent-Type: application/json; charset=utf-8\nVary: Accept-Encoding\nDate: Wed, 20 Nov 2013 17:10:22 GMT\nServer: Google Frontend\nAlternate-Protocol: 443:quic\nTransfer-Encoding: chunked\n\n[]\n\n\n\n\nDT(A)P environments\n\n\nThere are three environments. In most cases you'll only use the production environment.\nWhen instructed to test on any other environment, these are their characteristics:\n\n\nDevelopment\n\n\nThe latest features may be tested in the development environment: \nhttps://api-dot-dev.itslanguage.nl\n.\n\n\nThis environment may become unstable and data may be reset at any time.\n\n\nThis documentation matching this environment is available at: \nhttps://help-dot-dev.itslanguage.nl\n.\n\n\nTesting\n\n\nMore mature features may be tested in the test environment: \nhttps://api-dot-test.itslanguage.nl\n.\n\n\nThis environment may become unstable and data may be reset at any time.\n\n\nThis documentation matching this environment is available at: \nhttps://help-dot-test.itslanguage.nl\n.\n\n\nProduction\n\n\nStable features may be used in the production environment: \nhttps://api.itslanguage.nl\n.\n\n\nThis environment will store data it receives for a longer time.\n\n\nThis documentation matching this environment is available at: \nhttps://help.itslanguage.nl\n.\n\n\nRequest and Response Format\n\n\nAll endpoints accept and return JSON, with the exception of a few special cases that require submitting blobs.\n\n\nJSON\n\n\nAll endpoints accept and return JSON, with the exception of a few special cases designed for use from a web browser or containing blobs.\n\n\nAs described in \nRFC 4627\n:\n\nJSON text SHALL be encoded in Unicode. The default encoding is UTF-8.\n\nTherefore, specifying the encoding with \ncharset=utf-8\n in the header is optional, it's an implicit default.\n\n\nWhen sending JSON the appropriate Content-Type header needs to be set.\n\n\ncurl -d '{\"name\": \"sheffield\"}' -H \"Content-Type: application/json\" https://api.itslanguage.nl/organisations\n\n\n\n\nBlank fields are included as \nnull\n instead of being omitted.\n\n\nMultipart form data\n\n\nWhen submitted forms contains binary data like audio fragments, this request format needs to be used.\nAn example form POST looks like this:\n\n\nPOST /organisation/crimson/challenges/choice HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"choices\"\n\nlocated\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"choices\"\n\nsited\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<spoken audio: located>\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/wav\n\n<spoken audio: sited>\n--jhgd87g7Gy3d78--\n\n\n\n\nRepeated fieldnames are accepted and transformed as lists in the given order.\n\n\nURL encoded forms\n\n\nThis content type is unsupported for most API calls, it may be supported for legacy reasons.\n\n\nPOST /organisations/crimson/challenges/choice HTTP/1.1\nAccept: application/json\nContent-Type: application/x-www-form-urlencoded\n\nquestion=The%20Pitcairn%20Islands%20are%20...%20in%20the%20South%20Pacific%20Ocean&choices=located&choices=sited&choices=stationed&choices=settled\n\n\n\n\nData representation\n\n\nTimestamps\n\n\nAll timestamps are returned in ISO 8601 format \nYYYY-MM-DDTHH:MM:SSZ\n.\n\n\nSecuring Your Connection\n\n\nITSLanguage's API is available over both secure (HTTPS) and unsecure connections. The section on \nauthentication\n goes into more detail on when you should use one or the other. Note that cross-domain requests from a web browser should match the protocol (HTTP or HTTPS) used by the page the browser is displaying to avoid security warnings.\n\n\nSummary Representations\n\n\nWhen you fetch a list of resources, the response includes a \nsubset\n of the\nattributes for that resource. This is the \"summary\" representation of the\nresource. (Some attributes are computationally expensive for the API to provide.\nFor performance reasons, the summary representation excludes those attributes.\nTo obtain those attributes, fetch the \"detailed\" representation.)\n\n\nExample\n: When you get a list of students, you get the summary\nrepresentation of each student. Here, we fetch the list of students owned\nby the \nsheffield\n organisation:\n\n\nGET /organisations/sheffield/students HTTP/1.1\n\n\n\n\nDetailed Representations\n\n\nWhen you fetch an individual resource, the response typically includes \nall\n\nattributes for that resource. This is the \"detailed\" representation of the\nresource. (Note that authorization sometimes influences the amount of detail\nincluded in the representation.)\n\n\nExample\n: When you get an individual repository, you get the detailed\nrepresentation of the repository. Here, we fetch the\n\nsheffield/amy\n student:\n\n\nGET /organisations/sheffield/students/amy HTTP/1.1\n\n\n\n\nThe documentation provides an example response for each API method. The example\nresponse illustrates all attributes that are returned by that method.\n\n\nParameters\n\n\nMany API methods take optional parameters. For GET requests, any parameters not\nspecified as a segment in the path can be passed as an HTTP query string\nparameter:\n\n\ncurl -i \"https://api.itslanguage.nl/organisations/sheffield/students/?first_name=mauro\"\n\n\n\n\nIn this example, the 'sheffield' value is provided for the \n:organisation\n\nparameter in the path while \n:first_name\n is passed in the query\nstring.\n\n\nFor POST, PUT, and DELETE requests, parameters not included in the URL should\nbe encoded as form data with a Content-Type of 'application/x-www-form-urlencoded':\n\n\ncurl -i -d 'first_name=Mauro' https://api.itslanguage.nl/organisations/sheffield/students\n\n\n\n\nOr the parameters should be encoded as JSON with a Content-Type of 'application/json':\n\n\ncurl -i -d '{\"firstName\": \"Mauro\"}' -H 'application/json' https://api.itslanguage.nl/organisations/sheffield/students\n\n\n\n\nPagination\n\n\nRequests that return multiple items will be paginated to 20 items by\ndefault.  You can set a custom page size up to 100 with the \n?per_page\n parameter.\n\n\ncurl \"https://api.itslanguage.nl/resources?per_page=100\"\n\n\n\n\nLink Header\n\n\nThe pagination info is included in\n\nthe Link header\n. It is important to\nfollow these Link header values instead of constructing your own URLs. In some\ninstances, pagination is not based on page number.\n\n\nHTTP/1.1 200 OK\nLink: <https://api.itslanguage.nl/resources?page=for12c&per_page=100>; rel=\"next\",\n      <https://api.itslanguage.nl/resources?page=back12c&per_page=100>; rel=\"prev\"\n\n\n\n\nLinebreak is included for readability.\n\n\nThe possible \nrel\n values are:\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nnext\n\n\nThe immediate next page of results.\n\n\n\n\n\n\nprev\n\n\nThe immediate previous page of results.\n\n\n\n\n\n\n\n\nCross Origin Resource Sharing\n\n\nThe API supports Cross Origin Resource Sharing (CORS) for AJAX requests.\nyou can read the \nCORS W3C working draft\n, or\n\nthis intro\n from the\nHTML 5 Security Guide.\n\n\nHere's a sample request sent from a browser hitting\n\nhttp://example.com\n:\n\n\ncurl -i https://api.itslanguage.nl -H \"Origin: http://example.com\"\n\n\n\n\nHTTP/1.1 302 Found\n\n\n\n\nThis is what the CORS preflight request looks like:\n\n\ncurl -i https://api.itslanguage.nl -H \"Origin: http://example.com\" -X OPTIONS\n\n\n\n\nHTTP/1.1 204 No Content\nAccess-Control-Allow-Origin: *\nAccess-Control-Allow-Headers: Content-Type\nAccess-Control-Allow-Methods: GET, POST, PUT, DELETE\nAccess-Control-Max-Age: 86400\nAccess-Control-Allow-Credentials: true\n\n\n\n\nJSON-P Callbacks\n\n\nYou can send a \n?callback\n parameter to any GET call to have the results\nwrapped in a JavaScript function.  This is typically used when browsers want\nto embed content in web pages by getting around cross domain\nissues.  The response includes the same data output as the regular API,\nplus the relevant HTTP Header information.\n\n\ncurl \"https://api.itslanguage.nl?callback=foo\"\n\n\n\n\nfoo({\n  \"meta\": {\n    \"status\": 200,\n    \"Link\": [ // pagination headers and other links\n      [\"https://api.itslanguage.nl?cursor=next2\", {\"rel\": \"next\"}]\n    ]\n  },\n  \"data\": {\n    // the data\n  }\n})\n\n\n\n\nYou can write a JavaScript handler to process the callback like this:\n\n\nfunction foo(response) {\n  var meta = response.meta\n  var data = response.data\n  console.log(meta)\n  console.log(data)\n}\n\n\n\n\nAll of the headers are the same String value as the HTTP Headers with one\nnotable exception: Link.  Link headers are pre-parsed for you and come\nthrough as an array of \n[url, options]\n tuples.",
+            "title": "The REST API"
+        },
+        {
+            "location": "/api/index.html#urls",
+            "text": "API actions are usually performed by accessing our production servers on the  api.itslanguage.nl  domain.\nFor example:  curl -i https://api.itslanguage.nl/organisations  HTTP/1.1 200 OK\nCache-Control: no-cache\nContent-Type: application/json; charset=utf-8\nVary: Accept-Encoding\nDate: Wed, 20 Nov 2013 17:10:22 GMT\nServer: Google Frontend\nAlternate-Protocol: 443:quic\nTransfer-Encoding: chunked\n\n[]",
+            "title": "URLs"
+        },
+        {
+            "location": "/api/index.html#dtap-environments",
+            "text": "There are three environments. In most cases you'll only use the production environment.\nWhen instructed to test on any other environment, these are their characteristics:",
+            "title": "DT(A)P environments"
+        },
+        {
+            "location": "/api/index.html#development",
+            "text": "The latest features may be tested in the development environment:  https://api-dot-dev.itslanguage.nl .  This environment may become unstable and data may be reset at any time.  This documentation matching this environment is available at:  https://help-dot-dev.itslanguage.nl .",
+            "title": "Development"
+        },
+        {
+            "location": "/api/index.html#testing",
+            "text": "More mature features may be tested in the test environment:  https://api-dot-test.itslanguage.nl .  This environment may become unstable and data may be reset at any time.  This documentation matching this environment is available at:  https://help-dot-test.itslanguage.nl .",
+            "title": "Testing"
+        },
+        {
+            "location": "/api/index.html#production",
+            "text": "Stable features may be used in the production environment:  https://api.itslanguage.nl .  This environment will store data it receives for a longer time.  This documentation matching this environment is available at:  https://help.itslanguage.nl .",
+            "title": "Production"
+        },
+        {
+            "location": "/api/index.html#request-and-response-format",
+            "text": "All endpoints accept and return JSON, with the exception of a few special cases that require submitting blobs.",
+            "title": "Request and Response Format"
+        },
+        {
+            "location": "/api/index.html#json",
+            "text": "All endpoints accept and return JSON, with the exception of a few special cases designed for use from a web browser or containing blobs.  As described in  RFC 4627 : JSON text SHALL be encoded in Unicode. The default encoding is UTF-8. \nTherefore, specifying the encoding with  charset=utf-8  in the header is optional, it's an implicit default.  When sending JSON the appropriate Content-Type header needs to be set.  curl -d '{\"name\": \"sheffield\"}' -H \"Content-Type: application/json\" https://api.itslanguage.nl/organisations  Blank fields are included as  null  instead of being omitted.",
+            "title": "JSON"
+        },
+        {
+            "location": "/api/index.html#multipart-form-data",
+            "text": "When submitted forms contains binary data like audio fragments, this request format needs to be used.\nAn example form POST looks like this:  POST /organisation/crimson/challenges/choice HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"choices\"\n\nlocated\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"choices\"\n\nsited\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<spoken audio: located>\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/wav\n\n<spoken audio: sited>\n--jhgd87g7Gy3d78--  Repeated fieldnames are accepted and transformed as lists in the given order.",
+            "title": "Multipart form data"
+        },
+        {
+            "location": "/api/index.html#url-encoded-forms",
+            "text": "This content type is unsupported for most API calls, it may be supported for legacy reasons.  POST /organisations/crimson/challenges/choice HTTP/1.1\nAccept: application/json\nContent-Type: application/x-www-form-urlencoded\n\nquestion=The%20Pitcairn%20Islands%20are%20...%20in%20the%20South%20Pacific%20Ocean&choices=located&choices=sited&choices=stationed&choices=settled",
+            "title": "URL encoded forms"
+        },
+        {
+            "location": "/api/index.html#data-representation",
+            "text": "",
+            "title": "Data representation"
+        },
+        {
+            "location": "/api/index.html#timestamps",
+            "text": "All timestamps are returned in ISO 8601 format  YYYY-MM-DDTHH:MM:SSZ .",
+            "title": "Timestamps"
+        },
+        {
+            "location": "/api/index.html#securing-your-connection",
+            "text": "ITSLanguage's API is available over both secure (HTTPS) and unsecure connections. The section on  authentication  goes into more detail on when you should use one or the other. Note that cross-domain requests from a web browser should match the protocol (HTTP or HTTPS) used by the page the browser is displaying to avoid security warnings.",
+            "title": "Securing Your Connection"
+        },
+        {
+            "location": "/api/index.html#summary-representations",
+            "text": "When you fetch a list of resources, the response includes a  subset  of the\nattributes for that resource. This is the \"summary\" representation of the\nresource. (Some attributes are computationally expensive for the API to provide.\nFor performance reasons, the summary representation excludes those attributes.\nTo obtain those attributes, fetch the \"detailed\" representation.)  Example : When you get a list of students, you get the summary\nrepresentation of each student. Here, we fetch the list of students owned\nby the  sheffield  organisation:  GET /organisations/sheffield/students HTTP/1.1",
+            "title": "Summary Representations"
+        },
+        {
+            "location": "/api/index.html#detailed-representations",
+            "text": "When you fetch an individual resource, the response typically includes  all \nattributes for that resource. This is the \"detailed\" representation of the\nresource. (Note that authorization sometimes influences the amount of detail\nincluded in the representation.)  Example : When you get an individual repository, you get the detailed\nrepresentation of the repository. Here, we fetch the sheffield/amy  student:  GET /organisations/sheffield/students/amy HTTP/1.1  The documentation provides an example response for each API method. The example\nresponse illustrates all attributes that are returned by that method.",
+            "title": "Detailed Representations"
+        },
+        {
+            "location": "/api/index.html#parameters",
+            "text": "Many API methods take optional parameters. For GET requests, any parameters not\nspecified as a segment in the path can be passed as an HTTP query string\nparameter:  curl -i \"https://api.itslanguage.nl/organisations/sheffield/students/?first_name=mauro\"  In this example, the 'sheffield' value is provided for the  :organisation \nparameter in the path while  :first_name  is passed in the query\nstring.  For POST, PUT, and DELETE requests, parameters not included in the URL should\nbe encoded as form data with a Content-Type of 'application/x-www-form-urlencoded':  curl -i -d 'first_name=Mauro' https://api.itslanguage.nl/organisations/sheffield/students  Or the parameters should be encoded as JSON with a Content-Type of 'application/json':  curl -i -d '{\"firstName\": \"Mauro\"}' -H 'application/json' https://api.itslanguage.nl/organisations/sheffield/students",
+            "title": "Parameters"
+        },
+        {
+            "location": "/api/index.html#pagination",
+            "text": "Requests that return multiple items will be paginated to 20 items by\ndefault.  You can set a custom page size up to 100 with the  ?per_page  parameter.  curl \"https://api.itslanguage.nl/resources?per_page=100\"",
+            "title": "Pagination"
+        },
+        {
+            "location": "/api/index.html#link-header",
+            "text": "The pagination info is included in the Link header . It is important to\nfollow these Link header values instead of constructing your own URLs. In some\ninstances, pagination is not based on page number.  HTTP/1.1 200 OK\nLink: <https://api.itslanguage.nl/resources?page=for12c&per_page=100>; rel=\"next\",\n      <https://api.itslanguage.nl/resources?page=back12c&per_page=100>; rel=\"prev\"  Linebreak is included for readability.  The possible  rel  values are:     Name  Description      next  The immediate next page of results.    prev  The immediate previous page of results.",
+            "title": "Link Header"
+        },
+        {
+            "location": "/api/index.html#cross-origin-resource-sharing",
+            "text": "The API supports Cross Origin Resource Sharing (CORS) for AJAX requests.\nyou can read the  CORS W3C working draft , or this intro  from the\nHTML 5 Security Guide.  Here's a sample request sent from a browser hitting http://example.com :  curl -i https://api.itslanguage.nl -H \"Origin: http://example.com\"  HTTP/1.1 302 Found  This is what the CORS preflight request looks like:  curl -i https://api.itslanguage.nl -H \"Origin: http://example.com\" -X OPTIONS  HTTP/1.1 204 No Content\nAccess-Control-Allow-Origin: *\nAccess-Control-Allow-Headers: Content-Type\nAccess-Control-Allow-Methods: GET, POST, PUT, DELETE\nAccess-Control-Max-Age: 86400\nAccess-Control-Allow-Credentials: true",
+            "title": "Cross Origin Resource Sharing"
+        },
+        {
+            "location": "/api/index.html#json-p-callbacks",
+            "text": "You can send a  ?callback  parameter to any GET call to have the results\nwrapped in a JavaScript function.  This is typically used when browsers want\nto embed content in web pages by getting around cross domain\nissues.  The response includes the same data output as the regular API,\nplus the relevant HTTP Header information.  curl \"https://api.itslanguage.nl?callback=foo\"  foo({\n  \"meta\": {\n    \"status\": 200,\n    \"Link\": [ // pagination headers and other links\n      [\"https://api.itslanguage.nl?cursor=next2\", {\"rel\": \"next\"}]\n    ]\n  },\n  \"data\": {\n    // the data\n  }\n})  You can write a JavaScript handler to process the callback like this:  function foo(response) {\n  var meta = response.meta\n  var data = response.data\n  console.log(meta)\n  console.log(data)\n}  All of the headers are the same String value as the HTTP Headers with one\nnotable exception: Link.  Link headers are pre-parsed for you and come\nthrough as an array of  [url, options]  tuples.",
+            "title": "JSON-P Callbacks"
+        },
+        {
+            "location": "/api/authentication/index.html",
+            "text": "Tenant server authentication\n\n\nEach tenant will receive a set of secrets called principal and credentials.\nThe principal is a unique identifier (like a username) and the credentials are\na secret, only the tenant should know (a password). A tenant can authenticate\nusing these secrets.\n\n\nThe secrets are sent in an HTTP Form string to request an OAuth2 Token.\nSee \nOAuth2",
+            "title": "Authentication"
+        },
+        {
+            "location": "/api/authentication/index.html#tenant-server-authentication",
+            "text": "Each tenant will receive a set of secrets called principal and credentials.\nThe principal is a unique identifier (like a username) and the credentials are\na secret, only the tenant should know (a password). A tenant can authenticate\nusing these secrets.  The secrets are sent in an HTTP Form string to request an OAuth2 Token.\nSee  OAuth2",
+            "title": "Tenant server authentication"
+        },
+        {
+            "location": "/api/permissions/index.html",
+            "text": "Permissions and roles\n\n\nAll users in the ITSLanguage framework have at least one role.\nAlong with a role comes a set of permissions.\nEach API call in the system requires a certain permission.\n\n\nRoles\n\n\nRoles in the ITSLanguage framework\n\n\n\n\n\n\n\n\nRole\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSTUDENT\n\n\nA student\n\n\n\n\n\n\nORGANISATION\n\n\nAn organisation\n\n\n\n\n\n\nTENANT\n\n\nA tenant\n\n\n\n\n\n\n\n\nPermissions\n\n\n\n\n\n\nRole: Tenant\nPermissions:\n\n\n\n\nAUDIO_ANALYSIS_CREATE,\n\n\nAUDIO_ANALYSIS_LIST,\n\n\nCHALLENGE_EDIT,\n\n\nCHALLENGE_LIST,\n\n\nCHALLENGE_DELETE,\n\n\nORGANISATION_CREATE,\n\n\nORGANISATION_LIST,\n\n\nSPEECH_RECORDING_LIST,\n\n\nSTUDENT_CREATE,\n\n\nSTUDENT_LIST\n\n\n\n\n\n\n\n\nRole: Organisation\nPermissions:\n\n\n\n\nAUDIO_ANALYSIS_CREATE,\n\n\nAUDIO_ANALYSIS_LIST,\n\n\nAUDIO_RECOGNITION_LIST,\n\n\nCHALLENGE_CREATE,\n\n\nCHALLENGE_DELETE,\n\n\nCHALLENGE_EDIT,\n\n\nCHALLENGE_LIST,\n\n\nCHOICE_CHALLENGE_CREATE,\n\n\nCHOICE_CHALLENGE_DELETE,\n\n\nCHOICE_CHALLENGE_LIST,\n\n\nDOWNLOAD,\n\n\nSPEECH_RECORDING_LIST,\n\n\nSTUDENT_LIST\n\n\n\n\n\n\n\n\nRole: Student\n\n\n\n\nAUDIO_ANALYSIS_CREATE,\n\n\nAUDIO_ANALYSIS_LIST,\n\n\nAUDIO_RECOGNITION_CREATE,\n\n\nAUDIO_RECOGNITION_LIST,\n\n\nCHALLENGE_LIST,\n\n\nCHOICE_CHALLENGE_LIST,\n\n\nDOWNLOAD,\n\n\nSPEECH_RECORDING_CREATE,\n\n\nSPEECH_RECORDING_LIST\n\n\n\n\n\n\n\n\nIf a call is made with an invalid scope gained from an OAuth2 Token and thus with insufficient permissions,\na \n403 Forbidden\n response is returned.",
+            "title": "Roles and Permissions"
+        },
+        {
+            "location": "/api/permissions/index.html#permissions-and-roles",
+            "text": "All users in the ITSLanguage framework have at least one role.\nAlong with a role comes a set of permissions.\nEach API call in the system requires a certain permission.",
+            "title": "Permissions and roles"
+        },
+        {
+            "location": "/api/permissions/index.html#roles",
+            "text": "Roles in the ITSLanguage framework     Role  Description      STUDENT  A student    ORGANISATION  An organisation    TENANT  A tenant",
+            "title": "Roles"
+        },
+        {
+            "location": "/api/permissions/index.html#permissions",
+            "text": "Role: Tenant\nPermissions:   AUDIO_ANALYSIS_CREATE,  AUDIO_ANALYSIS_LIST,  CHALLENGE_EDIT,  CHALLENGE_LIST,  CHALLENGE_DELETE,  ORGANISATION_CREATE,  ORGANISATION_LIST,  SPEECH_RECORDING_LIST,  STUDENT_CREATE,  STUDENT_LIST     Role: Organisation\nPermissions:   AUDIO_ANALYSIS_CREATE,  AUDIO_ANALYSIS_LIST,  AUDIO_RECOGNITION_LIST,  CHALLENGE_CREATE,  CHALLENGE_DELETE,  CHALLENGE_EDIT,  CHALLENGE_LIST,  CHOICE_CHALLENGE_CREATE,  CHOICE_CHALLENGE_DELETE,  CHOICE_CHALLENGE_LIST,  DOWNLOAD,  SPEECH_RECORDING_LIST,  STUDENT_LIST     Role: Student   AUDIO_ANALYSIS_CREATE,  AUDIO_ANALYSIS_LIST,  AUDIO_RECOGNITION_CREATE,  AUDIO_RECOGNITION_LIST,  CHALLENGE_LIST,  CHOICE_CHALLENGE_LIST,  DOWNLOAD,  SPEECH_RECORDING_CREATE,  SPEECH_RECORDING_LIST     If a call is made with an invalid scope gained from an OAuth2 Token and thus with insufficient permissions,\na  403 Forbidden  response is returned.",
+            "title": "Permissions"
+        },
+        {
+            "location": "/api/errors/index.html",
+            "text": "Errors are reported with HTTP status codes in the 400 (for client errors) or 500 (for server errors) range. The response will contain a JSON object describing the error.\n\n\nError Format\n\n\nThere are three possible types of client errors on API calls that\nreceive request bodies:\n\n\n\n\nSending invalid JSON will result in a \n400 Bad Request\n response.\n\n\n\n\nHTTP/1.1 400 Bad Request\nContent-Type: application/json\nContent-Length: 36\n\n{\"message\": \"Problems parsing JSON\"}\n\n\n\n\n\n\nSending the wrong type of JSON values will result in a\n  \n400 Bad Request\n response.\n\n\n\n\nHTTP/1.1 400 Bad Request\nContent-Type: application/json\nContent-Length: 41\n\n{\"message\": \"Body should be a JSON Hash\"}\n\n\n\n\n\n\nSending invalid fields will result in a \n422 Unprocessable Entity\n\n  response.\n\n\n\n\nHTTP/1.1 422 Unprocessable Entity\nContent-Type: application/json\nContent-Length: 148\n\n{\n  \"message\": \"Validation Failed\",\n  \"errors\": [\n    {\n      \"resource\": \"Issue\",\n      \"field\": \"title\",\n      \"code\": \"missing_field\"\n    }\n  ]\n}\n\n\n\n\nAll error objects have resource and field properties so that your client\ncan tell what the problem is.  There's also an error code to let you\nknow what is wrong with the field.  These are the possible validation error\ncodes:\n\n\n\n\n\n\n\n\nError Name\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nmissing\n\n\nA resource does not exist.\n\n\n\n\n\n\nmissing_field\n\n\nA required field on a resource has not been set.\n\n\n\n\n\n\ninvalid\n\n\nThe formatting of a field is invalid.  The documentation for that resource should be able to give you more specific information.\n\n\n\n\n\n\nalready_exists\n\n\nAnother resource has the same value as this field.  This can happen in resources that must have some unique key (such as Label names).\n\n\n\n\n\n\n\n\nIf resources have custom validation errors, they will be documented with the resource.\n\n\nGeneric Errors\n\n\nSeveral types of errors can be raised on most API calls. Therefore,\nthese generic errors are described in the following list, not in each\nAPI call individually:\n\n\n\n\n\n\n\n\nError Code\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n403 Forbidden\n\n\nMake sure to apply the right authentication headers to the request.\n\n\n\n\n\n\n404 Not Found\n\n\nOne or more parameters failed to result in the retrieval of an exisiting entity. This error may also be returned when the entity exists but belongs to another tenant.\n\n\n\n\n\n\n409 Conflict\n\n\nWhen creating or updating an entity, one of the parameters would lead to overwriting an entity that is already present.\n\n\n\n\n\n\n410 Gone\n\n\nWhen deleting an entity that was already deleted, this error is returned.\n\n\n\n\n\n\n422 Unprocessable Entity\n\n\nSome of the provided parameters could not be validated.\n\n\n\n\n\n\n\n\nHTTP Verbs\n\n\nWhere possible, the API strives to use appropriate HTTP verbs for each action.\n\n\n\n\n\n\n\n\nVerb\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nHEAD\n\n\nCan be issued against any resource to get just the HTTP header info.\n\n\n\n\n\n\nGET\n\n\nRetrieve resources.\n\n\n\n\n\n\nPOST\n\n\nCreate resources, or performing custom actions that'll modify data.\n\n\n\n\n\n\nPUT\n\n\nReplace resources or collections.\n\n\n\n\n\n\nPATCH\n\n\nPartially replace resources or collections.\n\n\n\n\n\n\nDELETE\n\n\nDelete resources.\n\n\n\n\n\n\n\n\nJSONP Errors\n\n\nWhen clients request responses in JSONP format, the API server will \nalways\n respond with a 200 response code. This prevents the web browser swallowing the HTTP response without giving the Javascript callback a chance to process it.\n\n\nIt is always possible to identify an error response from a successful one by looking at the \ntypename\n field. The would-be HTTP status code is included in the \nstatus\n field.\n\n\n\n  \nThe JSONP return structure is not final yet.",
+            "title": "Error handling"
+        },
+        {
+            "location": "/api/errors/index.html#error-format",
+            "text": "There are three possible types of client errors on API calls that\nreceive request bodies:   Sending invalid JSON will result in a  400 Bad Request  response.   HTTP/1.1 400 Bad Request\nContent-Type: application/json\nContent-Length: 36\n\n{\"message\": \"Problems parsing JSON\"}   Sending the wrong type of JSON values will result in a\n   400 Bad Request  response.   HTTP/1.1 400 Bad Request\nContent-Type: application/json\nContent-Length: 41\n\n{\"message\": \"Body should be a JSON Hash\"}   Sending invalid fields will result in a  422 Unprocessable Entity \n  response.   HTTP/1.1 422 Unprocessable Entity\nContent-Type: application/json\nContent-Length: 148\n\n{\n  \"message\": \"Validation Failed\",\n  \"errors\": [\n    {\n      \"resource\": \"Issue\",\n      \"field\": \"title\",\n      \"code\": \"missing_field\"\n    }\n  ]\n}  All error objects have resource and field properties so that your client\ncan tell what the problem is.  There's also an error code to let you\nknow what is wrong with the field.  These are the possible validation error\ncodes:     Error Name  Description      missing  A resource does not exist.    missing_field  A required field on a resource has not been set.    invalid  The formatting of a field is invalid.  The documentation for that resource should be able to give you more specific information.    already_exists  Another resource has the same value as this field.  This can happen in resources that must have some unique key (such as Label names).     If resources have custom validation errors, they will be documented with the resource.",
+            "title": "Error Format"
+        },
+        {
+            "location": "/api/errors/index.html#generic-errors",
+            "text": "Several types of errors can be raised on most API calls. Therefore,\nthese generic errors are described in the following list, not in each\nAPI call individually:     Error Code  Description      403 Forbidden  Make sure to apply the right authentication headers to the request.    404 Not Found  One or more parameters failed to result in the retrieval of an exisiting entity. This error may also be returned when the entity exists but belongs to another tenant.    409 Conflict  When creating or updating an entity, one of the parameters would lead to overwriting an entity that is already present.    410 Gone  When deleting an entity that was already deleted, this error is returned.    422 Unprocessable Entity  Some of the provided parameters could not be validated.",
+            "title": "Generic Errors"
+        },
+        {
+            "location": "/api/errors/index.html#http-verbs",
+            "text": "Where possible, the API strives to use appropriate HTTP verbs for each action.     Verb  Description      HEAD  Can be issued against any resource to get just the HTTP header info.    GET  Retrieve resources.    POST  Create resources, or performing custom actions that'll modify data.    PUT  Replace resources or collections.    PATCH  Partially replace resources or collections.    DELETE  Delete resources.",
+            "title": "HTTP Verbs"
+        },
+        {
+            "location": "/api/errors/index.html#jsonp-errors",
+            "text": "When clients request responses in JSONP format, the API server will  always  respond with a 200 response code. This prevents the web browser swallowing the HTTP response without giving the Javascript callback a chance to process it.  It is always possible to identify an error response from a successful one by looking at the  typename  field. The would-be HTTP status code is included in the  status  field.  \n   The JSONP return structure is not final yet.",
+            "title": "JSONP Errors"
+        },
+        {
+            "location": "/api/oauth2/index.html",
+            "text": "Tenant server authentication\n\n\nOAuth2 is implemented so a tenant may authenticate and request an access\ntoken. Access tokens may be distributed to end-users to grant them access. By\nusing access tokens, access may be restricted by using scopes.\n\n\nEach tenant will receive a set of secrets called principal and credentials.\nThe principal is a unique identifier (like a username) and the credentials are\na secret, only the tenant should know (a password). A tenant can authenticate\nand receive an access token using these secrets.\n\n\nAn access token can be used to make an authorised request. To do so, the\naccess token should be passed as an authorization request header.\n\n\nObtain access token\n\n\nAn access token can either be requested using a manual request or by using an\nOAuth2 compatible client.\n\n\nRequest\n\n\nTo request an access token, a POST request should be done to the access token\nAPI. The body should contain the username, password, grant type and optional\nscope. Example, to request an access token for the user \ntenant\n with password\n\nsecret\n and scope \ntenant/tenant\n:\n\n\nPOST https://api.itslanguage.nl/tokens HTTP/1.1\nAccept: application/x-www-form-urlencoded\n\ngrant_type=password&username=tenant&password=secret&scope=tenant%2Ftenant\n\n\n\n\nNote the \nContent Type\n of the POST.\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json;charset=UTF-8\nCache-Control: no-store\nPragma: no-cache\n\n{\n    \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.nxowLE6zdaUjmiZKP-9K8OaXGUM_6O7LuHgUZgyAY9c\",\n    \"token_type\": \"Bearer\",\n    \"scope\": \"tenant/tenant\"\n}\n\n\n\n\nUsing the access token\n\n\nThe access token can be used to make an authorised request. To do so, the\naccess token should be placed in the Authorization header as a bearer token.\nExample:\n\n\nGET https://api.itslanguage.nl/organisations HTTP/1.1\nAccept: application/json\nAuthorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.nxowLE6zdaUjmiZKP-9K8OaXGUM_6O7LuHgUZgyAY9c\n\n\n\n\nTenant client authentication\n\n\nInstead of sharing the tenant's principal and credentials, a tenant client\nshould request or receive an access token from the tenant server. This should\nusually happen when an end-user logs into the tenant server. How this is done\nis to be determined by the tenant. This access token can be used by the client\nto authenticate on behalf of the tenant at the REST API or the Websocket\nserver. By issuing the access token to a tenant client, the tenant server\ngrants the tenant client access to the ITSLanguage platform.\n\n\nIn order to dispense an access token to the tenant client, the tenant server\nshould request a token from the REST API. A token can be requested at three\nlevels, tenant level, organisation level or student level.\n\n\nStudent level\n\n\nThis is the recommended way to request an access token. This way the access\ntoken is bound to a specific student so the token can only be used by that\nstudent. The tenant server should request an access token with a special\nscope. A student scope for the student \njoe\n in organisation \norg\n owned by\ntenant \ntenant\n should look like this:\n\ntenant/tenant/organisation/org/student/joe\n\n\nThis method should be used in production as it is the most secure method. It\nprovides isolation at student level. This means that each student receives a\ndifferent access token. Students cannot access another student's data.\n\n\nOrganisation level\n\n\nUsing this method, an access token is issued for an organisation. This access\ntoken can be used by each student in that organisation. All students in that\norganisation make use of the same account (dummy). This also means that\nstudents have access to each others data.\n\n\nWhen this method is chosen, a dummy student is created so the access token can\nbe used. When an API call requires a student, the id \ndummy\n needs to be\nsupplied.\n\n\nTo create an organisation level access token for the organisation \norg\n owned\nby the tenant \ntenant\n, the scope should be \ntenant/tenant/organisation/org\n.\n\n\nTenant level\n\n\nA tenant level access token can be requested to perform administrational tasks\nlike creating organisations. It is also possible to perform analyses on\nbehalf of the tenant. There is no distinction between organisations or students\nso \nall\n students of all organisations within that tenant use the same\naccount.\n\n\nTo make this work, a dummy organisation and a dummy student are created. When\nan API call requires an organisation or a student, the id \ndummy\n can be given\nfor the organisation and the student.\n\n\nTo create a tenant level access token for the tenant \ntenant\n the scope should\nbe \ntenant/tenant\n.",
+            "title": "OAuth2"
+        },
+        {
+            "location": "/api/oauth2/index.html#tenant-server-authentication",
+            "text": "OAuth2 is implemented so a tenant may authenticate and request an access\ntoken. Access tokens may be distributed to end-users to grant them access. By\nusing access tokens, access may be restricted by using scopes.  Each tenant will receive a set of secrets called principal and credentials.\nThe principal is a unique identifier (like a username) and the credentials are\na secret, only the tenant should know (a password). A tenant can authenticate\nand receive an access token using these secrets.  An access token can be used to make an authorised request. To do so, the\naccess token should be passed as an authorization request header.",
+            "title": "Tenant server authentication"
+        },
+        {
+            "location": "/api/oauth2/index.html#obtain-access-token",
+            "text": "An access token can either be requested using a manual request or by using an\nOAuth2 compatible client.",
+            "title": "Obtain access token"
+        },
+        {
+            "location": "/api/oauth2/index.html#request",
+            "text": "To request an access token, a POST request should be done to the access token\nAPI. The body should contain the username, password, grant type and optional\nscope. Example, to request an access token for the user  tenant  with password secret  and scope  tenant/tenant :  POST https://api.itslanguage.nl/tokens HTTP/1.1\nAccept: application/x-www-form-urlencoded\n\ngrant_type=password&username=tenant&password=secret&scope=tenant%2Ftenant  Note the  Content Type  of the POST.",
+            "title": "Request"
+        },
+        {
+            "location": "/api/oauth2/index.html#response",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json;charset=UTF-8\nCache-Control: no-store\nPragma: no-cache\n\n{\n    \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.nxowLE6zdaUjmiZKP-9K8OaXGUM_6O7LuHgUZgyAY9c\",\n    \"token_type\": \"Bearer\",\n    \"scope\": \"tenant/tenant\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/oauth2/index.html#using-the-access-token",
+            "text": "The access token can be used to make an authorised request. To do so, the\naccess token should be placed in the Authorization header as a bearer token.\nExample:  GET https://api.itslanguage.nl/organisations HTTP/1.1\nAccept: application/json\nAuthorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.nxowLE6zdaUjmiZKP-9K8OaXGUM_6O7LuHgUZgyAY9c",
+            "title": "Using the access token"
+        },
+        {
+            "location": "/api/oauth2/index.html#tenant-client-authentication",
+            "text": "Instead of sharing the tenant's principal and credentials, a tenant client\nshould request or receive an access token from the tenant server. This should\nusually happen when an end-user logs into the tenant server. How this is done\nis to be determined by the tenant. This access token can be used by the client\nto authenticate on behalf of the tenant at the REST API or the Websocket\nserver. By issuing the access token to a tenant client, the tenant server\ngrants the tenant client access to the ITSLanguage platform.  In order to dispense an access token to the tenant client, the tenant server\nshould request a token from the REST API. A token can be requested at three\nlevels, tenant level, organisation level or student level.",
+            "title": "Tenant client authentication"
+        },
+        {
+            "location": "/api/oauth2/index.html#student-level",
+            "text": "This is the recommended way to request an access token. This way the access\ntoken is bound to a specific student so the token can only be used by that\nstudent. The tenant server should request an access token with a special\nscope. A student scope for the student  joe  in organisation  org  owned by\ntenant  tenant  should look like this: tenant/tenant/organisation/org/student/joe  This method should be used in production as it is the most secure method. It\nprovides isolation at student level. This means that each student receives a\ndifferent access token. Students cannot access another student's data.",
+            "title": "Student level"
+        },
+        {
+            "location": "/api/oauth2/index.html#organisation-level",
+            "text": "Using this method, an access token is issued for an organisation. This access\ntoken can be used by each student in that organisation. All students in that\norganisation make use of the same account (dummy). This also means that\nstudents have access to each others data.  When this method is chosen, a dummy student is created so the access token can\nbe used. When an API call requires a student, the id  dummy  needs to be\nsupplied.  To create an organisation level access token for the organisation  org  owned\nby the tenant  tenant , the scope should be  tenant/tenant/organisation/org .",
+            "title": "Organisation level"
+        },
+        {
+            "location": "/api/oauth2/index.html#tenant-level",
+            "text": "A tenant level access token can be requested to perform administrational tasks\nlike creating organisations. It is also possible to perform analyses on\nbehalf of the tenant. There is no distinction between organisations or students\nso  all  students of all organisations within that tenant use the same\naccount.  To make this work, a dummy organisation and a dummy student are created. When\nan API call requires an organisation or a student, the id  dummy  can be given\nfor the organisation and the student.  To create a tenant level access token for the tenant  tenant  the scope should\nbe  tenant/tenant .",
+            "title": "Tenant level"
+        },
+        {
+            "location": "/api/organisations/index.html",
+            "text": "Organisations\n\n\nList all organisations\n\n\nURL\n\n\nGET /organisations HTTP/1.1\n\n\n\n\nRequest parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nsort\n\n\nstring\n\n\nOptional\n What to sort results by. Can be either \ncreated\n, \nupdated\n or \nname\n. Default: \ncreated\n.\n\n\n\n\n\n\ndirection\n\n\nstring\n\n\nOptional\n The direction of the sort. Can be either \nasc\n or \ndesc\n. Default: \ndesc\n.\n\n\n\n\n\n\n\n\nResponse\n\n\nThe response contains a list of organisations.\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"23\",\n    \"created\": \"2008-08-06T19:37:40Z\",\n    \"updated\": \"2010-09-21T14:26:15Z\",\n    \"name\": \"School of silly walks\"\n  },\n  {\n    \"id\": \"walamaloo\",\n    \"created\": \"2002-06-19T11:19:52Z\",\n    \"updated\": \"2011-03-12T16:20:17Z\",\n    \"name\": \"University of Walamaloo\"\n  }\n]\n\n\n\n\nGet a single organisation\n\n\nURL\n\n\nGET /organisations/:organisation HTTP/1.1\n\n\n\n\n\n\norganisation - \nRequired\n The identifier of the organisation.\n\n\n\n\nRequest\n\n\nGET /organisations/23 HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"23\",\n  \"created\": \"2000-04-17T19:20:23Z\",\n  \"updated\": \"2001-12-14T07:38:45Z\",\n  \"name\": \"School of silly walks\"\n}\n\n\n\n\nCreate an organisation\n\n\nURL\n\n\nPOST /organisation HTTP/1.1\n\n\n\n\nInput\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nstring\n\n\nOptional\n The organisation identifier. If none is given, one is generated.\n\n\n\n\n\n\nname\n\n\nstring\n\n\nRequired\n The name of the organisation.\n\n\n\n\n\n\n\n\nRequest\n\n\nPOST /organisation HTTP/1.1\nAccept: application/json\nContent-Type: application/json\n\n{\n  \"id\": \"walamaloo\",\n  \"name\": \"University of Walamaloo\"\n}\n\n\n\n\nResponse\n\n\nHTTP/1.1 201 Created\nContent-Type: application/json\n\n{\n  \"id\": \"walamaloo\",\n  \"created\": \"2002-06-19T11:19:52Z\",\n  \"updated\": \"2011-03-12T16:20:17Z\",\n  \"name\": \"University of Walamaloo\"\n}",
+            "title": "Organisations"
+        },
+        {
+            "location": "/api/organisations/index.html#organisations",
+            "text": "",
+            "title": "Organisations"
+        },
+        {
+            "location": "/api/organisations/index.html#list-all-organisations",
+            "text": "",
+            "title": "List all organisations"
+        },
+        {
+            "location": "/api/organisations/index.html#url",
+            "text": "GET /organisations HTTP/1.1",
+            "title": "URL"
+        },
+        {
+            "location": "/api/organisations/index.html#request-parameters",
+            "text": "Name  Type  Description      sort  string  Optional  What to sort results by. Can be either  created ,  updated  or  name . Default:  created .    direction  string  Optional  The direction of the sort. Can be either  asc  or  desc . Default:  desc .",
+            "title": "Request parameters"
+        },
+        {
+            "location": "/api/organisations/index.html#response",
+            "text": "The response contains a list of organisations.  HTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"23\",\n    \"created\": \"2008-08-06T19:37:40Z\",\n    \"updated\": \"2010-09-21T14:26:15Z\",\n    \"name\": \"School of silly walks\"\n  },\n  {\n    \"id\": \"walamaloo\",\n    \"created\": \"2002-06-19T11:19:52Z\",\n    \"updated\": \"2011-03-12T16:20:17Z\",\n    \"name\": \"University of Walamaloo\"\n  }\n]",
+            "title": "Response"
+        },
+        {
+            "location": "/api/organisations/index.html#get-a-single-organisation",
+            "text": "",
+            "title": "Get a single organisation"
+        },
+        {
+            "location": "/api/organisations/index.html#url_1",
+            "text": "GET /organisations/:organisation HTTP/1.1   organisation -  Required  The identifier of the organisation.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/organisations/index.html#request",
+            "text": "GET /organisations/23 HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/organisations/index.html#response_1",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"23\",\n  \"created\": \"2000-04-17T19:20:23Z\",\n  \"updated\": \"2001-12-14T07:38:45Z\",\n  \"name\": \"School of silly walks\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/organisations/index.html#create-an-organisation",
+            "text": "",
+            "title": "Create an organisation"
+        },
+        {
+            "location": "/api/organisations/index.html#url_2",
+            "text": "POST /organisation HTTP/1.1",
+            "title": "URL"
+        },
+        {
+            "location": "/api/organisations/index.html#input",
+            "text": "Name  Type  Description      id  string  Optional  The organisation identifier. If none is given, one is generated.    name  string  Required  The name of the organisation.",
+            "title": "Input"
+        },
+        {
+            "location": "/api/organisations/index.html#request_1",
+            "text": "POST /organisation HTTP/1.1\nAccept: application/json\nContent-Type: application/json\n\n{\n  \"id\": \"walamaloo\",\n  \"name\": \"University of Walamaloo\"\n}",
+            "title": "Request"
+        },
+        {
+            "location": "/api/organisations/index.html#response_2",
+            "text": "HTTP/1.1 201 Created\nContent-Type: application/json\n\n{\n  \"id\": \"walamaloo\",\n  \"created\": \"2002-06-19T11:19:52Z\",\n  \"updated\": \"2011-03-12T16:20:17Z\",\n  \"name\": \"University of Walamaloo\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/students/index.html",
+            "text": "Students\n\n\nList all students\n\n\nURL\n\n\nGET /organisations/:organisation/students HTTP/1.1\n\n\n\n\n\n\norganisation - \nRequired\n The identifier of the organisation.\n\n\n\n\nResponse\n\n\nThe response is a JSON list with students.\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"24\",\n    \"firstName\": \"Harry\",\n    \"lastName\": \"Bagot\",\n    \"gender\": \"male\",\n    \"birthYear\": 1980\n  },\n  {\n    \"id\": \"dk\",\n    \"firstName\": \"Debbie\",\n    \"lastName\": \"Katzenberg\",\n    \"gender\": \"female\",\n    \"birthYear\": 1983\n  }\n]\n\n\n\n\nGet a single student\n\n\nURL\n\n\nGET /organisations/:organisation/students/:student HTTP/1.1\n\n\n\n\n\n\norganisation - \nRequired\n The identifier of the organisation.\n\n\nstudent - \nRequired\n The identifier of the student.\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"29\",\n  \"firstName\": \"Luigi\",\n  \"lastName\": \"Vercotti\",\n  \"gender\": \"male\",\n  \"birthYear\": 1969\n}\n\n\n\n\nCreate a student\n\n\nURL\n\n\nPOST /organisations/:organisation/students HTTP/1.1\n\n\n\n\n\n\norganisation - \nRequired\n The identifier of the organisation.\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nstring\n\n\nOptional\n The student identifier. If none is given, one is generated.\n\n\n\n\n\n\nfirstName\n\n\nstring\n\n\nOptional\n The first name of the student.\n\n\n\n\n\n\ninfix\n\n\nstring\n\n\nOptional\n The name infix of the student.\n\n\n\n\n\n\nlastName\n\n\nstring\n\n\nOptional\n The last name of the student.\n\n\n\n\n\n\ngender\n\n\nstring\n\n\nOptional\n The gender of the student (\"male\" or \"female\").\n\n\n\n\n\n\nbirthYear\n\n\nint\n\n\nOptional\n The birth year of the student.\n\n\n\n\n\n\n\n\nResponse\n\n\nHTTP/1.1 201 Created\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/organisations/whizzo/students/4\n\n{\n  \"id\": \"4\",\n  \"firstName\": \"Arthur\",\n  \"lastName\": \"Belling\",\n  \"gender\": \"male\",\n  \"birthYear\": 1976\n}",
+            "title": "Students"
+        },
+        {
+            "location": "/api/students/index.html#students",
+            "text": "",
+            "title": "Students"
+        },
+        {
+            "location": "/api/students/index.html#list-all-students",
+            "text": "",
+            "title": "List all students"
+        },
+        {
+            "location": "/api/students/index.html#url",
+            "text": "GET /organisations/:organisation/students HTTP/1.1   organisation -  Required  The identifier of the organisation.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/students/index.html#response",
+            "text": "The response is a JSON list with students.  HTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"24\",\n    \"firstName\": \"Harry\",\n    \"lastName\": \"Bagot\",\n    \"gender\": \"male\",\n    \"birthYear\": 1980\n  },\n  {\n    \"id\": \"dk\",\n    \"firstName\": \"Debbie\",\n    \"lastName\": \"Katzenberg\",\n    \"gender\": \"female\",\n    \"birthYear\": 1983\n  }\n]",
+            "title": "Response"
+        },
+        {
+            "location": "/api/students/index.html#get-a-single-student",
+            "text": "",
+            "title": "Get a single student"
+        },
+        {
+            "location": "/api/students/index.html#url_1",
+            "text": "GET /organisations/:organisation/students/:student HTTP/1.1   organisation -  Required  The identifier of the organisation.  student -  Required  The identifier of the student.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/students/index.html#response_1",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"29\",\n  \"firstName\": \"Luigi\",\n  \"lastName\": \"Vercotti\",\n  \"gender\": \"male\",\n  \"birthYear\": 1969\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/students/index.html#create-a-student",
+            "text": "",
+            "title": "Create a student"
+        },
+        {
+            "location": "/api/students/index.html#url_2",
+            "text": "POST /organisations/:organisation/students HTTP/1.1   organisation -  Required  The identifier of the organisation.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/students/index.html#parameters",
+            "text": "Name  Type  Description      id  string  Optional  The student identifier. If none is given, one is generated.    firstName  string  Optional  The first name of the student.    infix  string  Optional  The name infix of the student.    lastName  string  Optional  The last name of the student.    gender  string  Optional  The gender of the student (\"male\" or \"female\").    birthYear  int  Optional  The birth year of the student.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/api/students/index.html#response_2",
+            "text": "HTTP/1.1 201 Created\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/organisations/whizzo/students/4\n\n{\n  \"id\": \"4\",\n  \"firstName\": \"Arthur\",\n  \"lastName\": \"Belling\",\n  \"gender\": \"male\",\n  \"birthYear\": 1976\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html",
+            "text": "Challenges\n\n\nSeveral types of challenges can be created using the ITSLanguage Speech API.\n\n\n\n\n\n\n\n\nType\n\n\nUsage\n\n\n\n\n\n\n\n\n\n\nspeech\n\n\nGuide the student in speaking through an optional topic and optional reference audio.\n\n\n\n\n\n\npronunciation\n\n\nA text transcription with reference audio allow a detailed, phoneme level analysis on user submitted audio.\n\n\n\n\n\n\nchoice\n\n\nOne set of transcription choices is used to perform speech recognition to selects one of the choices.\n\n\n\n\n\n\n\n\nList all speech challenges\n\n\nURL\n\n\nGET /challenges/speech HTTP/1.1\n\n\n\n\nRequest\n\n\nGET /challenges/speech HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse\n\n\nThe response is a JSON list with speech challenges.\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"speech_1\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"topic\": \"What do you know about babies?\",\n    \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n  },\n  {\n    \"id\": \"12\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"topic\": \"Book\"\n  }\n]\n\n\n\n\nGet a single speech challenge\n\n\nURL\n\n\nGET /challenges/speech/:challenge HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The speech challenge identifier.\n\n\n\n\nRequest\n\n\nGET /challenges/speech/speech_1 HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"speech_1\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"topic\": \"What do you know about babies?\",\n  \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n}\n\n\n\n\nCreate a speech challenge\n\n\nURL\n\n\nPOST /challenges/speech HTTP/1.1\n\n\n\n\nRequest parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nstring\n\n\nOptional\n The speech challenge identifier. If none is given, one is generated.\n\n\n\n\n\n\ntopic\n\n\nstring\n\n\nOptional\n A question or topic serving as guidance to the student.\n\n\n\n\n\n\nreferenceAudio\n\n\nblob\n\n\nOptional\n The reference audio fragment.\n\n\n\n\n\n\n\n\nRequest\n\n\nPOST /challenges/speech HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"referenceAudio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<blob>\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"topic\"\n\nWhat do you know about babies?\n--jhgd87g7Gy3d78--\n\n\n\n\nResponse\n\n\nHTTP/1.1 201 Created\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/speech/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"topic\": \"What do you know about babies?\",\n  \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n}\n\n\n\n\nUpdate a speech challenge\n\n\nURL\n\n\nPUT /challenges/speech/:challenge HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The speech challenge identifier.\n\n\n\n\nUpdate one or more properties of an existing speech challenge.\n\n\nRequest parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\ntopic\n\n\nstring\n\n\nOptional\n A question or topic serving as guidance to the student.\n\n\n\n\n\n\nreferenceAudio\n\n\nblob\n\n\nOptional\n The reference audio fragment.\n\n\n\n\n\n\n\n\nRequest\n\n\nPUT /challenges/speech/4 HTTP/1.1\nAccept: application/json\nContent-Type: application/json\n\n{\n  \"topic\": \"What do you know about the baby?\"\n}\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/speech/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"topic\": \"What do you know about the baby?\"\n}\n\n\n\n\nList all pronunciation challenges\n\n\nURL\n\n\nGET /challenges/pronunciation HTTP/1.1\n\n\n\n\nRequest\n\n\nGET /challenges/pronunciation HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse\n\n\nThe response is a JSON list with pronunciation challenges.\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"pronunciation_1\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"transcription\": \"You could take the baby with you\",\n    \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\",\n    \"status\": \"preparing\",\n    \"alignment\": null\n  },\n  {\n    \"id\": \"12\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"transcription\": \"tap\",\n    \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu6-Abq\",\n    \"status\": \"prepared\",\n    \"alignment\": {\n      \"confidenceScore\": -3.44,\n      \"words\": [\n        {\n          \"chunks\": [\n            {\n              \"graphemes\": \"t\",\n              \"phonemes\": [\n                {\n                  \"start\": 0.25,\n                  \"end\": 0.45,\n                  \"confidenceScore\": -2.8149,\n                  \"ipa\": \"t\"\n                }\n              ]\n            },\n            {\n              \"graphemes\": \"a\",\n              \"phonemes\": [\n                {\n                  \"start\": 0.45,\n                  \"end\": 0.67,\n                  \"confidenceScore\": -0.7412,\n                  \"ipa\": \"ae\"\n                }\n              ]\n            },\n            {\n              \"graphemes\": \"p\",\n              \"phonemes\": [\n                {\n                  \"start\": 0.67,\n                  \"end\": 0.84,\n                  \"confidenceScore\": -6.7516,\n                  \"ipa\": \"p\"\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  }\n]\n\n\n\n\nGet a single pronunciation challenge\n\n\nURL\n\n\nGET /challenges/pronunciation/:challenge HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The pronunciation challenge identifier.\n\n\n\n\nRequest\n\n\nGET /challenges/pronunciation/pronunciaton_1 HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"12\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"transcription\": \"tap\",\n  \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu6-Abq\",\n  \"status\": \"prepared\",\n  \"alignment\": {\n    \"confidenceScore\": -3.44,\n    \"words\": [\n      {\n        \"chunks\": [\n          {\n            \"phonemes\": [\n              {\n                \"start\": 0.25,\n                \"ipa\": \"t\",\n                \"end\": 0.45,\n                \"confidenceScore\": -2.8149\n              }\n            ],\n            \"graphemes\": \"t\"\n          },\n          {\n            \"phonemes\": [\n              {\n                \"start\": 0.45,\n                \"ipa\": \"ae\",\n                \"end\": 0.67,\n                \"confidenceScore\": -0.7412\n              }\n            ],\n            \"graphemes\": \"a\"\n          },\n          {\n            \"phonemes\": [\n              {\n                \"start\": 0.67,\n                \"ipa\": \"p\",\n                \"end\": 0.84,\n                \"confidenceScore\": -6.7516\n              }\n            ],\n            \"graphemes\": \"p\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\n\n\n\nCreate a pronunciation challenge\n\n\nURL\n\n\nPOST /challenges/pronunciation HTTP/1.1\n\n\n\n\nRequest parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nstring\n\n\nOptional\n The pronunciation challenge identifier. If none is given, one is generated.\n\n\n\n\n\n\ntranscription\n\n\nstring\n\n\nRequired\n The spoken word or sentence as plain text.\n\n\n\n\n\n\nreferenceAudio\n\n\nblob\n\n\nRequired\n The reference audio fragment.\n\n\n\n\n\n\n\n\nRequest\n\n\nPOST /challenges/pronunciation HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"referenceAudio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<blob>\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"transcription\"\n\nYou could take the baby with you\n--jhgd87g7Gy3d78--\n\n\n\n\nResponse\n\n\nHTTP/1.1 201 Created\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/pronunciation/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"transcription\": \"You could take the baby with you\",\n  \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\",\n  \"status\": \"preparing\",\n  \"alignment\": null\n}\n\n\n\n\nUpdate a pronunciation challenge\n\n\nURL\n\n\nPUT /challenges/pronunciation/:challenge HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The pronunciation challenge identifier.\n\n\n\n\nUpdate one or more properties of an existing pronunciation challenge.\n\n\nRequest parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\ntranscription\n\n\nstring\n\n\nOptional\n The spoken word or sentence in plain text.\n\n\n\n\n\n\nreferenceAudio\n\n\nblob\n\n\nOptional\n The reference audio fragment.\n\n\n\n\n\n\nstatus\n\n\nstring\n\n\nOptional\n The status of the challenge (unprepared, preparing, prepared).\n\n\n\n\n\n\nalignment\n\n\nobject\n\n\nOptional\n The alignment of the challenge.\n\n\n\n\n\n\n\n\nRequest\n\n\nPUT /challenges/pronunciation/4 HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"transcription\"\n\ntap\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"referenceAudio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<blob>\nContent-Disposition: form-data; name=\"status\"\n\nprepared\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"aignment\"\nContent-Type: application/json\n\n{\"confidenceScore\": -3.44, \"words\": [....]}\n--jhgd87g7Gy3d78--\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/pronunciation/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"transcription\": \"You could take the baby with you\",\n  \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-Abc\",\n  \"status\": \"prepared\",\n  \"alignment\": {\"confidenceScore\": -3.44, \"words\": [....]}\n}\n\n\n\n\nDelete a single pronunciation challenge\n\n\nURL\n\n\nDELETE /challenges/pronunciation/:challenge HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The choice challenge identifier.\n\n\n\n\nRequest\n\n\nDELETE /challenges/pronunciation/choice_1 HTTP/1.1\n\n\n\n\nResponse\n\n\nHTTP/1.1 204 No Content\n\n\n\n\nList all choice challenges\n\n\nURL\n\n\nGET /challenges/choice HTTP/1.1\n\n\n\n\nRequest\n\n\nGET /challenges/choice HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse fields\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nstatus\n\n\nstring\n\n\nRequired\n The status of the challenge's preparation. Either 'unprepared', 'preparing' or 'prepared'. Only a 'prepared' challenge is ready to perform a speech recognition on.\n\n\n\n\n\n\n\n\nResponse\n\n\nThe response is a JSON list with choice challenges.\n\n\nThe second entry shows that \nchoice challenges\n can also be used to recognise one specific sentence.\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"13\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"question\": \"The Pitcairn Islands are ... in the South Pacific Ocean\",\n    \"choices\": [\n      {\n        \"choice\": \"located\",\n        \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n      }, {\n        \"choice\": \"sited\",\n        \"audioUrl\": null\n      }, {\n        \"choice\": \"stationed\",\n        \"audioUrl\": null\n      }, {\n        \"choice\": \"settled\",\n        \"audioUrl\": null\n      }\n    ],\n    \"status\": \"prepared\"\n  },\n  {\n    \"id\": \"14\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"question\": \"Ik heb erge hoofdpijn.\",\n    \"choices\": [\n      {\n        \"choice\": \"I have a very bad headache.\",\n        \"audioUrl\": null\n      }\n    ],\n    \"status\": \"preparing\"\n  }\n]\n\n\n\n\nGet a single choice challenge\n\n\nURL\n\n\nGET /challenges/choice/:challenge HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The choice challenge identifier.\n\n\n\n\nRequest\n\n\nGET /challenges/choice/choice_1 HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"13\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"question\": \"The Pitcairn Islands are ... in the South Pacific Ocean\",\n  \"choices\": [\n    {\n      \"choice\": \"located\",\n      \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n    }, {\n      \"choice\": \"sited\",\n      \"audioUrl\": null\n    }, {\n      \"choice\": \"stationed\",\n      \"audioUrl\": null\n    }, {\n      \"choice\": \"settled\",\n      \"audioUrl\": null\n    }\n  ],\n  \"status\": \"prepared\"\n}\n\n\n\n\nCreate a choice challenge\n\n\nURL\n\n\nPOST /challenges/choice HTTP/1.1\n\n\n\n\nRequest parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nstring\n\n\nOptional\n The choice challenge identifier. If none is given, one is generated.\n\n\n\n\n\n\nquestion\n\n\nstring\n\n\nOptional\n A hint or question related to the choices.\n\n\n\n\n\n\nchoices\n\n\nstring[]\n\n\nRequired\n The sentences of which at most one may be recognised.\n\n\n\n\n\n\naudio\n\n\nblob[]\n\n\nOptional\n Audible sentences that match the ones in \nchoices\n at the same index.\n\n\n\n\n\n\n\n\nRequest\n\n\nPOST /challenges/choice HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"choices\"\n\nlocated\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"choices\"\n\nsited\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<spoken audio: located>\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/wav\n\n<spoken audio: sited>\n--jhgd87g7Gy3d78--\n\n\n\n\nResponse fields\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nstatus\n\n\nstring\n\n\nRequired\n The status of the challenge's preparation. Either 'unprepared', 'preparing' or 'prepared'. After creating a choice challenge, the status is 'preparing' for a short while, after it'll become 'prepared' to indicate the challenge is ready to perform a speech recognition on, or it'll be 'unprepared' in case the preparation failed for any reason.\n\n\n\n\n\n\n\n\nResponse\n\n\nHTTP/1.1 202 Accepted\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/choice/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"question\": \"The Pitcairn Islands are ... in the South Pacific Ocean\",\n  \"choices\": [\n    {\n      \"choice\": \"located\",\n      \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n    }, {\n      \"choice\": \"sited\",\n      \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsK\"\n    }\n  ],\n  \"status\": \"preparing\"\n}\n\n\n\n\nUpdate a choice challenge\n\n\nUpdate one or more properties of an existing choice challenge.\n\n\nURL\n\n\nPUT /challenges/choice/:challenge HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The choice challenge identifier.\n\n\n\n\nRequest Parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nquestion\n\n\nstring\n\n\nOptional\n A hint or question related to the choices.\n\n\n\n\n\n\nchoices\n\n\nstring[]\n\n\nOptional\n The sentences of which at most one may be recognised.\n\n\n\n\n\n\naudio\n\n\nblob[]\n\n\nOptional\n Audible sentences that match the ones in \nchoices\n.\n\n\n\n\n\n\n\n\nRequest\n\n\nPUT /challenges/choice/4 HTTP/1.1\nAccept: application/json\nContent-Type: application/json\n\n{\n  \"choices\": [\n    \"located\",\n    \"sited\",\n    \"stationed\",\n    \"settled\"\n  ]\n}\n\n\n\n\nOr, with a preference for a web form submit:\n\n\nPUT /challenges/choice HTTP/1.1\nContent-Type: application/x-www-form-urlencoded\n\nchoices=located&choices=sited&choices=stationed&choices=settled\n\n\n\n\nResponse fields\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nstatus\n\n\nstring\n\n\nRequired\n The status of the challenge's preparation. Either 'unprepared', 'preparing' or 'prepared'. After updating a choice challenge, the status is 'preparing' for a short while, after it'll become 'prepared' to indicate the challenge is ready once more to perform a speech recognition on, or it'll be 'unprepared' in case the preparation failed for any reason. Note that once a choice challenge has been updated, no speech recognitions can be performed on it until the status becomes 'prepared' again, even though the choice challenge was 'prepared' before the update.\n\n\n\n\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/choice/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"question\": \"The Pitcairn Islands are ... in the South Pacific Ocean\",\n  \"choices\": [\n    \"located\",\n    \"sited\",\n    \"stationed\",\n    \"settled\"\n  ],\n  \"status\": \"preparing\"\n}\n\n\n\n\nDelete a single choice challenge\n\n\nURL\n\n\nDELETE /challenges/choice/:challenge HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The choice challenge identifier.\n\n\n\n\nRequest\n\n\nDELETE /challenges/choice/choice_1 HTTP/1.1\n\n\n\n\nResponse\n\n\nHTTP/1.1 204 No Content",
+            "title": "Challenges"
+        },
+        {
+            "location": "/api/challenges/index.html#challenges",
+            "text": "Several types of challenges can be created using the ITSLanguage Speech API.     Type  Usage      speech  Guide the student in speaking through an optional topic and optional reference audio.    pronunciation  A text transcription with reference audio allow a detailed, phoneme level analysis on user submitted audio.    choice  One set of transcription choices is used to perform speech recognition to selects one of the choices.",
+            "title": "Challenges"
+        },
+        {
+            "location": "/api/challenges/index.html#list-all-speech-challenges",
+            "text": "",
+            "title": "List all speech challenges"
+        },
+        {
+            "location": "/api/challenges/index.html#url",
+            "text": "GET /challenges/speech HTTP/1.1",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request",
+            "text": "GET /challenges/speech HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response",
+            "text": "The response is a JSON list with speech challenges.  HTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"speech_1\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"topic\": \"What do you know about babies?\",\n    \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n  },\n  {\n    \"id\": \"12\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"topic\": \"Book\"\n  }\n]",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#get-a-single-speech-challenge",
+            "text": "",
+            "title": "Get a single speech challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_1",
+            "text": "GET /challenges/speech/:challenge HTTP/1.1   challenge  -  Required  The speech challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request_1",
+            "text": "GET /challenges/speech/speech_1 HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response_1",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"speech_1\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"topic\": \"What do you know about babies?\",\n  \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#create-a-speech-challenge",
+            "text": "",
+            "title": "Create a speech challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_2",
+            "text": "POST /challenges/speech HTTP/1.1",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request-parameters",
+            "text": "Name  Type  Description      id  string  Optional  The speech challenge identifier. If none is given, one is generated.    topic  string  Optional  A question or topic serving as guidance to the student.    referenceAudio  blob  Optional  The reference audio fragment.",
+            "title": "Request parameters"
+        },
+        {
+            "location": "/api/challenges/index.html#request_2",
+            "text": "POST /challenges/speech HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"referenceAudio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<blob>\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"topic\"\n\nWhat do you know about babies?\n--jhgd87g7Gy3d78--",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response_2",
+            "text": "HTTP/1.1 201 Created\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/speech/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"topic\": \"What do you know about babies?\",\n  \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#update-a-speech-challenge",
+            "text": "",
+            "title": "Update a speech challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_3",
+            "text": "PUT /challenges/speech/:challenge HTTP/1.1   challenge  -  Required  The speech challenge identifier.   Update one or more properties of an existing speech challenge.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request-parameters_1",
+            "text": "Name  Type  Description      topic  string  Optional  A question or topic serving as guidance to the student.    referenceAudio  blob  Optional  The reference audio fragment.",
+            "title": "Request parameters"
+        },
+        {
+            "location": "/api/challenges/index.html#request_3",
+            "text": "PUT /challenges/speech/4 HTTP/1.1\nAccept: application/json\nContent-Type: application/json\n\n{\n  \"topic\": \"What do you know about the baby?\"\n}",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response_3",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/speech/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"topic\": \"What do you know about the baby?\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#list-all-pronunciation-challenges",
+            "text": "",
+            "title": "List all pronunciation challenges"
+        },
+        {
+            "location": "/api/challenges/index.html#url_4",
+            "text": "GET /challenges/pronunciation HTTP/1.1",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request_4",
+            "text": "GET /challenges/pronunciation HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response_4",
+            "text": "The response is a JSON list with pronunciation challenges.  HTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"pronunciation_1\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"transcription\": \"You could take the baby with you\",\n    \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\",\n    \"status\": \"preparing\",\n    \"alignment\": null\n  },\n  {\n    \"id\": \"12\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"transcription\": \"tap\",\n    \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu6-Abq\",\n    \"status\": \"prepared\",\n    \"alignment\": {\n      \"confidenceScore\": -3.44,\n      \"words\": [\n        {\n          \"chunks\": [\n            {\n              \"graphemes\": \"t\",\n              \"phonemes\": [\n                {\n                  \"start\": 0.25,\n                  \"end\": 0.45,\n                  \"confidenceScore\": -2.8149,\n                  \"ipa\": \"t\"\n                }\n              ]\n            },\n            {\n              \"graphemes\": \"a\",\n              \"phonemes\": [\n                {\n                  \"start\": 0.45,\n                  \"end\": 0.67,\n                  \"confidenceScore\": -0.7412,\n                  \"ipa\": \"ae\"\n                }\n              ]\n            },\n            {\n              \"graphemes\": \"p\",\n              \"phonemes\": [\n                {\n                  \"start\": 0.67,\n                  \"end\": 0.84,\n                  \"confidenceScore\": -6.7516,\n                  \"ipa\": \"p\"\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  }\n]",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#get-a-single-pronunciation-challenge",
+            "text": "",
+            "title": "Get a single pronunciation challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_5",
+            "text": "GET /challenges/pronunciation/:challenge HTTP/1.1   challenge  -  Required  The pronunciation challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request_5",
+            "text": "GET /challenges/pronunciation/pronunciaton_1 HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response_5",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"12\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"transcription\": \"tap\",\n  \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu6-Abq\",\n  \"status\": \"prepared\",\n  \"alignment\": {\n    \"confidenceScore\": -3.44,\n    \"words\": [\n      {\n        \"chunks\": [\n          {\n            \"phonemes\": [\n              {\n                \"start\": 0.25,\n                \"ipa\": \"t\",\n                \"end\": 0.45,\n                \"confidenceScore\": -2.8149\n              }\n            ],\n            \"graphemes\": \"t\"\n          },\n          {\n            \"phonemes\": [\n              {\n                \"start\": 0.45,\n                \"ipa\": \"ae\",\n                \"end\": 0.67,\n                \"confidenceScore\": -0.7412\n              }\n            ],\n            \"graphemes\": \"a\"\n          },\n          {\n            \"phonemes\": [\n              {\n                \"start\": 0.67,\n                \"ipa\": \"p\",\n                \"end\": 0.84,\n                \"confidenceScore\": -6.7516\n              }\n            ],\n            \"graphemes\": \"p\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#create-a-pronunciation-challenge",
+            "text": "",
+            "title": "Create a pronunciation challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_6",
+            "text": "POST /challenges/pronunciation HTTP/1.1",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request-parameters_2",
+            "text": "Name  Type  Description      id  string  Optional  The pronunciation challenge identifier. If none is given, one is generated.    transcription  string  Required  The spoken word or sentence as plain text.    referenceAudio  blob  Required  The reference audio fragment.",
+            "title": "Request parameters"
+        },
+        {
+            "location": "/api/challenges/index.html#request_6",
+            "text": "POST /challenges/pronunciation HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"referenceAudio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<blob>\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"transcription\"\n\nYou could take the baby with you\n--jhgd87g7Gy3d78--",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response_6",
+            "text": "HTTP/1.1 201 Created\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/pronunciation/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"transcription\": \"You could take the baby with you\",\n  \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\",\n  \"status\": \"preparing\",\n  \"alignment\": null\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#update-a-pronunciation-challenge",
+            "text": "",
+            "title": "Update a pronunciation challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_7",
+            "text": "PUT /challenges/pronunciation/:challenge HTTP/1.1   challenge  -  Required  The pronunciation challenge identifier.   Update one or more properties of an existing pronunciation challenge.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request-parameters_3",
+            "text": "Name  Type  Description      transcription  string  Optional  The spoken word or sentence in plain text.    referenceAudio  blob  Optional  The reference audio fragment.    status  string  Optional  The status of the challenge (unprepared, preparing, prepared).    alignment  object  Optional  The alignment of the challenge.",
+            "title": "Request parameters"
+        },
+        {
+            "location": "/api/challenges/index.html#request_7",
+            "text": "PUT /challenges/pronunciation/4 HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"transcription\"\n\ntap\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"referenceAudio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<blob>\nContent-Disposition: form-data; name=\"status\"\n\nprepared\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"aignment\"\nContent-Type: application/json\n\n{\"confidenceScore\": -3.44, \"words\": [....]}\n--jhgd87g7Gy3d78--",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response_7",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/pronunciation/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"transcription\": \"You could take the baby with you\",\n  \"referenceAudioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-Abc\",\n  \"status\": \"prepared\",\n  \"alignment\": {\"confidenceScore\": -3.44, \"words\": [....]}\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#delete-a-single-pronunciation-challenge",
+            "text": "",
+            "title": "Delete a single pronunciation challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_8",
+            "text": "DELETE /challenges/pronunciation/:challenge HTTP/1.1   challenge  -  Required  The choice challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request_8",
+            "text": "DELETE /challenges/pronunciation/choice_1 HTTP/1.1",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response_8",
+            "text": "HTTP/1.1 204 No Content",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#list-all-choice-challenges",
+            "text": "",
+            "title": "List all choice challenges"
+        },
+        {
+            "location": "/api/challenges/index.html#url_9",
+            "text": "GET /challenges/choice HTTP/1.1",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request_9",
+            "text": "GET /challenges/choice HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response-fields",
+            "text": "Name  Type  Description      status  string  Required  The status of the challenge's preparation. Either 'unprepared', 'preparing' or 'prepared'. Only a 'prepared' challenge is ready to perform a speech recognition on.",
+            "title": "Response fields"
+        },
+        {
+            "location": "/api/challenges/index.html#response_9",
+            "text": "The response is a JSON list with choice challenges.  The second entry shows that  choice challenges  can also be used to recognise one specific sentence.  HTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"13\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"question\": \"The Pitcairn Islands are ... in the South Pacific Ocean\",\n    \"choices\": [\n      {\n        \"choice\": \"located\",\n        \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n      }, {\n        \"choice\": \"sited\",\n        \"audioUrl\": null\n      }, {\n        \"choice\": \"stationed\",\n        \"audioUrl\": null\n      }, {\n        \"choice\": \"settled\",\n        \"audioUrl\": null\n      }\n    ],\n    \"status\": \"prepared\"\n  },\n  {\n    \"id\": \"14\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"question\": \"Ik heb erge hoofdpijn.\",\n    \"choices\": [\n      {\n        \"choice\": \"I have a very bad headache.\",\n        \"audioUrl\": null\n      }\n    ],\n    \"status\": \"preparing\"\n  }\n]",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#get-a-single-choice-challenge",
+            "text": "",
+            "title": "Get a single choice challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_10",
+            "text": "GET /challenges/choice/:challenge HTTP/1.1   challenge  -  Required  The choice challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request_10",
+            "text": "GET /challenges/choice/choice_1 HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response_10",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"13\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"question\": \"The Pitcairn Islands are ... in the South Pacific Ocean\",\n  \"choices\": [\n    {\n      \"choice\": \"located\",\n      \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n    }, {\n      \"choice\": \"sited\",\n      \"audioUrl\": null\n    }, {\n      \"choice\": \"stationed\",\n      \"audioUrl\": null\n    }, {\n      \"choice\": \"settled\",\n      \"audioUrl\": null\n    }\n  ],\n  \"status\": \"prepared\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#create-a-choice-challenge",
+            "text": "",
+            "title": "Create a choice challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_11",
+            "text": "POST /challenges/choice HTTP/1.1",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request-parameters_4",
+            "text": "Name  Type  Description      id  string  Optional  The choice challenge identifier. If none is given, one is generated.    question  string  Optional  A hint or question related to the choices.    choices  string[]  Required  The sentences of which at most one may be recognised.    audio  blob[]  Optional  Audible sentences that match the ones in  choices  at the same index.",
+            "title": "Request parameters"
+        },
+        {
+            "location": "/api/challenges/index.html#request_11",
+            "text": "POST /challenges/choice HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"choices\"\n\nlocated\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"choices\"\n\nsited\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<spoken audio: located>\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/wav\n\n<spoken audio: sited>\n--jhgd87g7Gy3d78--",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response-fields_1",
+            "text": "Name  Type  Description      status  string  Required  The status of the challenge's preparation. Either 'unprepared', 'preparing' or 'prepared'. After creating a choice challenge, the status is 'preparing' for a short while, after it'll become 'prepared' to indicate the challenge is ready to perform a speech recognition on, or it'll be 'unprepared' in case the preparation failed for any reason.",
+            "title": "Response fields"
+        },
+        {
+            "location": "/api/challenges/index.html#response_11",
+            "text": "HTTP/1.1 202 Accepted\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/choice/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"question\": \"The Pitcairn Islands are ... in the South Pacific Ocean\",\n  \"choices\": [\n    {\n      \"choice\": \"located\",\n      \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\"\n    }, {\n      \"choice\": \"sited\",\n      \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsK\"\n    }\n  ],\n  \"status\": \"preparing\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#update-a-choice-challenge",
+            "text": "Update one or more properties of an existing choice challenge.",
+            "title": "Update a choice challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_12",
+            "text": "PUT /challenges/choice/:challenge HTTP/1.1   challenge  -  Required  The choice challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request-parameters_5",
+            "text": "Name  Type  Description      question  string  Optional  A hint or question related to the choices.    choices  string[]  Optional  The sentences of which at most one may be recognised.    audio  blob[]  Optional  Audible sentences that match the ones in  choices .",
+            "title": "Request Parameters"
+        },
+        {
+            "location": "/api/challenges/index.html#request_12",
+            "text": "PUT /challenges/choice/4 HTTP/1.1\nAccept: application/json\nContent-Type: application/json\n\n{\n  \"choices\": [\n    \"located\",\n    \"sited\",\n    \"stationed\",\n    \"settled\"\n  ]\n}  Or, with a preference for a web form submit:  PUT /challenges/choice HTTP/1.1\nContent-Type: application/x-www-form-urlencoded\n\nchoices=located&choices=sited&choices=stationed&choices=settled",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response-fields_2",
+            "text": "Name  Type  Description      status  string  Required  The status of the challenge's preparation. Either 'unprepared', 'preparing' or 'prepared'. After updating a choice challenge, the status is 'preparing' for a short while, after it'll become 'prepared' to indicate the challenge is ready once more to perform a speech recognition on, or it'll be 'unprepared' in case the preparation failed for any reason. Note that once a choice challenge has been updated, no speech recognitions can be performed on it until the status becomes 'prepared' again, even though the choice challenge was 'prepared' before the update.",
+            "title": "Response fields"
+        },
+        {
+            "location": "/api/challenges/index.html#response_12",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/choice/4\n\n{\n  \"id\": \"4\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"question\": \"The Pitcairn Islands are ... in the South Pacific Ocean\",\n  \"choices\": [\n    \"located\",\n    \"sited\",\n    \"stationed\",\n    \"settled\"\n  ],\n  \"status\": \"preparing\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/challenges/index.html#delete-a-single-choice-challenge",
+            "text": "",
+            "title": "Delete a single choice challenge"
+        },
+        {
+            "location": "/api/challenges/index.html#url_13",
+            "text": "DELETE /challenges/choice/:challenge HTTP/1.1   challenge  -  Required  The choice challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/challenges/index.html#request_13",
+            "text": "DELETE /challenges/choice/choice_1 HTTP/1.1",
+            "title": "Request"
+        },
+        {
+            "location": "/api/challenges/index.html#response_13",
+            "text": "HTTP/1.1 204 No Content",
+            "title": "Response"
+        },
+        {
+            "location": "/api/recordings/index.html",
+            "text": "Recordings\n\n\nAudio can be stored using the ITSLanguage Speech API.\nIt can optionally be retrieved for processing or playback at a later time.\n\n\n\n\n\n\n\n\nType\n\n\nUsage\n\n\n\n\n\n\n\n\n\n\nspeech\n\n\nRecord user submitted audio for a speech challenge.\n\n\n\n\n\n\n\n\nList all speech recordings\n\n\nURL\n\n\nGET /challenges/speech/:challenge/recordings HTTP/1.1\n\n\n\n\n\n\nchallenge - \nRequired\n The challenge identifier.\n\n\n\n\nRequest\n\n\nGET /challenges/speech/test/recordings HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse\n\n\nThe response is a JSON list with speech recordings.\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"recording_1\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\",\n    \"studentId\": \"24\"\n  },\n  {\n    \"id\": \"14\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-Xaq\",\n    \"studentId\": \"24\"\n  }\n]\n\n\n\n\nGet a single speech recording\n\n\nURL\n\n\nGET /challenges/speech/:challenge/recordings/:recording HTTP/1.1\n\n\n\n\n\n\nchallenge - \nRequired\n The challenge identifier.\n\n\nrecording - \nRequired\n The recording identifier.\n\n\n\n\nRequest\n\n\nGET /challenges/speech/speech_1/recordings/recording_1 HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"speech_1\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\",\n  \"studentId\": \"24\"\n}\n\n\n\n\nCreate a speech recording\n\n\nSubmit a new audio recording to persist without immediate analysis.\n\n\nURL\n\n\nPOST /challenges/speech/:challenge/recordings HTTP/1.1\n\n\n\n\n\n\nchallenge - \nRequired\n The challenge identifier.\n\n\n\n\nRequest parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nstring\n\n\nOptional\n The recording identifier. If none is given, one is generated.\n\n\n\n\n\n\nstudentId\n\n\nstring\n\n\nRequired\n The id of the student that supplied the audio.\n\n\n\n\n\n\naudio\n\n\nblob\n\n\nRequired\n The actual audio. (Ogg Opus or WAV)\n\n\n\n\n\n\n\n\nRequest\n\n\nThe request should be a \nmultipart/form-data\n.\n\n\nPOST /challenges/speech/test/recordings HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=\"YvHKkjjzXfysYJVHMoOAoNczae\"\n\n--YvHKkjjzXfysYJVHMoOAoNczae\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<audio blob>\n--YvHKkjjzXfysYJVHMoOAoNczae\nContent-Disposition: form-data; name=\"studentId\"\n\n24\n--YvHKkjjzXfysYJVHMoOAoNczae--\n\n\n\n\nResponse\n\n\nIf the audio was persisted correctly:\n\n\nHTTP/1.1 201 Created\nContent-Type: application/json\n\n{\n  \"id\": \"34\",\n  \"updated\": \"2014-02-13T09:39:40Z\",\n  \"created\": \"2014-02-13T09:39:37Z\",\n  \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\",\n  \"studentId\": \"24\"\n}",
+            "title": "Speech Recordings"
+        },
+        {
+            "location": "/api/recordings/index.html#recordings",
+            "text": "Audio can be stored using the ITSLanguage Speech API.\nIt can optionally be retrieved for processing or playback at a later time.     Type  Usage      speech  Record user submitted audio for a speech challenge.",
+            "title": "Recordings"
+        },
+        {
+            "location": "/api/recordings/index.html#list-all-speech-recordings",
+            "text": "",
+            "title": "List all speech recordings"
+        },
+        {
+            "location": "/api/recordings/index.html#url",
+            "text": "GET /challenges/speech/:challenge/recordings HTTP/1.1   challenge -  Required  The challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/recordings/index.html#request",
+            "text": "GET /challenges/speech/test/recordings HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/recordings/index.html#response",
+            "text": "The response is a JSON list with speech recordings.  HTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"recording_1\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\",\n    \"studentId\": \"24\"\n  },\n  {\n    \"id\": \"14\",\n    \"created\": \"2014-01-28T21:25:10Z\",\n    \"updated\": \"2014-01-28T21:25:10Z\",\n    \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-Xaq\",\n    \"studentId\": \"24\"\n  }\n]",
+            "title": "Response"
+        },
+        {
+            "location": "/api/recordings/index.html#get-a-single-speech-recording",
+            "text": "",
+            "title": "Get a single speech recording"
+        },
+        {
+            "location": "/api/recordings/index.html#url_1",
+            "text": "GET /challenges/speech/:challenge/recordings/:recording HTTP/1.1   challenge -  Required  The challenge identifier.  recording -  Required  The recording identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/recordings/index.html#request_1",
+            "text": "GET /challenges/speech/speech_1/recordings/recording_1 HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/recordings/index.html#response_1",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"speech_1\",\n  \"created\": \"2014-01-28T21:25:10Z\",\n  \"updated\": \"2014-01-28T21:25:10Z\",\n  \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\",\n  \"studentId\": \"24\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/recordings/index.html#create-a-speech-recording",
+            "text": "Submit a new audio recording to persist without immediate analysis.",
+            "title": "Create a speech recording"
+        },
+        {
+            "location": "/api/recordings/index.html#url_2",
+            "text": "POST /challenges/speech/:challenge/recordings HTTP/1.1   challenge -  Required  The challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/recordings/index.html#request-parameters",
+            "text": "Name  Type  Description      id  string  Optional  The recording identifier. If none is given, one is generated.    studentId  string  Required  The id of the student that supplied the audio.    audio  blob  Required  The actual audio. (Ogg Opus or WAV)",
+            "title": "Request parameters"
+        },
+        {
+            "location": "/api/recordings/index.html#request_2",
+            "text": "The request should be a  multipart/form-data .  POST /challenges/speech/test/recordings HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=\"YvHKkjjzXfysYJVHMoOAoNczae\"\n\n--YvHKkjjzXfysYJVHMoOAoNczae\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<audio blob>\n--YvHKkjjzXfysYJVHMoOAoNczae\nContent-Disposition: form-data; name=\"studentId\"\n\n24\n--YvHKkjjzXfysYJVHMoOAoNczae--",
+            "title": "Request"
+        },
+        {
+            "location": "/api/recordings/index.html#response_2",
+            "text": "If the audio was persisted correctly:  HTTP/1.1 201 Created\nContent-Type: application/json\n\n{\n  \"id\": \"34\",\n  \"updated\": \"2014-02-13T09:39:40Z\",\n  \"created\": \"2014-02-13T09:39:37Z\",\n  \"audioUrl\": \"https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ\",\n  \"studentId\": \"24\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/analyses/index.html",
+            "text": "Analyses\n\n\nSpeech analyses can be applied to user submitted audio using the ITSLanguage Speech API.\n\n\n\n\n\n\n\n\nType\n\n\nUsage\n\n\n\n\n\n\n\n\n\n\npronunciation\n\n\nCompares reference audio to user submitted audio and provides an analysis on phoneme level.\n\n\n\n\n\n\n\n\nCreate a pronunciation analysis\n\n\nURL\n\n\nPOST /challenges/pronunciation/:challenge/analyses HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The challenge identifier.\n\n\n\n\nRequest parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nstring\n\n\nOptional\n A unique identifier for the analysis.\n\n\n\n\n\n\nstudentId\n\n\nstring\n\n\nRequired\n The id of the student that supplied the audio.\n\n\n\n\n\n\naudio\n\n\nblob\n\n\nRequired\n The actual audio. (Ogg Opus or WAV)\n\n\n\n\n\n\nscore\n\n\nfloat\n\n\nOptional\n The overall score of the pronunciation between 0 and 1. Required if \nwords\n is given.\n\n\n\n\n\n\nwords\n\n\njson\n\n\nOptional\n A JSON encoded list of analysed words, forming the spoken sentence. Required if \nscore\n is given.\n\n\n\n\n\n\n\n\nA word is represented as a list of graphemes. Each grapheme contains of the\nfollowing attributes:\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\ngraphemes\n\n\nstring\n\n\nRequired\n A string containing the assessed graphemes.\n\n\n\n\n\n\nphonemes\n\n\nobject[]\n\n\nRequired\n A list of phonemes found in the assessed grapheme.\n\n\n\n\n\n\nscore\n\n\nfloat\n\n\nRequired\n The score of the assessed graphemes between 0 and 1.\n\n\n\n\n\n\nverdict\n\n\nstring\n\n\nRequired\n The textual representation of the score. This should be \nbad\n, \ngood\n or `moderate,\n\n\n\n\n\n\n\n\nEach phoneme should have the following properties:\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nipa\n\n\nstring\n\n\nRequired\n IPA representation of the analysed graphemes.\n\n\n\n\n\n\nscore\n\n\nfloat\n\n\nRequired\n The score of the assessed phoneme between 0 and 1.\n\n\n\n\n\n\nverdict\n\n\nstring\n\n\nRequired\n The textual representation of the score. This should be \nbad\n, \ngood\n or \nmoderate\n.\n\n\n\n\n\n\nstart\n\n\nfloat\n\n\nRequired\n Starting point offset from the beginning of the audio.\n\n\n\n\n\n\nend\n\n\nfloat\n\n\nRequired\n Ending point offset from the beginning of the audio.\n\n\n\n\n\n\n\n\nRequest\n\n\nThe request should be a \nmultipart/form-data\n.\n\n\nPOST /challenges/pronunciation/test/analyses HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=\"4c1plRsNM5mLpzT7UvYG\"\n\n--4c1plRsNM5mLpzT7UvYG\nContent-Disposition: form-data; name=\"id\"\n\n35\n--4c1plRsNM5mLpzT7UvYG\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<audio blob>\n--4c1plRsNM5mLpzT7UvYG\nContent-Disposition: form-data; name=\"studentId\"\n\n24\n--4c1plRsNM5mLpzT7UvYG\nContent-Disposition: form-data; name=\"score\"\n\n0.75\n--4c1plRsNM5mLpzT7UvYG\nContent-Disposition: form-data; name=\"words\"\nContent-Type: application/json:\n\n[\n  {\n    \"chunks\": [\n      {\n        \"score\": 0.9,\n        \"verdict\": \"good\",\n        \"graphemes\": \"b\",\n        \"phonemes\": [\n          {\n            \"ipa\": \"b\",\n            \"score\": 0.9,\n            \"verdict\": \"good\",\n            \"start\": 0.112,\n            \"end\": 0.171\n          }\n        ]\n      },\n      {\n        \"score\": 0.4,\n        \"verdict\": \"bad\",\n        \"graphemes\": \"o\",\n        \"phonemes\": [\n          {\n            \"ipa\": \"\\u0251\",\n            \"score\": 0.4,\n            \"verdict\": \"bad\",\n            \"start\": 0.171,\n            \"end\": 0.227\n          }\n        ]\n      },\n      {\n        \"score\": 0.5,\n        \"verdict\": \"moderate\",\n        \"graphemes\": \"x\",\n        \"phonemes\": [\n          {\n            \"ipa\": \"k\",\n            \"score\": 0.4,\n            \"verdict\": \"bad\",\n            \"start\": 0.227,\n            \"end\": 0.264\n          },\n          {\n            \"ipa\": \"s\",\n            \"score\": 0.6,\n            \"verdict\": \"moderate\",\n            \"start\": 0.264,\n            \"end\": 0.339\n          }\n        ]\n      }\n    ]\n  }\n]\n\n--4c1plRsNM5mLpzT7UvYG--\n\n\n\n\nResponse\n\n\nThe analysed audio can be downloaded by opening the \naudioUrl\n in the\nresponse.\n\n\nHTTP/1.1 201 Created\nContent-Type: application/json\n\n{\n  \"id\": \"35\",\n  \"updated\": \"2014-02-13T09:39:40Z\",\n  \"created\": \"2014-02-13T09:39:37Z\",\n  \"audioUrl\": \"https://api.itslanguage.nl/challenges/pronunciation/test/analyses/35/audio\",\n  \"studentId\": \"24\",\n  \"score\": 0.75,\n  \"words\": [\n    {\n      \"chunks\": [\n        {\n          \"score\": 0.9,\n          \"verdict\": \"good\",\n          \"graphemes\": \"b\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"b\",\n              \"score\": 0.9,\n              \"verdict\": \"good\",\n              \"start\": 0.112,\n              \"end\": 0.171\n            }\n          ]\n        },\n        {\n          \"score\": 0.4,\n          \"verdict\": \"bad\",\n          \"graphemes\": \"o\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"\\u0251\",\n              \"score\": 0.4,\n              \"verdict\": \"bad\",\n              \"start\": 0.171,\n              \"end\": 0.227\n            }\n          ]\n        },\n        {\n          \"score\": 0.5,\n          \"verdict\": \"moderate\",\n          \"graphemes\": \"x\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"k\",\n              \"score\": 0.4,\n              \"verdict\": \"bad\",\n              \"start\": 0.227,\n              \"end\": 0.264\n            },\n            {\n              \"ipa\": \"s\",\n              \"score\": 0.6,\n              \"verdict\": \"moderate\",\n              \"start\": 0.264,\n              \"end\": 0.339\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n\n\n\n\nList pronunciation analyses\n\n\nURL\n\n\nGET /challenges/pronunciation/:challenge/analyses HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The challenge identifier.\n\n\n\n\nRequest parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nstudentId\n\n\nstring\n\n\nOptional\n The id of the student that supplied the audio.\n\n\n\n\n\n\n\n\nRequest\n\n\nGET /challenges/pronunciation/test/analyses?studentId=24 HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse\n\n\nThe response is a JSON list with pronunciation analyses of \nstudentId\n '24'.\n\n\nNote:\n\n\n\n\nThe apostrophe in \nBob's\n is included in the \ngraphemes\n field of the \ns\n.\n\n\nWhen a phoneme represents more than one grapheme like \nyo\n in \nyour\n, they're grouped in the same \ngraphemes\n field.\n\n\nThe \nc\n in \nuncle\n exists of two phonemes. The \nscore\n and \nverdict\n are shown\n  per phoneme, along with the \nipa\n notation.\n\n\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"34\",\n    \"updated\": \"2014-02-13T09:39:40Z\",\n    \"created\": \"2014-02-13T09:39:37Z\",\n    \"audioUrl\": \"https://api.itslanguage.nl/challenges/pronunciation/test/analyses/34/audio\",\n    \"studentId\": \"24\",\n    \"score\": 0.75,\n    \"words\": [\n      {\n        \"chunks\": [\n          {\n            \"score\": 0.99,\n            \"verdict\": \"good\",\n            \"graphemes\": \"B\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"b\",\n                \"score\": 0.99,\n                \"verdict\": \"good\",\n                \"start\": 1.07,\n                \"end\": 1.15\n              }\n            ]\n          },\n          {\n            \"score\": 0.77,\n            \"verdict\": \"good\",\n            \"graphemes\": \"O\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"oh\",\n                \"score\": 0.77,\n                \"verdict\": \"good\",\n                \"start\": 1.15,\n                \"end\": 1.22\n              }\n            ]\n          },\n          {\n            \"score\": 0.92,\n            \"verdict\": \"good\",\n            \"graphemes\": \"B\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"b\",\n                \"score\": 0.92,\n                \"verdict\": \"good\",\n                \"start\": 1.22,\n                \"end\": 1.35\n              }\n            ]\n          },\n          {\n            \"score\": 0.59,\n            \"verdict\": \"moderate\",\n            \"graphemes\": \"'S\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"z\",\n                \"score\": 0.59,\n                \"verdict\": \"moderate\",\n                \"start\": 1.35,\n                \"end\": 1.42\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    \"id\": \"35\",\n    \"updated\": \"2014-02-13T09:39:40Z\",\n    \"created\": \"2014-02-13T09:39:37Z\",\n    \"audioUrl\": \"https://api.itslanguage.nl/challenges/pronunciation/test/analyses/35/audio\",\n    \"studentId\": \"24\",\n    \"score\": 0.75,\n    \"words\": [\n      {\n        \"chunks\": [\n          {\n            \"score\": 0.89,\n            \"verdict\": \"good\",\n            \"graphemes\": \"YO\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"y\",\n                \"score\": 0.89,\n                \"verdict\": \"good\",\n                \"start\": 1.42,\n                \"end\": 1.51\n              }\n            ]\n          },\n          {\n            \"score\": 0.48,\n            \"verdict\": \"moderate\",\n            \"graphemes\": \"UR\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"ao\",\n                \"score\": 0.48,\n                \"verdict\": \"moderate\",\n                \"start\": 1.51,\n                \"end\": 1.61\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    \"id\": \"36\",\n    \"updated\": \"2014-02-13T09:39:40Z\",\n    \"created\": \"2014-02-13T09:39:37Z\",\n    \"audioUrl\": \"https://api.itslanguage.nl/challenges/pronunciation/test/analyses/36/audio\",\n    \"studentId\": \"24\",\n    \"score\": 0.75,\n    \"words\": [\n      {\n        \"chunks\": [\n          {\n            \"score\": 0.81,\n            \"verdict\": \"good\",\n            \"graphemes\": \"U\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"ah\",\n                \"score\": 0.81,\n                \"verdict\": \"good\",\n                \"start\": 1.61,\n                \"end\": 1.69\n              }\n            ]\n          },\n          {\n            \"score\": 0.95,\n            \"verdict\": \"good\",\n            \"graphemes\": \"N\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"ng\",\n                \"score\": 0.95,\n                \"verdict\": \"good\",\n                \"start\": 1.69,\n                \"end\": 1.74\n              }\n            ]\n          },\n          {\n            \"score\": 0.99,\n            \"verdict\": \"good\",\n            \"graphemes\": \"C\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"k\",\n                \"score\": 0.99,\n                \"verdict\": \"good\",\n                \"start\": 1.74,\n                \"end\": 1.83\n              },\n              {\n                \"ipa\": \"ax\",\n                \"score\": 0.94,\n                \"verdict\": \"good\",\n                \"start\": 1.83,\n                \"end\": 1.88\n              }\n            ]\n          },\n          {\n            \"score\": 0.97,\n            \"verdict\": \"good\",\n            \"graphemes\": \"LE\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"l\",\n                \"score\": 0.97,\n                \"verdict\": \"good\",\n                \"start\": 1.88,\n                \"end\": 2.08\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n]\n\n\n\n\nGet a single pronunciation analysis\n\n\nURL\n\n\nGET /challenges/pronunciation/:challenge/analyses/:analysis HTTP/1.1\n\n\n\n\n\n\nchallenge\n - \nRequired\n The challenge identifier.\n\n\nanalysis\n - \nRequired\n The analysis identifier.\n\n\n\n\nRequest\n\n\nGET /challenges/pronunciation/test/analyses/25 HTTP/1.1\nAccept: application/json\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"25\",\n  \"updated\": \"2014-02-13T09:37:40Z\",\n  \"created\": \"2014-02-13T09:37:37Z\",\n  \"audioUrl\": \"https://api.itslanguage.nl/challenges/pronunciation/test/analyses/25/audio\",\n  \"studentId\": \"24\",\n  \"score\": 0.75,\n  \"words\": [\n    {\n      \"chunks\": [\n        {\n          \"score\": 0.9,\n          \"verdict\": \"good\",\n          \"graphemes\": \"b\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"b\",\n              \"score\": 0.9,\n              \"verdict\": \"good\"\n            }\n          ]\n        },\n        {\n          \"score\": 0.4,\n          \"verdict\": \"bad\",\n          \"graphemes\": \"o\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"\\u0251\",\n              \"score\": 0.4,\n              \"verdict\": \"bad\"\n            }\n          ]\n        },\n        {\n          \"score\": 0.5,\n          \"verdict\": \"moderate\",\n          \"graphemes\": \"x\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"k\",\n              \"score\": 0.4,\n              \"verdict\": \"bad\"\n            },\n            {\n              \"ipa\": \"s\",\n              \"score\": 0.6,\n              \"verdict\": \"moderate\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+            "title": "Speech Analysis"
+        },
+        {
+            "location": "/api/analyses/index.html#analyses",
+            "text": "Speech analyses can be applied to user submitted audio using the ITSLanguage Speech API.     Type  Usage      pronunciation  Compares reference audio to user submitted audio and provides an analysis on phoneme level.",
+            "title": "Analyses"
+        },
+        {
+            "location": "/api/analyses/index.html#create-a-pronunciation-analysis",
+            "text": "",
+            "title": "Create a pronunciation analysis"
+        },
+        {
+            "location": "/api/analyses/index.html#url",
+            "text": "POST /challenges/pronunciation/:challenge/analyses HTTP/1.1   challenge  -  Required  The challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/analyses/index.html#request-parameters",
+            "text": "Name  Type  Description      id  string  Optional  A unique identifier for the analysis.    studentId  string  Required  The id of the student that supplied the audio.    audio  blob  Required  The actual audio. (Ogg Opus or WAV)    score  float  Optional  The overall score of the pronunciation between 0 and 1. Required if  words  is given.    words  json  Optional  A JSON encoded list of analysed words, forming the spoken sentence. Required if  score  is given.     A word is represented as a list of graphemes. Each grapheme contains of the\nfollowing attributes:     Name  Type  Description      graphemes  string  Required  A string containing the assessed graphemes.    phonemes  object[]  Required  A list of phonemes found in the assessed grapheme.    score  float  Required  The score of the assessed graphemes between 0 and 1.    verdict  string  Required  The textual representation of the score. This should be  bad ,  good  or `moderate,     Each phoneme should have the following properties:     Name  Type  Description      ipa  string  Required  IPA representation of the analysed graphemes.    score  float  Required  The score of the assessed phoneme between 0 and 1.    verdict  string  Required  The textual representation of the score. This should be  bad ,  good  or  moderate .    start  float  Required  Starting point offset from the beginning of the audio.    end  float  Required  Ending point offset from the beginning of the audio.",
+            "title": "Request parameters"
+        },
+        {
+            "location": "/api/analyses/index.html#request",
+            "text": "The request should be a  multipart/form-data .  POST /challenges/pronunciation/test/analyses HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=\"4c1plRsNM5mLpzT7UvYG\"\n\n--4c1plRsNM5mLpzT7UvYG\nContent-Disposition: form-data; name=\"id\"\n\n35\n--4c1plRsNM5mLpzT7UvYG\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<audio blob>\n--4c1plRsNM5mLpzT7UvYG\nContent-Disposition: form-data; name=\"studentId\"\n\n24\n--4c1plRsNM5mLpzT7UvYG\nContent-Disposition: form-data; name=\"score\"\n\n0.75\n--4c1plRsNM5mLpzT7UvYG\nContent-Disposition: form-data; name=\"words\"\nContent-Type: application/json:\n\n[\n  {\n    \"chunks\": [\n      {\n        \"score\": 0.9,\n        \"verdict\": \"good\",\n        \"graphemes\": \"b\",\n        \"phonemes\": [\n          {\n            \"ipa\": \"b\",\n            \"score\": 0.9,\n            \"verdict\": \"good\",\n            \"start\": 0.112,\n            \"end\": 0.171\n          }\n        ]\n      },\n      {\n        \"score\": 0.4,\n        \"verdict\": \"bad\",\n        \"graphemes\": \"o\",\n        \"phonemes\": [\n          {\n            \"ipa\": \"\\u0251\",\n            \"score\": 0.4,\n            \"verdict\": \"bad\",\n            \"start\": 0.171,\n            \"end\": 0.227\n          }\n        ]\n      },\n      {\n        \"score\": 0.5,\n        \"verdict\": \"moderate\",\n        \"graphemes\": \"x\",\n        \"phonemes\": [\n          {\n            \"ipa\": \"k\",\n            \"score\": 0.4,\n            \"verdict\": \"bad\",\n            \"start\": 0.227,\n            \"end\": 0.264\n          },\n          {\n            \"ipa\": \"s\",\n            \"score\": 0.6,\n            \"verdict\": \"moderate\",\n            \"start\": 0.264,\n            \"end\": 0.339\n          }\n        ]\n      }\n    ]\n  }\n]\n\n--4c1plRsNM5mLpzT7UvYG--",
+            "title": "Request"
+        },
+        {
+            "location": "/api/analyses/index.html#response",
+            "text": "The analysed audio can be downloaded by opening the  audioUrl  in the\nresponse.  HTTP/1.1 201 Created\nContent-Type: application/json\n\n{\n  \"id\": \"35\",\n  \"updated\": \"2014-02-13T09:39:40Z\",\n  \"created\": \"2014-02-13T09:39:37Z\",\n  \"audioUrl\": \"https://api.itslanguage.nl/challenges/pronunciation/test/analyses/35/audio\",\n  \"studentId\": \"24\",\n  \"score\": 0.75,\n  \"words\": [\n    {\n      \"chunks\": [\n        {\n          \"score\": 0.9,\n          \"verdict\": \"good\",\n          \"graphemes\": \"b\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"b\",\n              \"score\": 0.9,\n              \"verdict\": \"good\",\n              \"start\": 0.112,\n              \"end\": 0.171\n            }\n          ]\n        },\n        {\n          \"score\": 0.4,\n          \"verdict\": \"bad\",\n          \"graphemes\": \"o\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"\\u0251\",\n              \"score\": 0.4,\n              \"verdict\": \"bad\",\n              \"start\": 0.171,\n              \"end\": 0.227\n            }\n          ]\n        },\n        {\n          \"score\": 0.5,\n          \"verdict\": \"moderate\",\n          \"graphemes\": \"x\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"k\",\n              \"score\": 0.4,\n              \"verdict\": \"bad\",\n              \"start\": 0.227,\n              \"end\": 0.264\n            },\n            {\n              \"ipa\": \"s\",\n              \"score\": 0.6,\n              \"verdict\": \"moderate\",\n              \"start\": 0.264,\n              \"end\": 0.339\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/analyses/index.html#list-pronunciation-analyses",
+            "text": "",
+            "title": "List pronunciation analyses"
+        },
+        {
+            "location": "/api/analyses/index.html#url_1",
+            "text": "GET /challenges/pronunciation/:challenge/analyses HTTP/1.1   challenge  -  Required  The challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/analyses/index.html#request-parameters_1",
+            "text": "Name  Type  Description      studentId  string  Optional  The id of the student that supplied the audio.",
+            "title": "Request parameters"
+        },
+        {
+            "location": "/api/analyses/index.html#request_1",
+            "text": "GET /challenges/pronunciation/test/analyses?studentId=24 HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/analyses/index.html#response_1",
+            "text": "The response is a JSON list with pronunciation analyses of  studentId  '24'.  Note:   The apostrophe in  Bob's  is included in the  graphemes  field of the  s .  When a phoneme represents more than one grapheme like  yo  in  your , they're grouped in the same  graphemes  field.  The  c  in  uncle  exists of two phonemes. The  score  and  verdict  are shown\n  per phoneme, along with the  ipa  notation.   HTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"34\",\n    \"updated\": \"2014-02-13T09:39:40Z\",\n    \"created\": \"2014-02-13T09:39:37Z\",\n    \"audioUrl\": \"https://api.itslanguage.nl/challenges/pronunciation/test/analyses/34/audio\",\n    \"studentId\": \"24\",\n    \"score\": 0.75,\n    \"words\": [\n      {\n        \"chunks\": [\n          {\n            \"score\": 0.99,\n            \"verdict\": \"good\",\n            \"graphemes\": \"B\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"b\",\n                \"score\": 0.99,\n                \"verdict\": \"good\",\n                \"start\": 1.07,\n                \"end\": 1.15\n              }\n            ]\n          },\n          {\n            \"score\": 0.77,\n            \"verdict\": \"good\",\n            \"graphemes\": \"O\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"oh\",\n                \"score\": 0.77,\n                \"verdict\": \"good\",\n                \"start\": 1.15,\n                \"end\": 1.22\n              }\n            ]\n          },\n          {\n            \"score\": 0.92,\n            \"verdict\": \"good\",\n            \"graphemes\": \"B\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"b\",\n                \"score\": 0.92,\n                \"verdict\": \"good\",\n                \"start\": 1.22,\n                \"end\": 1.35\n              }\n            ]\n          },\n          {\n            \"score\": 0.59,\n            \"verdict\": \"moderate\",\n            \"graphemes\": \"'S\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"z\",\n                \"score\": 0.59,\n                \"verdict\": \"moderate\",\n                \"start\": 1.35,\n                \"end\": 1.42\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    \"id\": \"35\",\n    \"updated\": \"2014-02-13T09:39:40Z\",\n    \"created\": \"2014-02-13T09:39:37Z\",\n    \"audioUrl\": \"https://api.itslanguage.nl/challenges/pronunciation/test/analyses/35/audio\",\n    \"studentId\": \"24\",\n    \"score\": 0.75,\n    \"words\": [\n      {\n        \"chunks\": [\n          {\n            \"score\": 0.89,\n            \"verdict\": \"good\",\n            \"graphemes\": \"YO\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"y\",\n                \"score\": 0.89,\n                \"verdict\": \"good\",\n                \"start\": 1.42,\n                \"end\": 1.51\n              }\n            ]\n          },\n          {\n            \"score\": 0.48,\n            \"verdict\": \"moderate\",\n            \"graphemes\": \"UR\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"ao\",\n                \"score\": 0.48,\n                \"verdict\": \"moderate\",\n                \"start\": 1.51,\n                \"end\": 1.61\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  },\n  {\n    \"id\": \"36\",\n    \"updated\": \"2014-02-13T09:39:40Z\",\n    \"created\": \"2014-02-13T09:39:37Z\",\n    \"audioUrl\": \"https://api.itslanguage.nl/challenges/pronunciation/test/analyses/36/audio\",\n    \"studentId\": \"24\",\n    \"score\": 0.75,\n    \"words\": [\n      {\n        \"chunks\": [\n          {\n            \"score\": 0.81,\n            \"verdict\": \"good\",\n            \"graphemes\": \"U\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"ah\",\n                \"score\": 0.81,\n                \"verdict\": \"good\",\n                \"start\": 1.61,\n                \"end\": 1.69\n              }\n            ]\n          },\n          {\n            \"score\": 0.95,\n            \"verdict\": \"good\",\n            \"graphemes\": \"N\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"ng\",\n                \"score\": 0.95,\n                \"verdict\": \"good\",\n                \"start\": 1.69,\n                \"end\": 1.74\n              }\n            ]\n          },\n          {\n            \"score\": 0.99,\n            \"verdict\": \"good\",\n            \"graphemes\": \"C\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"k\",\n                \"score\": 0.99,\n                \"verdict\": \"good\",\n                \"start\": 1.74,\n                \"end\": 1.83\n              },\n              {\n                \"ipa\": \"ax\",\n                \"score\": 0.94,\n                \"verdict\": \"good\",\n                \"start\": 1.83,\n                \"end\": 1.88\n              }\n            ]\n          },\n          {\n            \"score\": 0.97,\n            \"verdict\": \"good\",\n            \"graphemes\": \"LE\",\n            \"phonemes\": [\n              {\n                \"ipa\": \"l\",\n                \"score\": 0.97,\n                \"verdict\": \"good\",\n                \"start\": 1.88,\n                \"end\": 2.08\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n]",
+            "title": "Response"
+        },
+        {
+            "location": "/api/analyses/index.html#get-a-single-pronunciation-analysis",
+            "text": "",
+            "title": "Get a single pronunciation analysis"
+        },
+        {
+            "location": "/api/analyses/index.html#url_2",
+            "text": "GET /challenges/pronunciation/:challenge/analyses/:analysis HTTP/1.1   challenge  -  Required  The challenge identifier.  analysis  -  Required  The analysis identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/analyses/index.html#request_2",
+            "text": "GET /challenges/pronunciation/test/analyses/25 HTTP/1.1\nAccept: application/json",
+            "title": "Request"
+        },
+        {
+            "location": "/api/analyses/index.html#response_2",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"25\",\n  \"updated\": \"2014-02-13T09:37:40Z\",\n  \"created\": \"2014-02-13T09:37:37Z\",\n  \"audioUrl\": \"https://api.itslanguage.nl/challenges/pronunciation/test/analyses/25/audio\",\n  \"studentId\": \"24\",\n  \"score\": 0.75,\n  \"words\": [\n    {\n      \"chunks\": [\n        {\n          \"score\": 0.9,\n          \"verdict\": \"good\",\n          \"graphemes\": \"b\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"b\",\n              \"score\": 0.9,\n              \"verdict\": \"good\"\n            }\n          ]\n        },\n        {\n          \"score\": 0.4,\n          \"verdict\": \"bad\",\n          \"graphemes\": \"o\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"\\u0251\",\n              \"score\": 0.4,\n              \"verdict\": \"bad\"\n            }\n          ]\n        },\n        {\n          \"score\": 0.5,\n          \"verdict\": \"moderate\",\n          \"graphemes\": \"x\",\n          \"phonemes\": [\n            {\n              \"ipa\": \"k\",\n              \"score\": 0.4,\n              \"verdict\": \"bad\"\n            },\n            {\n              \"ipa\": \"s\",\n              \"score\": 0.6,\n              \"verdict\": \"moderate\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/recognitions/index.html",
+            "text": "Recognitions\n\n\nSpeech recognitions can be stored and retrieved for user submitted audio using the ITSLanguage Speech API.\nThe actual recognitions are performed by the ITSLanguage websocket server.\n\n\n\n\n\n\n\n\nType\n\n\nUsage\n\n\n\n\n\n\n\n\n\n\nchoice\n\n\nPerforms speech recognition on user submitted audio and selects one of the choices.\n\n\n\n\n\n\n\n\nCreate a choice recognition\n\n\nSubmit an audio fragment for recognition.\n\n\nURL\n\n\nPOST /challenges/choice/:challenge/recognitions HTTP/1.1\n\n\n\n\n\n\nchallenge - \nRequired\n The challenge identifier.\n\n\n\n\nRequest parameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nid\n\n\nstring\n\n\nOptional\n A unique identifier for the recognition. If none is given, one is generated.\n\n\n\n\n\n\nstudentId\n\n\nstring\n\n\nRequired\n The identifier of the student that supplied the audio.\n\n\n\n\n\n\naudio\n\n\nblob\n\n\nRequired\n The actual audio. (Ogg Opus or WAV)\n\n\n\n\n\n\nrecognised\n\n\nstring\n\n\nOptional\n The recognised string. Omit if nothing is recognised.\n\n\n\n\n\n\n\n\nRequest\n\n\nThe request should be a \nmultipart/form-data\n request.\n\n\nPOST /challenges/choice/test/recognitions HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<blob>\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"studentId\"\n\nharry\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"recognised\"\n\nbike\n--jhgd87g7Gy3d78--\n\n\n\n\nResponse\n\n\nThe audio can be downloaded by opening the \naudioUrl\n in the response.\n\n\nHTTP/1.1 201 Created\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/choice/test/recognitions/8\n\n{\n  \"id\": \"8\",\n  \"updated\": \"2014-02-13T09:39:40Z\",\n  \"created\": \"2014-02-13T09:39:37Z\",\n  \"challengeId\": \"8\",\n  \"studentId\": \"24\",\n  \"audioUrl\": \"https://api.itslanguage.nl/challenges/choice/test/recognitions/8/audio\",\n  \"recognised\": \"bike\"\n}\n\n\n\n\nList choice recognitions\n\n\nURL\n\n\nGET /challenges/choice/:challenge/recognitions HTTP/1.1\n\n\n\n\n\n\nchallenge - \nRequired\n The identifier of the challenge.\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"8\",\n    \"updated\": \"2014-07-19T19:22:48Z\",\n    \"created\": \"2014-07-19T19:22:48Z\",\n    \"challengeId\": \"8\",\n    \"studentId\": \"harry\",\n    \"audioUrl\": \"https://api.itslanguage.nl/challenges/choice/test/recognitions/8/audio\",\n    \"recognised\": \"bright side of life\"\n  },\n  {\n    \"id\": \"237\",\n    \"updated\": \"2014-07-19T19:22:48Z\",\n    \"created\": \"2014-07-19T19:22:48Z\",\n    \"challengeId\": \"237\",\n    \"studentId\": \"arthur\",\n    \"audioUrl\": \"https://api.itslanguage.nl/challenges/choice/test/recognitions/237/audio\",\n    \"recognised\": \"spam\"\n  }\n]\n\n\n\n\nGet a single choice recognition\n\n\nURL\n\n\nGET /challenges/choice/:challenge/recognitions/:recognition HTTP/1.1\n\n\n\n\n\n\nchallenge - \nRequired\n The identifier of the challenge.\n\n\nrecognition - \nRequired\n The identifier of the recognition.\n\n\n\n\nResponse\n\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"spam\",\n  \"created\": \"2014-07-19T19:22:48Z\",\n  \"updated\": \"2014-07-19T19:22:48Z\",\n  \"challengeId\": \"spam\",\n  \"studentId\": \"87\",\n  \"audioUrl\": \"https://api.itslanguage.nl/challenges/choice/test/recognitions/spam/audio\",\n  \"recognised\": null\n}",
+            "title": "Speech Recognition"
+        },
+        {
+            "location": "/api/recognitions/index.html#recognitions",
+            "text": "Speech recognitions can be stored and retrieved for user submitted audio using the ITSLanguage Speech API.\nThe actual recognitions are performed by the ITSLanguage websocket server.     Type  Usage      choice  Performs speech recognition on user submitted audio and selects one of the choices.",
+            "title": "Recognitions"
+        },
+        {
+            "location": "/api/recognitions/index.html#create-a-choice-recognition",
+            "text": "Submit an audio fragment for recognition.",
+            "title": "Create a choice recognition"
+        },
+        {
+            "location": "/api/recognitions/index.html#url",
+            "text": "POST /challenges/choice/:challenge/recognitions HTTP/1.1   challenge -  Required  The challenge identifier.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/recognitions/index.html#request-parameters",
+            "text": "Name  Type  Description      id  string  Optional  A unique identifier for the recognition. If none is given, one is generated.    studentId  string  Required  The identifier of the student that supplied the audio.    audio  blob  Required  The actual audio. (Ogg Opus or WAV)    recognised  string  Optional  The recognised string. Omit if nothing is recognised.",
+            "title": "Request parameters"
+        },
+        {
+            "location": "/api/recognitions/index.html#request",
+            "text": "The request should be a  multipart/form-data  request.  POST /challenges/choice/test/recognitions HTTP/1.1\nAccept: application/json\nContent-Type: multipart/form-data; boundary=jhgd87g7Gy3d78\n\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"audio\"; filename=\"blob\"\nContent-Type: audio/ogg\n\n<blob>\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"studentId\"\n\nharry\n--jhgd87g7Gy3d78\nContent-Disposition: form-data; name=\"recognised\"\n\nbike\n--jhgd87g7Gy3d78--",
+            "title": "Request"
+        },
+        {
+            "location": "/api/recognitions/index.html#response",
+            "text": "The audio can be downloaded by opening the  audioUrl  in the response.  HTTP/1.1 201 Created\nContent-Type: application/json\nLocation: https://api.itslanguage.nl/challenges/choice/test/recognitions/8\n\n{\n  \"id\": \"8\",\n  \"updated\": \"2014-02-13T09:39:40Z\",\n  \"created\": \"2014-02-13T09:39:37Z\",\n  \"challengeId\": \"8\",\n  \"studentId\": \"24\",\n  \"audioUrl\": \"https://api.itslanguage.nl/challenges/choice/test/recognitions/8/audio\",\n  \"recognised\": \"bike\"\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/api/recognitions/index.html#list-choice-recognitions",
+            "text": "",
+            "title": "List choice recognitions"
+        },
+        {
+            "location": "/api/recognitions/index.html#url_1",
+            "text": "GET /challenges/choice/:challenge/recognitions HTTP/1.1   challenge -  Required  The identifier of the challenge.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/recognitions/index.html#response_1",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\n\n[\n  {\n    \"id\": \"8\",\n    \"updated\": \"2014-07-19T19:22:48Z\",\n    \"created\": \"2014-07-19T19:22:48Z\",\n    \"challengeId\": \"8\",\n    \"studentId\": \"harry\",\n    \"audioUrl\": \"https://api.itslanguage.nl/challenges/choice/test/recognitions/8/audio\",\n    \"recognised\": \"bright side of life\"\n  },\n  {\n    \"id\": \"237\",\n    \"updated\": \"2014-07-19T19:22:48Z\",\n    \"created\": \"2014-07-19T19:22:48Z\",\n    \"challengeId\": \"237\",\n    \"studentId\": \"arthur\",\n    \"audioUrl\": \"https://api.itslanguage.nl/challenges/choice/test/recognitions/237/audio\",\n    \"recognised\": \"spam\"\n  }\n]",
+            "title": "Response"
+        },
+        {
+            "location": "/api/recognitions/index.html#get-a-single-choice-recognition",
+            "text": "",
+            "title": "Get a single choice recognition"
+        },
+        {
+            "location": "/api/recognitions/index.html#url_2",
+            "text": "GET /challenges/choice/:challenge/recognitions/:recognition HTTP/1.1   challenge -  Required  The identifier of the challenge.  recognition -  Required  The identifier of the recognition.",
+            "title": "URL"
+        },
+        {
+            "location": "/api/recognitions/index.html#response_2",
+            "text": "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  \"id\": \"spam\",\n  \"created\": \"2014-07-19T19:22:48Z\",\n  \"updated\": \"2014-07-19T19:22:48Z\",\n  \"challengeId\": \"spam\",\n  \"studentId\": \"87\",\n  \"audioUrl\": \"https://api.itslanguage.nl/challenges/choice/test/recognitions/spam/audio\",\n  \"recognised\": null\n}",
+            "title": "Response"
+        },
+        {
+            "location": "/websocket/index.html",
+            "text": "Websocket API\n\n\nThe websocket API is implemented using \nWAMP\n (Web Application Messaging\nProtocol). This allows for RPCs over websockets.\nTo be able to use the websocket API, a WAMP client should be used.",
+            "title": "Websocket API"
+        },
+        {
+            "location": "/websocket/index.html#websocket-api",
+            "text": "The websocket API is implemented using  WAMP  (Web Application Messaging\nProtocol). This allows for RPCs over websockets.\nTo be able to use the websocket API, a WAMP client should be used.",
+            "title": "Websocket API"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html",
+            "text": "Speech Recording\n\n\nStoring speech recordings is split up into multiple RPCs. Below, the various\nRPCs are documented.\n\n\nInitialise a recording\n\n\nInitialise a speech recording, this RPC should be called for each new speech\nrecording. A unique id is generated for a speech recording. This id is used\nin the other RPCs to identify the recording,\n\n\nURI\n\n\nnl.itslanguage.recording.init_recording\n\n\n\n\nResponse\n\n\nThe id of the new speech recording is returned as a string.\n\n\nInitialising audio for uploading\n\n\nThe audio that is to be uploaded for analysis is streamed to the server. Some\ninformation is required in order for the server to be able to store the audio\ncorrectly.\n\n\nURI\n\n\nnl.itslanguage.recording.init_audio\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nrecording_id\n\n\nstring\n\n\nRequired\n The unique id of the speech recording.\n\n\n\n\n\n\naudio_format\n\n\nstring\n\n\nRequired\n The mimetype of the audio to upload.\n\n\n\n\n\n\n\n\nDepending on the \naudio_format\n, additional parameters may be required.\nPlease see \nthe audio documentation\n for which audio formats are\nsupported and what parameters they require.\n\n\nInitialise recording challenge\n\n\nA challenge should be linked when storing the recording. This call verifies\nasynchronously that the challenge exists. If the challenge or the organisation\ndoesn't exist, an error is raised. Since this happens asynchronously, the error\nis raised later.\n\n\nURI\n\n\nnl.itslanguage.recording.init_challenge\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nrecording_id\n\n\nstring\n\n\nRequired\n The unique id of the speech recording.\n\n\n\n\n\n\norganisation_id\n\n\nstring\n\n\nRequired\n The id of the organisation in which to find the challenge.\n\n\n\n\n\n\nchallenge_id\n\n\nstring\n\n\nRequired\n The id of the challenge the recording is meant for.\n\n\n\n\n\n\n\n\nStream recording audio\n\n\nThe recorded audio can now be streamed to the server. The streaming works by\nrepeatedly calling this RPC. Each time the RPC is called, the data\nwill be appended to an audio file on the server.\n\n\nURI\n\n\nnl.itslanguage.recording.write\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nrecording_id\n\n\nstring\n\n\nRequired\n The unique id of the speech recording.\n\n\n\n\n\n\ndata\n\n\nbytes\n\n\nRequired\n The data to stream to the server. This can be any length.\n\n\n\n\n\n\nencoding\n\n\nstring\n\n\nOptional\n The encoding in which the data is sent. This should be \nbase64\n if the data is base64 encoded.\n\n\n\n\n\n\n\n\nClose recording\n\n\nClose the recording and store it on the server. After this call, no data can be\nwritten to the recording any more.\n\n\nURI\n\n\nnl.itslanguage.recording.close\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nrecording_id\n\n\nstring\n\n\nRequired\n The unique id of the speech recording.\n\n\n\n\n\n\n\n\nThe RPC can return various errors:\n\n\n\n\nnl.itslanguage.no_such_organisation\n If the organisation doesn't exist.\n\n\nnl.itslanguage.no_such_challenge\n If the challenge doesn't exist.",
+            "title": "Speech Recording"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#speech-recording",
+            "text": "Storing speech recordings is split up into multiple RPCs. Below, the various\nRPCs are documented.",
+            "title": "Speech Recording"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#initialise-a-recording",
+            "text": "Initialise a speech recording, this RPC should be called for each new speech\nrecording. A unique id is generated for a speech recording. This id is used\nin the other RPCs to identify the recording,",
+            "title": "Initialise a recording"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#uri",
+            "text": "nl.itslanguage.recording.init_recording",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#response",
+            "text": "The id of the new speech recording is returned as a string.",
+            "title": "Response"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#initialising-audio-for-uploading",
+            "text": "The audio that is to be uploaded for analysis is streamed to the server. Some\ninformation is required in order for the server to be able to store the audio\ncorrectly.",
+            "title": "Initialising audio for uploading"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#uri_1",
+            "text": "nl.itslanguage.recording.init_audio",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#parameters",
+            "text": "Name  Type  Description      recording_id  string  Required  The unique id of the speech recording.    audio_format  string  Required  The mimetype of the audio to upload.     Depending on the  audio_format , additional parameters may be required.\nPlease see  the audio documentation  for which audio formats are\nsupported and what parameters they require.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#initialise-recording-challenge",
+            "text": "A challenge should be linked when storing the recording. This call verifies\nasynchronously that the challenge exists. If the challenge or the organisation\ndoesn't exist, an error is raised. Since this happens asynchronously, the error\nis raised later.",
+            "title": "Initialise recording challenge"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#uri_2",
+            "text": "nl.itslanguage.recording.init_challenge",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#parameters_1",
+            "text": "Name  Type  Description      recording_id  string  Required  The unique id of the speech recording.    organisation_id  string  Required  The id of the organisation in which to find the challenge.    challenge_id  string  Required  The id of the challenge the recording is meant for.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#stream-recording-audio",
+            "text": "The recorded audio can now be streamed to the server. The streaming works by\nrepeatedly calling this RPC. Each time the RPC is called, the data\nwill be appended to an audio file on the server.",
+            "title": "Stream recording audio"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#uri_3",
+            "text": "nl.itslanguage.recording.write",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#parameters_2",
+            "text": "Name  Type  Description      recording_id  string  Required  The unique id of the speech recording.    data  bytes  Required  The data to stream to the server. This can be any length.    encoding  string  Optional  The encoding in which the data is sent. This should be  base64  if the data is base64 encoded.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#close-recording",
+            "text": "Close the recording and store it on the server. After this call, no data can be\nwritten to the recording any more.",
+            "title": "Close recording"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#uri_4",
+            "text": "nl.itslanguage.recording.close",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/speech_recording/index.html#parameters_3",
+            "text": "Name  Type  Description      recording_id  string  Required  The unique id of the speech recording.     The RPC can return various errors:   nl.itslanguage.no_such_organisation  If the organisation doesn't exist.  nl.itslanguage.no_such_challenge  If the challenge doesn't exist.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html",
+            "text": "Pronunciation Analyses\n\n\nPerforming a pronunciation analysis is broken up into various calls.\n\n\nInitialising a pronunciation analysis\n\n\nThis is the starting point for a pronunciation analysis. A unique analysis id\nis generated, which serves a leading role in the analysis. Each other call\nrequires the analysis id as a parameter.\n\n\nIf other RPCs are called without this RPC being called first, the error\n\nnl.itslanguage.session_not_initialised\n will be returned.\n\n\nURI\n\n\nnl.itslanguage.pronunciation.init_analysis\n\n\n\n\nResponse\n\n\nThe unique analysis id is returned as a string. The id is used in other calls\nto identify the current analysis.\n\n\nInitialising audio for uploading\n\n\nThe audio that is to be uploaded for analysis is streamed to the server. Some\ninformation is required in order for the server to be able to store and\nanalyse the audio correctly.\n\n\nURI\n\n\nnl.itslanguage.pronunciation.init_audio\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nanalysis_id\n\n\nstring\n\n\nRequired\n The id of the analysis to initialise the audio for.\n\n\n\n\n\n\naudio_format\n\n\nstring\n\n\nRequired\n The mimetype of the audio to upload.\n\n\n\n\n\n\n\n\nDepending on the \naudio_format\n, additional parameters may be required.\nPlease see \nthe audio documentation\n for which audio formats are\nsupported and what parameters they require.\n\n\nInitialise pronunciation challenge\n\n\nBefore performing the analysis, the reference audio of the challenge needs to\nbe prepared. This involves aligning the audio. When the RPC is called, the\nchallenge is initialised asynchronously. When the challenge is to be used, the\nserver automatically waits for the challenge initialisation to finish. If the\ninitialisation results in an error, the error is relayed to the client.\n\n\nURI\n\n\nnl.itslanguage.pronunciation.init_challenge\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nanalysis_id\n\n\nstring\n\n\nRequired\n The id of the analysis to prepare the challenge for.\n\n\n\n\n\n\norganisation_id\n\n\nstring\n\n\nRequired\n The id of the organisation in which to find the challenge.\n\n\n\n\n\n\nchallenge_id\n\n\nstring\n\n\nRequired\n The id of the challenge to prepare.\n\n\n\n\n\n\n\n\nStream analysis audio\n\n\nThe audio to be analysed can now be streamed to the server. The streaming\nworks by repeatedly calling this RPC. Each time the RPC is called, the data\nwill be appended to an audio file on the server.\n\n\nURI\n\n\nnl.itslanguage.pronunciation.write\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nanalysis_id\n\n\nstring\n\n\nRequired\n The id of the analysis for which to upload the audio.\n\n\n\n\n\n\ndata\n\n\nbytes\n\n\nRequired\n The data to stream to the server. This can be any length.\n\n\n\n\n\n\nencoding\n\n\nstring\n\n\nOptional\n The encoding in which the data is sent. This should be \nbase64\n if the data is base64 encoded.\n\n\n\n\n\n\n\n\nPerform the analysis\n\n\nAfter completing the streaming of the audio, the analysis can be performed.\n\n\nURI\n\n\nnl.itslanguage.pronunciation.analyse\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nanalysis_id\n\n\nstring\n\n\nRequired\n The id of the analysis to perform.\n\n\n\n\n\n\n\n\nResponse\n\n\nA JSON object with the analysis results and metadata is returned.\n\n\nExample:\n\n\n{\"id\": \"98\",\n \"audioUrl\": \"https://api-dot-itslanguage.nl:80/organisations/1/challenges/pronunciation/4/analyses/98/audio\",\n \"score\": 8.4245,\n \"words\": [[{\"graphemes\": \"B\",\n             \"score\": 9.8355,\n             \"verdict\": \"good\",\n             \"phonemes\": [{\"start\": 0.12,\n                           \"end\": 0.33,\n                           \"ipa\": \"b\",\n                           \"score\": 9.8355,\n                           \"verdict\": \"good\"}]},\n             {\"graphemes\": \"IR\",\n              \"phonemes\": [{\"end\": 0.5,\n                            \"ipa\": \"er\",\n                            \"score\": 5.9905,\n                            \"start\": 0.33,\n                            \"verdict\": \"moderate\"}],\n              \"score\": 5.9905,\n              \"verdict\": \"moderate\"},\n             {\"graphemes\": \"D\",\n              \"phonemes\": [{\"end\": 0.63,\n                            \"ipa\": \"d\",\n                            \"score\": 7.5173,\n                            \"start\": 0.5,\n                            \"verdict\": \"good\"}],\n              \"score\": 7.5173,\n              \"verdict\": \"good\"}]]}\n\n\n\n\nThe RPC can return various errors:\n\n\n\n\nnl.itslanguage.alignment_failed\n If the alignment of the audio failed.\n\n\nnl.itslanguage.analysis_failed\n If the analysis of the audio failed.\n\n\nnl.itslanguage.no_such_organisation\n If the organisation doesn't exist.\n\n\nnl.itslanguage.no_such_challenge\n If the challenge doesn't exist.",
+            "title": "Pronunciation Analyses"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#pronunciation-analyses",
+            "text": "Performing a pronunciation analysis is broken up into various calls.",
+            "title": "Pronunciation Analyses"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#initialising-a-pronunciation-analysis",
+            "text": "This is the starting point for a pronunciation analysis. A unique analysis id\nis generated, which serves a leading role in the analysis. Each other call\nrequires the analysis id as a parameter.  If other RPCs are called without this RPC being called first, the error nl.itslanguage.session_not_initialised  will be returned.",
+            "title": "Initialising a pronunciation analysis"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#uri",
+            "text": "nl.itslanguage.pronunciation.init_analysis",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#response",
+            "text": "The unique analysis id is returned as a string. The id is used in other calls\nto identify the current analysis.",
+            "title": "Response"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#initialising-audio-for-uploading",
+            "text": "The audio that is to be uploaded for analysis is streamed to the server. Some\ninformation is required in order for the server to be able to store and\nanalyse the audio correctly.",
+            "title": "Initialising audio for uploading"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#uri_1",
+            "text": "nl.itslanguage.pronunciation.init_audio",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#parameters",
+            "text": "Name  Type  Description      analysis_id  string  Required  The id of the analysis to initialise the audio for.    audio_format  string  Required  The mimetype of the audio to upload.     Depending on the  audio_format , additional parameters may be required.\nPlease see  the audio documentation  for which audio formats are\nsupported and what parameters they require.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#initialise-pronunciation-challenge",
+            "text": "Before performing the analysis, the reference audio of the challenge needs to\nbe prepared. This involves aligning the audio. When the RPC is called, the\nchallenge is initialised asynchronously. When the challenge is to be used, the\nserver automatically waits for the challenge initialisation to finish. If the\ninitialisation results in an error, the error is relayed to the client.",
+            "title": "Initialise pronunciation challenge"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#uri_2",
+            "text": "nl.itslanguage.pronunciation.init_challenge",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#parameters_1",
+            "text": "Name  Type  Description      analysis_id  string  Required  The id of the analysis to prepare the challenge for.    organisation_id  string  Required  The id of the organisation in which to find the challenge.    challenge_id  string  Required  The id of the challenge to prepare.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#stream-analysis-audio",
+            "text": "The audio to be analysed can now be streamed to the server. The streaming\nworks by repeatedly calling this RPC. Each time the RPC is called, the data\nwill be appended to an audio file on the server.",
+            "title": "Stream analysis audio"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#uri_3",
+            "text": "nl.itslanguage.pronunciation.write",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#parameters_2",
+            "text": "Name  Type  Description      analysis_id  string  Required  The id of the analysis for which to upload the audio.    data  bytes  Required  The data to stream to the server. This can be any length.    encoding  string  Optional  The encoding in which the data is sent. This should be  base64  if the data is base64 encoded.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#perform-the-analysis",
+            "text": "After completing the streaming of the audio, the analysis can be performed.",
+            "title": "Perform the analysis"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#uri_4",
+            "text": "nl.itslanguage.pronunciation.analyse",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#parameters_3",
+            "text": "Name  Type  Description      analysis_id  string  Required  The id of the analysis to perform.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/pronunciation_analyses/index.html#response_1",
+            "text": "A JSON object with the analysis results and metadata is returned.  Example:  {\"id\": \"98\",\n \"audioUrl\": \"https://api-dot-itslanguage.nl:80/organisations/1/challenges/pronunciation/4/analyses/98/audio\",\n \"score\": 8.4245,\n \"words\": [[{\"graphemes\": \"B\",\n             \"score\": 9.8355,\n             \"verdict\": \"good\",\n             \"phonemes\": [{\"start\": 0.12,\n                           \"end\": 0.33,\n                           \"ipa\": \"b\",\n                           \"score\": 9.8355,\n                           \"verdict\": \"good\"}]},\n             {\"graphemes\": \"IR\",\n              \"phonemes\": [{\"end\": 0.5,\n                            \"ipa\": \"er\",\n                            \"score\": 5.9905,\n                            \"start\": 0.33,\n                            \"verdict\": \"moderate\"}],\n              \"score\": 5.9905,\n              \"verdict\": \"moderate\"},\n             {\"graphemes\": \"D\",\n              \"phonemes\": [{\"end\": 0.63,\n                            \"ipa\": \"d\",\n                            \"score\": 7.5173,\n                            \"start\": 0.5,\n                            \"verdict\": \"good\"}],\n              \"score\": 7.5173,\n              \"verdict\": \"good\"}]]}  The RPC can return various errors:   nl.itslanguage.alignment_failed  If the alignment of the audio failed.  nl.itslanguage.analysis_failed  If the analysis of the audio failed.  nl.itslanguage.no_such_organisation  If the organisation doesn't exist.  nl.itslanguage.no_such_challenge  If the challenge doesn't exist.",
+            "title": "Response"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html",
+            "text": "Choice Recognitions\n\n\nPerforming a choice recognition is broken up into various calls.\n\n\nInitialising a choice recognition\n\n\nThis is the starting point for a choice recognition. A unique recognition id\nis generated, which serves a leading role in the recognition. Each other call\nrequires the recognition id as a parameter.\n\n\nIf other RPCs are called without this RPC being called first, the error\n\nnl.itslanguage.session_not_initialised\n will be returned.\n\n\nURI\n\n\nnl.itslanguage.choice.init_recognition\n\n\n\n\nResponse\n\n\nThe unique recognition id is returned as a string. The id is used in other calls\nto identify the current recognition.\n\n\nInitialising audio for uploading\n\n\nThe audio that is to be uploaded for recognition is streamed to the server. Some\ninformation is required in order for the server to be able to store and\nuse the audio correctly.\n\n\nURI\n\n\nnl.itslanguage.choice.init_audio\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nrecognition_id\n\n\nstring\n\n\nRequired\n The id of the recognition to initialise the audio for.\n\n\n\n\n\n\naudio_format\n\n\nstring\n\n\nRequired\n The mimetype of the audio to upload.\n\n\n\n\n\n\n\n\nDepending on the \naudio_format\n, additional parameters may be required.\nPlease see \nthe audio documentation\n for which audio formats are\nsupported and what parameters they require.\n\n\nInitialise choice challenge\n\n\nBefore performing the recognition, a WFST needs to be prepared for the\nchallenge. When the RPC is called, the challenge is initialised asynchronously.\nWhen the challenge is to be used, the server automatically waits for the\nchallenge initialisation to finish. If the initialisation results in an error,\nthe error is relayed to the client.\n\n\nURI\n\n\nnl.itslanguage.choice.init_challenge\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nrecognition_id\n\n\nstring\n\n\nRequired\n The id of the recognition to prepare the challenge for.\n\n\n\n\n\n\norganisation_id\n\n\nstring\n\n\nRequired\n The id of the organisation in which to find the challenge.\n\n\n\n\n\n\nchallenge_id\n\n\nstring\n\n\nRequired\n The id of the challenge to prepare.\n\n\n\n\n\n\n\n\nStream recognition audio\n\n\nThe audio to be recognised can now be streamed to the server. The streaming\nworks by repeatedly calling this RPC. Each time the RPC is called, the data\nwill be appended to an audio file on the server.\n\n\nURI\n\n\nnl.itslanguage.choice.write\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nrecognition_id\n\n\nstring\n\n\nRequired\n The id of the recognition for which to upload the audio.\n\n\n\n\n\n\ndata\n\n\nbytes\n\n\nRequired\n The data to stream to the server. This can be any length.\n\n\n\n\n\n\nencoding\n\n\nstring\n\n\nOptional\n The encoding in which the data is sent. This should be \nbase64\n if the data is base64 encoded.\n\n\n\n\n\n\n\n\nPerform the recognition\n\n\nAfter completing the streaming of the audio, the recognition can be performed.\n\n\nURI\n\n\nnl.itslanguage.choice.recognise\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nrecognition_id\n\n\nstring\n\n\nRequired\n The id of the recognition to perform.\n\n\n\n\n\n\n\n\nResponse\n\n\nA JSON object with the recognition results and metadata is returned.\n\n\nExample:\n\n\n{\"id\": \"g93h844\",\n \"audioUrl\": \"https://api-dot-itslanguage.nl:80/organisations/1/challenges/choice/4/recognitions/g93h844/audio\",\n \"recognised\": \"Unicorns\"}\n\n\n\n\nThe RPC can return various errors:\n\n\n\n\nnl.itslanguage.recognition_failed\n If the recognition of the audio failed.\n\n\nnl.itslanguage.no_such_organisation\n If the organisation doesn't exist.\n\n\nnl.itslanguage.no_such_challenge\n If the challenge doesn't exist.",
+            "title": "Choice Recognitions"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#choice-recognitions",
+            "text": "Performing a choice recognition is broken up into various calls.",
+            "title": "Choice Recognitions"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#initialising-a-choice-recognition",
+            "text": "This is the starting point for a choice recognition. A unique recognition id\nis generated, which serves a leading role in the recognition. Each other call\nrequires the recognition id as a parameter.  If other RPCs are called without this RPC being called first, the error nl.itslanguage.session_not_initialised  will be returned.",
+            "title": "Initialising a choice recognition"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#uri",
+            "text": "nl.itslanguage.choice.init_recognition",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#response",
+            "text": "The unique recognition id is returned as a string. The id is used in other calls\nto identify the current recognition.",
+            "title": "Response"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#initialising-audio-for-uploading",
+            "text": "The audio that is to be uploaded for recognition is streamed to the server. Some\ninformation is required in order for the server to be able to store and\nuse the audio correctly.",
+            "title": "Initialising audio for uploading"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#uri_1",
+            "text": "nl.itslanguage.choice.init_audio",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#parameters",
+            "text": "Name  Type  Description      recognition_id  string  Required  The id of the recognition to initialise the audio for.    audio_format  string  Required  The mimetype of the audio to upload.     Depending on the  audio_format , additional parameters may be required.\nPlease see  the audio documentation  for which audio formats are\nsupported and what parameters they require.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#initialise-choice-challenge",
+            "text": "Before performing the recognition, a WFST needs to be prepared for the\nchallenge. When the RPC is called, the challenge is initialised asynchronously.\nWhen the challenge is to be used, the server automatically waits for the\nchallenge initialisation to finish. If the initialisation results in an error,\nthe error is relayed to the client.",
+            "title": "Initialise choice challenge"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#uri_2",
+            "text": "nl.itslanguage.choice.init_challenge",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#parameters_1",
+            "text": "Name  Type  Description      recognition_id  string  Required  The id of the recognition to prepare the challenge for.    organisation_id  string  Required  The id of the organisation in which to find the challenge.    challenge_id  string  Required  The id of the challenge to prepare.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#stream-recognition-audio",
+            "text": "The audio to be recognised can now be streamed to the server. The streaming\nworks by repeatedly calling this RPC. Each time the RPC is called, the data\nwill be appended to an audio file on the server.",
+            "title": "Stream recognition audio"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#uri_3",
+            "text": "nl.itslanguage.choice.write",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#parameters_2",
+            "text": "Name  Type  Description      recognition_id  string  Required  The id of the recognition for which to upload the audio.    data  bytes  Required  The data to stream to the server. This can be any length.    encoding  string  Optional  The encoding in which the data is sent. This should be  base64  if the data is base64 encoded.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#perform-the-recognition",
+            "text": "After completing the streaming of the audio, the recognition can be performed.",
+            "title": "Perform the recognition"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#uri_4",
+            "text": "nl.itslanguage.choice.recognise",
+            "title": "URI"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#parameters_3",
+            "text": "Name  Type  Description      recognition_id  string  Required  The id of the recognition to perform.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/websocket/choice_recognitions/index.html#response_1",
+            "text": "A JSON object with the recognition results and metadata is returned.  Example:  {\"id\": \"g93h844\",\n \"audioUrl\": \"https://api-dot-itslanguage.nl:80/organisations/1/challenges/choice/4/recognitions/g93h844/audio\",\n \"recognised\": \"Unicorns\"}  The RPC can return various errors:   nl.itslanguage.recognition_failed  If the recognition of the audio failed.  nl.itslanguage.no_such_organisation  If the organisation doesn't exist.  nl.itslanguage.no_such_challenge  If the challenge doesn't exist.",
+            "title": "Response"
+        },
+        {
+            "location": "/websocket/audio/index.html",
+            "text": "Audio\n\n\nVarious RPCs accept audio uploads. Supported audio formats are documented here.\n\n\nWAV\n\n\nMimetypes\n\n\nThe WAV format has multiple mimetypes associated with it. The following are\nsupported by ITSLanguage:\n\n\n\n\naudio/wav\n\n\naudio/wave\n\n\naudio/x-wav\n\n\n\n\nParameters\n\n\n\n\n\n\n\n\nname\n\n\ntype\n\n\ndescription\n\n\n\n\n\n\n\n\n\n\nchannels\n\n\nint\n\n\nRequired\n The number of channels.\n\n\n\n\n\n\nframe_rate\n\n\nint\n\n\nRequired\n The frame rate in Hertz.\n\n\n\n\n\n\nsample_width\n\n\nint\n\n\nRequired\n The sample width in bits.",
+            "title": "Audio"
+        },
+        {
+            "location": "/websocket/audio/index.html#audio",
+            "text": "Various RPCs accept audio uploads. Supported audio formats are documented here.",
+            "title": "Audio"
+        },
+        {
+            "location": "/websocket/audio/index.html#wav",
+            "text": "",
+            "title": "WAV"
+        },
+        {
+            "location": "/websocket/audio/index.html#mimetypes",
+            "text": "The WAV format has multiple mimetypes associated with it. The following are\nsupported by ITSLanguage:   audio/wav  audio/wave  audio/x-wav",
+            "title": "Mimetypes"
+        },
+        {
+            "location": "/websocket/audio/index.html#parameters",
+            "text": "name  type  description      channels  int  Required  The number of channels.    frame_rate  int  Required  The frame rate in Hertz.    sample_width  int  Required  The sample width in bits.",
+            "title": "Parameters"
+        },
+        {
+            "location": "/api/permissions/index.html",
+            "text": "Permissions and roles\n\n\nAll users in the ITSLanguage framework have at least one role.\nAlong with a role comes a set of permissions.\nEach API call in the system requires a certain permission.\n\n\nRoles\n\n\nRoles in the ITSLanguage framework\n\n\n\n\n\n\n\n\nRole\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSTUDENT\n\n\nA student\n\n\n\n\n\n\nORGANISATION\n\n\nAn organisation\n\n\n\n\n\n\nTENANT\n\n\nA tenant\n\n\n\n\n\n\n\n\nPermissions\n\n\n\n\n\n\nRole: Tenant\nPermissions:\n\n\n\n\nAUDIO_ANALYSIS_CREATE,\n\n\nAUDIO_ANALYSIS_LIST,\n\n\nCHALLENGE_EDIT,\n\n\nCHALLENGE_LIST,\n\n\nCHALLENGE_DELETE,\n\n\nORGANISATION_CREATE,\n\n\nORGANISATION_LIST,\n\n\nSPEECH_RECORDING_LIST,\n\n\nSTUDENT_CREATE,\n\n\nSTUDENT_LIST\n\n\n\n\n\n\n\n\nRole: Organisation\nPermissions:\n\n\n\n\nAUDIO_ANALYSIS_CREATE,\n\n\nAUDIO_ANALYSIS_LIST,\n\n\nAUDIO_RECOGNITION_LIST,\n\n\nCHALLENGE_CREATE,\n\n\nCHALLENGE_DELETE,\n\n\nCHALLENGE_EDIT,\n\n\nCHALLENGE_LIST,\n\n\nCHOICE_CHALLENGE_CREATE,\n\n\nCHOICE_CHALLENGE_DELETE,\n\n\nCHOICE_CHALLENGE_LIST,\n\n\nDOWNLOAD,\n\n\nSPEECH_RECORDING_LIST,\n\n\nSTUDENT_LIST\n\n\n\n\n\n\n\n\nRole: Student\n\n\n\n\nAUDIO_ANALYSIS_CREATE,\n\n\nAUDIO_ANALYSIS_LIST,\n\n\nAUDIO_RECOGNITION_CREATE,\n\n\nAUDIO_RECOGNITION_LIST,\n\n\nCHALLENGE_LIST,\n\n\nCHOICE_CHALLENGE_LIST,\n\n\nDOWNLOAD,\n\n\nSPEECH_RECORDING_CREATE,\n\n\nSPEECH_RECORDING_LIST\n\n\n\n\n\n\n\n\nIf a call is made with an invalid scope gained from an OAuth2 Token and thus with insufficient permissions,\na \n403 Forbidden\n response is returned.",
+            "title": "Permissions"
+        },
+        {
+            "location": "/api/permissions/index.html#permissions-and-roles",
+            "text": "All users in the ITSLanguage framework have at least one role.\nAlong with a role comes a set of permissions.\nEach API call in the system requires a certain permission.",
+            "title": "Permissions and roles"
+        },
+        {
+            "location": "/api/permissions/index.html#roles",
+            "text": "Roles in the ITSLanguage framework     Role  Description      STUDENT  A student    ORGANISATION  An organisation    TENANT  A tenant",
+            "title": "Roles"
+        },
+        {
+            "location": "/api/permissions/index.html#permissions",
+            "text": "Role: Tenant\nPermissions:   AUDIO_ANALYSIS_CREATE,  AUDIO_ANALYSIS_LIST,  CHALLENGE_EDIT,  CHALLENGE_LIST,  CHALLENGE_DELETE,  ORGANISATION_CREATE,  ORGANISATION_LIST,  SPEECH_RECORDING_LIST,  STUDENT_CREATE,  STUDENT_LIST     Role: Organisation\nPermissions:   AUDIO_ANALYSIS_CREATE,  AUDIO_ANALYSIS_LIST,  AUDIO_RECOGNITION_LIST,  CHALLENGE_CREATE,  CHALLENGE_DELETE,  CHALLENGE_EDIT,  CHALLENGE_LIST,  CHOICE_CHALLENGE_CREATE,  CHOICE_CHALLENGE_DELETE,  CHOICE_CHALLENGE_LIST,  DOWNLOAD,  SPEECH_RECORDING_LIST,  STUDENT_LIST     Role: Student   AUDIO_ANALYSIS_CREATE,  AUDIO_ANALYSIS_LIST,  AUDIO_RECOGNITION_CREATE,  AUDIO_RECOGNITION_LIST,  CHALLENGE_LIST,  CHOICE_CHALLENGE_LIST,  DOWNLOAD,  SPEECH_RECORDING_CREATE,  SPEECH_RECORDING_LIST     If a call is made with an invalid scope gained from an OAuth2 Token and thus with insufficient permissions,\na  403 Forbidden  response is returned.",
+            "title": "Permissions"
+        },
+        {
+            "location": "/api/architecture/index.html",
+            "text": "Steaming cloud architecture\n\n\n{% aafigure --textual --scale=.6 %}\n                                                                    +------------------------+\n                                                                    |                        |\n                                                                    | Google Cloud Storage   |\n                                                                    |                        |\n                                                                    +---+--------------------+\n                                                                        |\n                                                      +-----------------+\n                                                      |\n+--------------------+            +-------------------+--+          +------------------------+\n|                    |            |                      |          |                        |\n| Tenant             +------------+ Google App Engine    +----------+ Google Cloud Datastore |\n|                    |            |                      |          |                        |\n+--+-----------------+            +-+-----------------+--+          +------------------------+\n   |                                |                 |\n   |               +----------------+                 |\n   |               |                                  |\n+--+---------------+-+            +-------------------+--+\n|                    |            |                      |\n| Student            +------------+ Google Managed VMs   |\n|                    |            |                      |\n+--------------------+            +----------------------+\n{% endaafigure %}\n\n\nComponents and actors\n\n\nTenant\n\n\nA client corporation using the ITSLanguage REST API to perform CRUD\noperations on organisations, students, challenges.\n\n\nStudent\n\n\nAn actor performing the audio recordings. A student belongs to an organisation\n(a school). This organisation is a client corporation of the tenant.\n\n\nA student connects with the:\n\n\n\n\nREST API to retrieve challenge metadata (e.g. reference audio).\n\n\nWebsocket API to submit recorded audio.\n\n\n\n\nGoogle Managed VMs\n\n\n\n\nWebsocket server listening for students connecting to receive and process audio.\n\n\n\n\nGoogle App Engine\n\n\nREST API to interface with tenants and students performing administrative tasks.\n\n\nGoogle Cloud Storage\n\n\nStorage for submitted audio.\n\n\nGoogle Cloud Datastore\n\n\nNoSQL datastore for all non-binary data.",
+            "title": "Infrastructure Architecture"
+        },
+        {
+            "location": "/api/architecture/index.html#steaming-cloud-architecture",
+            "text": "{% aafigure --textual --scale=.6 %}\n                                                                    +------------------------+\n                                                                    |                        |\n                                                                    | Google Cloud Storage   |\n                                                                    |                        |\n                                                                    +---+--------------------+\n                                                                        |\n                                                      +-----------------+\n                                                      |\n+--------------------+            +-------------------+--+          +------------------------+\n|                    |            |                      |          |                        |\n| Tenant             +------------+ Google App Engine    +----------+ Google Cloud Datastore |\n|                    |            |                      |          |                        |\n+--+-----------------+            +-+-----------------+--+          +------------------------+\n   |                                |                 |\n   |               +----------------+                 |\n   |               |                                  |\n+--+---------------+-+            +-------------------+--+\n|                    |            |                      |\n| Student            +------------+ Google Managed VMs   |\n|                    |            |                      |\n+--------------------+            +----------------------+\n{% endaafigure %}",
+            "title": "Steaming cloud architecture"
+        },
+        {
+            "location": "/api/architecture/index.html#components-and-actors",
+            "text": "",
+            "title": "Components and actors"
+        },
+        {
+            "location": "/api/architecture/index.html#tenant",
+            "text": "A client corporation using the ITSLanguage REST API to perform CRUD\noperations on organisations, students, challenges.",
+            "title": "Tenant"
+        },
+        {
+            "location": "/api/architecture/index.html#student",
+            "text": "An actor performing the audio recordings. A student belongs to an organisation\n(a school). This organisation is a client corporation of the tenant.  A student connects with the:   REST API to retrieve challenge metadata (e.g. reference audio).  Websocket API to submit recorded audio.",
+            "title": "Student"
+        },
+        {
+            "location": "/api/architecture/index.html#google-managed-vms",
+            "text": "Websocket server listening for students connecting to receive and process audio.",
+            "title": "Google Managed VMs"
+        },
+        {
+            "location": "/api/architecture/index.html#google-app-engine",
+            "text": "REST API to interface with tenants and students performing administrative tasks.",
+            "title": "Google App Engine"
+        },
+        {
+            "location": "/api/architecture/index.html#google-cloud-storage",
+            "text": "Storage for submitted audio.",
+            "title": "Google Cloud Storage"
+        },
+        {
+            "location": "/api/architecture/index.html#google-cloud-datastore",
+            "text": "NoSQL datastore for all non-binary data.",
+            "title": "Google Cloud Datastore"
+        }
+    ]
+}

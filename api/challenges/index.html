@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Challenges - ITSLanguage API</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Challenges";
+    var mkdocs_page_input_path = "api/challenges.md";
+    var mkdocs_page_url = "/api/challenges/index.html";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="icon icon-home"> ITSLanguage API</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Home</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../index.html">ITSLanguage Speech API</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API basics</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../index.html">The REST API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../authentication/index.html">Authentication</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../permissions/index.html">Roles and Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../errors/index.html">Error handling</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../oauth2/index.html">OAuth2</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../organisations/index.html">Organisations</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../students/index.html">Students</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">Challenges</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#challenges">Challenges</a></li>
+                
+                    <li><a class="toctree-l4" href="#list-all-speech-challenges">List all speech challenges</a></li>
+                
+                    <li><a class="toctree-l4" href="#get-a-single-speech-challenge">Get a single speech challenge</a></li>
+                
+                    <li><a class="toctree-l4" href="#create-a-speech-challenge">Create a speech challenge</a></li>
+                
+                    <li><a class="toctree-l4" href="#update-a-speech-challenge">Update a speech challenge</a></li>
+                
+                    <li><a class="toctree-l4" href="#list-all-pronunciation-challenges">List all pronunciation challenges</a></li>
+                
+                    <li><a class="toctree-l4" href="#get-a-single-pronunciation-challenge">Get a single pronunciation challenge</a></li>
+                
+                    <li><a class="toctree-l4" href="#create-a-pronunciation-challenge">Create a pronunciation challenge</a></li>
+                
+                    <li><a class="toctree-l4" href="#update-a-pronunciation-challenge">Update a pronunciation challenge</a></li>
+                
+                    <li><a class="toctree-l4" href="#delete-a-single-pronunciation-challenge">Delete a single pronunciation challenge</a></li>
+                
+                    <li><a class="toctree-l4" href="#list-all-choice-challenges">List all choice challenges</a></li>
+                
+                    <li><a class="toctree-l4" href="#get-a-single-choice-challenge">Get a single choice challenge</a></li>
+                
+                    <li><a class="toctree-l4" href="#create-a-choice-challenge">Create a choice challenge</a></li>
+                
+                    <li><a class="toctree-l4" href="#update-a-choice-challenge">Update a choice challenge</a></li>
+                
+                    <li><a class="toctree-l4" href="#delete-a-single-choice-challenge">Delete a single choice challenge</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../recordings/index.html">Speech Recordings</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../analyses/index.html">Speech Analysis</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../recognitions/index.html">Speech Recognition</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Websocket API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/index.html">Websocket API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/speech_recording/index.html">Speech Recording</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/pronunciation_analyses/index.html">Pronunciation Analyses</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/choice_recognitions/index.html">Choice Recognitions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/audio/index.html">Audio</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Internal API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../permissions/index.html">Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../architecture/index.html">Infrastructure Architecture</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">ITSLanguage API</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>REST API &raquo;</li>
+        
+      
+    
+    <li>Challenges</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/itslanguage/itslanguage-docs/edit/master/docs/api/challenges.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="challenges"><a class="toclink" href="#challenges">Challenges</a></h1>
+<p>Several types of challenges can be created using the ITSLanguage Speech API.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#list-all-speech-challenges">speech</a></td>
+<td>Guide the student in speaking through an optional topic and optional reference audio.</td>
+</tr>
+<tr>
+<td><a href="#list-all-pronunciation-challenges">pronunciation</a></td>
+<td>A text transcription with reference audio allow a detailed, phoneme level analysis on user submitted audio.</td>
+</tr>
+<tr>
+<td><a href="#list-all-choice-challenges">choice</a></td>
+<td>One set of transcription choices is used to perform speech recognition to selects one of the choices.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="list-all-speech-challenges"><a class="toclink" href="#list-all-speech-challenges">List all speech challenges</a></h2>
+<h3 id="url"><a class="toclink" href="#url">URL</a></h3>
+<pre><code class="http">GET /challenges/speech HTTP/1.1
+</code></pre>
+
+<h3 id="request"><a class="toclink" href="#request">Request</a></h3>
+<pre><code class="http">GET /challenges/speech HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response"><a class="toclink" href="#response">Response</a></h3>
+<p>The response is a JSON list with speech challenges.</p>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;id&quot;: &quot;speech_1&quot;,
+    &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;topic&quot;: &quot;What do you know about babies?&quot;,
+    &quot;referenceAudioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;
+  },
+  {
+    &quot;id&quot;: &quot;12&quot;,
+    &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;topic&quot;: &quot;Book&quot;
+  }
+]
+</code></pre>
+
+<h2 id="get-a-single-speech-challenge"><a class="toclink" href="#get-a-single-speech-challenge">Get a single speech challenge</a></h2>
+<h3 id="url_1"><a class="toclink" href="#url_1">URL</a></h3>
+<pre><code class="http">GET /challenges/speech/:challenge HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The speech challenge identifier.</li>
+</ul>
+<h3 id="request_1"><a class="toclink" href="#request_1">Request</a></h3>
+<pre><code class="http">GET /challenges/speech/speech_1 HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response_1"><a class="toclink" href="#response_1">Response</a></h3>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;speech_1&quot;,
+  &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;topic&quot;: &quot;What do you know about babies?&quot;,
+  &quot;referenceAudioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;
+}
+</code></pre>
+
+<h2 id="create-a-speech-challenge"><a class="toclink" href="#create-a-speech-challenge">Create a speech challenge</a></h2>
+<h3 id="url_2"><a class="toclink" href="#url_2">URL</a></h3>
+<pre><code class="http">POST /challenges/speech HTTP/1.1
+</code></pre>
+
+<h3 id="request-parameters"><a class="toclink" href="#request-parameters">Request parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> The speech challenge identifier. If none is given, one is generated.</td>
+</tr>
+<tr>
+<td><code>topic</code></td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> A question or topic serving as guidance to the student.</td>
+</tr>
+<tr>
+<td><code>referenceAudio</code></td>
+<td><code>blob</code></td>
+<td><strong>Optional</strong> The reference audio fragment.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="request_2"><a class="toclink" href="#request_2">Request</a></h4>
+<pre><code class="http">POST /challenges/speech HTTP/1.1
+Accept: application/json
+Content-Type: multipart/form-data; boundary=jhgd87g7Gy3d78
+
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;referenceAudio&quot;; filename=&quot;blob&quot;
+Content-Type: audio/ogg
+
+&lt;blob&gt;
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;topic&quot;
+
+What do you know about babies?
+--jhgd87g7Gy3d78--
+</code></pre>
+
+<h3 id="response_2"><a class="toclink" href="#response_2">Response</a></h3>
+<pre><code class="http">HTTP/1.1 201 Created
+Content-Type: application/json
+Location: https://api.itslanguage.nl/challenges/speech/4
+
+{
+  &quot;id&quot;: &quot;4&quot;,
+  &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;topic&quot;: &quot;What do you know about babies?&quot;,
+  &quot;referenceAudioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;
+}
+</code></pre>
+
+<h2 id="update-a-speech-challenge"><a class="toclink" href="#update-a-speech-challenge">Update a speech challenge</a></h2>
+<h3 id="url_3"><a class="toclink" href="#url_3">URL</a></h3>
+<pre><code class="http">PUT /challenges/speech/:challenge HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The speech challenge identifier.</li>
+</ul>
+<p>Update one or more properties of an existing speech challenge.</p>
+<h3 id="request-parameters_1"><a class="toclink" href="#request-parameters_1">Request parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>topic</code></td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> A question or topic serving as guidance to the student.</td>
+</tr>
+<tr>
+<td><code>referenceAudio</code></td>
+<td><code>blob</code></td>
+<td><strong>Optional</strong> The reference audio fragment.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request_3"><a class="toclink" href="#request_3">Request</a></h3>
+<pre><code class="http">PUT /challenges/speech/4 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  &quot;topic&quot;: &quot;What do you know about the baby?&quot;
+}
+</code></pre>
+
+<h3 id="response_3"><a class="toclink" href="#response_3">Response</a></h3>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Location: https://api.itslanguage.nl/challenges/speech/4
+
+{
+  &quot;id&quot;: &quot;4&quot;,
+  &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;topic&quot;: &quot;What do you know about the baby?&quot;
+}
+</code></pre>
+
+<h2 id="list-all-pronunciation-challenges"><a class="toclink" href="#list-all-pronunciation-challenges">List all pronunciation challenges</a></h2>
+<h3 id="url_4"><a class="toclink" href="#url_4">URL</a></h3>
+<pre><code class="http">GET /challenges/pronunciation HTTP/1.1
+</code></pre>
+
+<h3 id="request_4"><a class="toclink" href="#request_4">Request</a></h3>
+<pre><code class="http">GET /challenges/pronunciation HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response_4"><a class="toclink" href="#response_4">Response</a></h3>
+<p>The response is a JSON list with pronunciation challenges.</p>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;id&quot;: &quot;pronunciation_1&quot;,
+    &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;transcription&quot;: &quot;You could take the baby with you&quot;,
+    &quot;referenceAudioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;,
+    &quot;status&quot;: &quot;preparing&quot;,
+    &quot;alignment&quot;: null
+  },
+  {
+    &quot;id&quot;: &quot;12&quot;,
+    &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;transcription&quot;: &quot;tap&quot;,
+    &quot;referenceAudioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu6-Abq&quot;,
+    &quot;status&quot;: &quot;prepared&quot;,
+    &quot;alignment&quot;: {
+      &quot;confidenceScore&quot;: -3.44,
+      &quot;words&quot;: [
+        {
+          &quot;chunks&quot;: [
+            {
+              &quot;graphemes&quot;: &quot;t&quot;,
+              &quot;phonemes&quot;: [
+                {
+                  &quot;start&quot;: 0.25,
+                  &quot;end&quot;: 0.45,
+                  &quot;confidenceScore&quot;: -2.8149,
+                  &quot;ipa&quot;: &quot;t&quot;
+                }
+              ]
+            },
+            {
+              &quot;graphemes&quot;: &quot;a&quot;,
+              &quot;phonemes&quot;: [
+                {
+                  &quot;start&quot;: 0.45,
+                  &quot;end&quot;: 0.67,
+                  &quot;confidenceScore&quot;: -0.7412,
+                  &quot;ipa&quot;: &quot;ae&quot;
+                }
+              ]
+            },
+            {
+              &quot;graphemes&quot;: &quot;p&quot;,
+              &quot;phonemes&quot;: [
+                {
+                  &quot;start&quot;: 0.67,
+                  &quot;end&quot;: 0.84,
+                  &quot;confidenceScore&quot;: -6.7516,
+                  &quot;ipa&quot;: &quot;p&quot;
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
+</code></pre>
+
+<h2 id="get-a-single-pronunciation-challenge"><a class="toclink" href="#get-a-single-pronunciation-challenge">Get a single pronunciation challenge</a></h2>
+<h3 id="url_5"><a class="toclink" href="#url_5">URL</a></h3>
+<pre><code class="http">GET /challenges/pronunciation/:challenge HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The pronunciation challenge identifier.</li>
+</ul>
+<h3 id="request_5"><a class="toclink" href="#request_5">Request</a></h3>
+<pre><code class="http">GET /challenges/pronunciation/pronunciaton_1 HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response_5"><a class="toclink" href="#response_5">Response</a></h3>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;12&quot;,
+  &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;transcription&quot;: &quot;tap&quot;,
+  &quot;referenceAudioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu6-Abq&quot;,
+  &quot;status&quot;: &quot;prepared&quot;,
+  &quot;alignment&quot;: {
+    &quot;confidenceScore&quot;: -3.44,
+    &quot;words&quot;: [
+      {
+        &quot;chunks&quot;: [
+          {
+            &quot;phonemes&quot;: [
+              {
+                &quot;start&quot;: 0.25,
+                &quot;ipa&quot;: &quot;t&quot;,
+                &quot;end&quot;: 0.45,
+                &quot;confidenceScore&quot;: -2.8149
+              }
+            ],
+            &quot;graphemes&quot;: &quot;t&quot;
+          },
+          {
+            &quot;phonemes&quot;: [
+              {
+                &quot;start&quot;: 0.45,
+                &quot;ipa&quot;: &quot;ae&quot;,
+                &quot;end&quot;: 0.67,
+                &quot;confidenceScore&quot;: -0.7412
+              }
+            ],
+            &quot;graphemes&quot;: &quot;a&quot;
+          },
+          {
+            &quot;phonemes&quot;: [
+              {
+                &quot;start&quot;: 0.67,
+                &quot;ipa&quot;: &quot;p&quot;,
+                &quot;end&quot;: 0.84,
+                &quot;confidenceScore&quot;: -6.7516
+              }
+            ],
+            &quot;graphemes&quot;: &quot;p&quot;
+          }
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+
+<h2 id="create-a-pronunciation-challenge"><a class="toclink" href="#create-a-pronunciation-challenge">Create a pronunciation challenge</a></h2>
+<h3 id="url_6"><a class="toclink" href="#url_6">URL</a></h3>
+<pre><code class="http">POST /challenges/pronunciation HTTP/1.1
+</code></pre>
+
+<h3 id="request-parameters_2"><a class="toclink" href="#request-parameters_2">Request parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> The pronunciation challenge identifier. If none is given, one is generated.</td>
+</tr>
+<tr>
+<td><code>transcription</code></td>
+<td><code>string</code></td>
+<td><strong>Required</strong> The spoken word or sentence as plain text.</td>
+</tr>
+<tr>
+<td><code>referenceAudio</code></td>
+<td><code>blob</code></td>
+<td><strong>Required</strong> The reference audio fragment.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request_6"><a class="toclink" href="#request_6">Request</a></h3>
+<pre><code class="http">POST /challenges/pronunciation HTTP/1.1
+Accept: application/json
+Content-Type: multipart/form-data; boundary=jhgd87g7Gy3d78
+
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;referenceAudio&quot;; filename=&quot;blob&quot;
+Content-Type: audio/ogg
+
+&lt;blob&gt;
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;transcription&quot;
+
+You could take the baby with you
+--jhgd87g7Gy3d78--
+</code></pre>
+
+<h3 id="response_6"><a class="toclink" href="#response_6">Response</a></h3>
+<pre><code class="http">HTTP/1.1 201 Created
+Content-Type: application/json
+Location: https://api.itslanguage.nl/challenges/pronunciation/4
+
+{
+  &quot;id&quot;: &quot;4&quot;,
+  &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;transcription&quot;: &quot;You could take the baby with you&quot;,
+  &quot;referenceAudioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;,
+  &quot;status&quot;: &quot;preparing&quot;,
+  &quot;alignment&quot;: null
+}
+</code></pre>
+
+<h2 id="update-a-pronunciation-challenge"><a class="toclink" href="#update-a-pronunciation-challenge">Update a pronunciation challenge</a></h2>
+<h3 id="url_7"><a class="toclink" href="#url_7">URL</a></h3>
+<pre><code class="http">PUT /challenges/pronunciation/:challenge HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The pronunciation challenge identifier.</li>
+</ul>
+<p>Update one or more properties of an existing pronunciation challenge.</p>
+<h3 id="request-parameters_3"><a class="toclink" href="#request-parameters_3">Request parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>transcription</code></td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> The spoken word or sentence in plain text.</td>
+</tr>
+<tr>
+<td><code>referenceAudio</code></td>
+<td><code>blob</code></td>
+<td><strong>Optional</strong> The reference audio fragment.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> The status of the challenge (unprepared, preparing, prepared).</td>
+</tr>
+<tr>
+<td><code>alignment</code></td>
+<td><code>object</code></td>
+<td><strong>Optional</strong> The alignment of the challenge.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request_7"><a class="toclink" href="#request_7">Request</a></h3>
+<pre><code class="http">PUT /challenges/pronunciation/4 HTTP/1.1
+Accept: application/json
+Content-Type: multipart/form-data; boundary=jhgd87g7Gy3d78
+
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;transcription&quot;
+
+tap
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;referenceAudio&quot;; filename=&quot;blob&quot;
+Content-Type: audio/ogg
+
+&lt;blob&gt;
+Content-Disposition: form-data; name=&quot;status&quot;
+
+prepared
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;aignment&quot;
+Content-Type: application/json
+
+{&quot;confidenceScore&quot;: -3.44, &quot;words&quot;: [....]}
+--jhgd87g7Gy3d78--
+</code></pre>
+
+<h3 id="response_7"><a class="toclink" href="#response_7">Response</a></h3>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Location: https://api.itslanguage.nl/challenges/pronunciation/4
+
+{
+  &quot;id&quot;: &quot;4&quot;,
+  &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;transcription&quot;: &quot;You could take the baby with you&quot;,
+  &quot;referenceAudioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-Abc&quot;,
+  &quot;status&quot;: &quot;prepared&quot;,
+  &quot;alignment&quot;: {&quot;confidenceScore&quot;: -3.44, &quot;words&quot;: [....]}
+}
+</code></pre>
+
+<h2 id="delete-a-single-pronunciation-challenge"><a class="toclink" href="#delete-a-single-pronunciation-challenge">Delete a single pronunciation challenge</a></h2>
+<h3 id="url_8"><a class="toclink" href="#url_8">URL</a></h3>
+<pre><code class="http">DELETE /challenges/pronunciation/:challenge HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The choice challenge identifier.</li>
+</ul>
+<h3 id="request_8"><a class="toclink" href="#request_8">Request</a></h3>
+<pre><code class="http">DELETE /challenges/pronunciation/choice_1 HTTP/1.1
+</code></pre>
+
+<h3 id="response_8"><a class="toclink" href="#response_8">Response</a></h3>
+<pre><code class="http">HTTP/1.1 204 No Content
+</code></pre>
+
+<h2 id="list-all-choice-challenges"><a class="toclink" href="#list-all-choice-challenges">List all choice challenges</a></h2>
+<h3 id="url_9"><a class="toclink" href="#url_9">URL</a></h3>
+<pre><code class="http">GET /challenges/choice HTTP/1.1
+</code></pre>
+
+<h3 id="request_9"><a class="toclink" href="#request_9">Request</a></h3>
+<pre><code class="http">GET /challenges/choice HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response-fields"><a class="toclink" href="#response-fields">Response fields</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td><code>string</code></td>
+<td><strong>Required</strong> The status of the challenge's preparation. Either 'unprepared', 'preparing' or 'prepared'. Only a 'prepared' challenge is ready to perform a speech recognition on.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="response_9"><a class="toclink" href="#response_9">Response</a></h3>
+<p>The response is a JSON list with choice challenges.</p>
+<p>The second entry shows that <em>choice challenges</em> can also be used to recognise one specific sentence.</p>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;id&quot;: &quot;13&quot;,
+    &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;question&quot;: &quot;The Pitcairn Islands are ... in the South Pacific Ocean&quot;,
+    &quot;choices&quot;: [
+      {
+        &quot;choice&quot;: &quot;located&quot;,
+        &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;
+      }, {
+        &quot;choice&quot;: &quot;sited&quot;,
+        &quot;audioUrl&quot;: null
+      }, {
+        &quot;choice&quot;: &quot;stationed&quot;,
+        &quot;audioUrl&quot;: null
+      }, {
+        &quot;choice&quot;: &quot;settled&quot;,
+        &quot;audioUrl&quot;: null
+      }
+    ],
+    &quot;status&quot;: &quot;prepared&quot;
+  },
+  {
+    &quot;id&quot;: &quot;14&quot;,
+    &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+    &quot;question&quot;: &quot;Ik heb erge hoofdpijn.&quot;,
+    &quot;choices&quot;: [
+      {
+        &quot;choice&quot;: &quot;I have a very bad headache.&quot;,
+        &quot;audioUrl&quot;: null
+      }
+    ],
+    &quot;status&quot;: &quot;preparing&quot;
+  }
+]
+</code></pre>
+
+<h2 id="get-a-single-choice-challenge"><a class="toclink" href="#get-a-single-choice-challenge">Get a single choice challenge</a></h2>
+<h3 id="url_10"><a class="toclink" href="#url_10">URL</a></h3>
+<pre><code class="http">GET /challenges/choice/:challenge HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The choice challenge identifier.</li>
+</ul>
+<h3 id="request_10"><a class="toclink" href="#request_10">Request</a></h3>
+<pre><code class="http">GET /challenges/choice/choice_1 HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response_10"><a class="toclink" href="#response_10">Response</a></h3>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;13&quot;,
+  &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;question&quot;: &quot;The Pitcairn Islands are ... in the South Pacific Ocean&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;choice&quot;: &quot;located&quot;,
+      &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;
+    }, {
+      &quot;choice&quot;: &quot;sited&quot;,
+      &quot;audioUrl&quot;: null
+    }, {
+      &quot;choice&quot;: &quot;stationed&quot;,
+      &quot;audioUrl&quot;: null
+    }, {
+      &quot;choice&quot;: &quot;settled&quot;,
+      &quot;audioUrl&quot;: null
+    }
+  ],
+  &quot;status&quot;: &quot;prepared&quot;
+}
+</code></pre>
+
+<h2 id="create-a-choice-challenge"><a class="toclink" href="#create-a-choice-challenge">Create a choice challenge</a></h2>
+<h3 id="url_11"><a class="toclink" href="#url_11">URL</a></h3>
+<pre><code class="http">POST /challenges/choice HTTP/1.1
+</code></pre>
+
+<h3 id="request-parameters_4"><a class="toclink" href="#request-parameters_4">Request parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> The choice challenge identifier. If none is given, one is generated.</td>
+</tr>
+<tr>
+<td><code>question</code></td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> A hint or question related to the choices.</td>
+</tr>
+<tr>
+<td><code>choices</code></td>
+<td><code>string[]</code></td>
+<td><strong>Required</strong> The sentences of which at most one may be recognised.</td>
+</tr>
+<tr>
+<td><code>audio</code></td>
+<td><code>blob[]</code></td>
+<td><strong>Optional</strong> Audible sentences that match the ones in <code>choices</code> at the same index.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request_11"><a class="toclink" href="#request_11">Request</a></h3>
+<pre><code class="http">POST /challenges/choice HTTP/1.1
+Accept: application/json
+Content-Type: multipart/form-data; boundary=jhgd87g7Gy3d78
+
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;choices&quot;
+
+located
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;choices&quot;
+
+sited
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;audio&quot;; filename=&quot;blob&quot;
+Content-Type: audio/ogg
+
+&lt;spoken audio: located&gt;
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;audio&quot;; filename=&quot;blob&quot;
+Content-Type: audio/wav
+
+&lt;spoken audio: sited&gt;
+--jhgd87g7Gy3d78--
+</code></pre>
+
+<h3 id="response-fields_1"><a class="toclink" href="#response-fields_1">Response fields</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td><code>string</code></td>
+<td><strong>Required</strong> The status of the challenge's preparation. Either 'unprepared', 'preparing' or 'prepared'. After creating a choice challenge, the status is 'preparing' for a short while, after it'll become 'prepared' to indicate the challenge is ready to perform a speech recognition on, or it'll be 'unprepared' in case the preparation failed for any reason.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="response_11"><a class="toclink" href="#response_11">Response</a></h3>
+<pre><code class="http">HTTP/1.1 202 Accepted
+Content-Type: application/json
+Location: https://api.itslanguage.nl/challenges/choice/4
+
+{
+  &quot;id&quot;: &quot;4&quot;,
+  &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;question&quot;: &quot;The Pitcairn Islands are ... in the South Pacific Ocean&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;choice&quot;: &quot;located&quot;,
+      &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsJ&quot;
+    }, {
+      &quot;choice&quot;: &quot;sited&quot;,
+      &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/download/YsjdG37bUGseu8-bsK&quot;
+    }
+  ],
+  &quot;status&quot;: &quot;preparing&quot;
+}
+</code></pre>
+
+<h2 id="update-a-choice-challenge"><a class="toclink" href="#update-a-choice-challenge">Update a choice challenge</a></h2>
+<p>Update one or more properties of an existing choice challenge.</p>
+<h3 id="url_12"><a class="toclink" href="#url_12">URL</a></h3>
+<pre><code class="http">PUT /challenges/choice/:challenge HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The choice challenge identifier.</li>
+</ul>
+<h3 id="request-parameters_5"><a class="toclink" href="#request-parameters_5">Request Parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>question</code></td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> A hint or question related to the choices.</td>
+</tr>
+<tr>
+<td><code>choices</code></td>
+<td><code>string[]</code></td>
+<td><strong>Optional</strong> The sentences of which at most one may be recognised.</td>
+</tr>
+<tr>
+<td><code>audio</code></td>
+<td><code>blob[]</code></td>
+<td><strong>Optional</strong> Audible sentences that match the ones in <code>choices</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request_12"><a class="toclink" href="#request_12">Request</a></h3>
+<pre><code class="http">PUT /challenges/choice/4 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  &quot;choices&quot;: [
+    &quot;located&quot;,
+    &quot;sited&quot;,
+    &quot;stationed&quot;,
+    &quot;settled&quot;
+  ]
+}
+</code></pre>
+
+<p>Or, with a preference for a web form submit:</p>
+<pre><code class="http">PUT /challenges/choice HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+choices=located&amp;choices=sited&amp;choices=stationed&amp;choices=settled
+</code></pre>
+
+<h3 id="response-fields_2"><a class="toclink" href="#response-fields_2">Response fields</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td><code>string</code></td>
+<td><strong>Required</strong> The status of the challenge's preparation. Either 'unprepared', 'preparing' or 'prepared'. After updating a choice challenge, the status is 'preparing' for a short while, after it'll become 'prepared' to indicate the challenge is ready once more to perform a speech recognition on, or it'll be 'unprepared' in case the preparation failed for any reason. Note that once a choice challenge has been updated, no speech recognitions can be performed on it until the status becomes 'prepared' again, even though the choice challenge was 'prepared' before the update.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="response_12"><a class="toclink" href="#response_12">Response</a></h3>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Location: https://api.itslanguage.nl/challenges/choice/4
+
+{
+  &quot;id&quot;: &quot;4&quot;,
+  &quot;created&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;updated&quot;: &quot;2014-01-28T21:25:10Z&quot;,
+  &quot;question&quot;: &quot;The Pitcairn Islands are ... in the South Pacific Ocean&quot;,
+  &quot;choices&quot;: [
+    &quot;located&quot;,
+    &quot;sited&quot;,
+    &quot;stationed&quot;,
+    &quot;settled&quot;
+  ],
+  &quot;status&quot;: &quot;preparing&quot;
+}
+</code></pre>
+
+<h2 id="delete-a-single-choice-challenge"><a class="toclink" href="#delete-a-single-choice-challenge">Delete a single choice challenge</a></h2>
+<h3 id="url_13"><a class="toclink" href="#url_13">URL</a></h3>
+<pre><code class="http">DELETE /challenges/choice/:challenge HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The choice challenge identifier.</li>
+</ul>
+<h3 id="request_13"><a class="toclink" href="#request_13">Request</a></h3>
+<pre><code class="http">DELETE /challenges/choice/choice_1 HTTP/1.1
+</code></pre>
+
+<h3 id="response_13"><a class="toclink" href="#response_13">Response</a></h3>
+<pre><code class="http">HTTP/1.1 204 No Content
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../recordings/index.html" class="btn btn-neutral float-right" title="Speech Recordings">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../students/index.html" class="btn btn-neutral" title="Students"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2013-2015</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/itslanguage/itslanguage-docs/" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../students/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../recordings/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

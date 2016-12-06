@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Audio - ITSLanguage API</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Audio";
+    var mkdocs_page_input_path = "websocket/audio.md";
+    var mkdocs_page_url = "/websocket/audio/index.html";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="icon icon-home"> ITSLanguage API</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Home</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../index.html">ITSLanguage Speech API</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API basics</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/index.html">The REST API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/authentication/index.html">Authentication</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/permissions/index.html">Roles and Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/errors/index.html">Error handling</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/oauth2/index.html">OAuth2</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/organisations/index.html">Organisations</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/students/index.html">Students</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/challenges/index.html">Challenges</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/recordings/index.html">Speech Recordings</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/analyses/index.html">Speech Analysis</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/recognitions/index.html">Speech Recognition</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Websocket API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../index.html">Websocket API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../speech_recording/index.html">Speech Recording</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../pronunciation_analyses/index.html">Pronunciation Analyses</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../choice_recognitions/index.html">Choice Recognitions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">Audio</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#audio">Audio</a></li>
+                
+                    <li><a class="toctree-l4" href="#wav">WAV</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Internal API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/permissions/index.html">Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api/architecture/index.html">Infrastructure Architecture</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">ITSLanguage API</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Websocket API &raquo;</li>
+        
+      
+    
+    <li>Audio</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/itslanguage/itslanguage-docs/edit/master/docs/websocket/audio.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="audio"><a class="toclink" href="#audio">Audio</a></h1>
+<p>Various RPCs accept audio uploads. Supported audio formats are documented here.</p>
+<h2 id="wav"><a class="toclink" href="#wav">WAV</a></h2>
+<h3 id="mimetypes"><a class="toclink" href="#mimetypes">Mimetypes</a></h3>
+<p>The WAV format has multiple mimetypes associated with it. The following are
+supported by ITSLanguage:</p>
+<ul>
+<li><code>audio/wav</code></li>
+<li><code>audio/wave</code></li>
+<li><code>audio/x-wav</code></li>
+</ul>
+<h3 id="parameters"><a class="toclink" href="#parameters">Parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>channels</td>
+<td><code>int</code></td>
+<td><strong>Required</strong> The number of channels.</td>
+</tr>
+<tr>
+<td>frame_rate</td>
+<td><code>int</code></td>
+<td><strong>Required</strong> The frame rate in Hertz.</td>
+</tr>
+<tr>
+<td>sample_width</td>
+<td><code>int</code></td>
+<td><strong>Required</strong> The sample width in bits.</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../api/permissions/index.html" class="btn btn-neutral float-right" title="Permissions">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../choice_recognitions/index.html" class="btn btn-neutral" title="Choice Recognitions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2013-2015</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/itslanguage/itslanguage-docs/" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../choice_recognitions/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../api/permissions/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

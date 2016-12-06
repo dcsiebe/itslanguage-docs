@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Speech Analysis - ITSLanguage API</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Speech Analysis";
+    var mkdocs_page_input_path = "api/analyses.md";
+    var mkdocs_page_url = "/api/analyses/index.html";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="icon icon-home"> ITSLanguage API</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Home</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../index.html">ITSLanguage Speech API</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API basics</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../index.html">The REST API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../authentication/index.html">Authentication</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../permissions/index.html">Roles and Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../errors/index.html">Error handling</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../oauth2/index.html">OAuth2</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../organisations/index.html">Organisations</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../students/index.html">Students</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../challenges/index.html">Challenges</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../recordings/index.html">Speech Recordings</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">Speech Analysis</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#analyses">Analyses</a></li>
+                
+                    <li><a class="toctree-l4" href="#create-a-pronunciation-analysis">Create a pronunciation analysis</a></li>
+                
+                    <li><a class="toctree-l4" href="#list-pronunciation-analyses">List pronunciation analyses</a></li>
+                
+                    <li><a class="toctree-l4" href="#get-a-single-pronunciation-analysis">Get a single pronunciation analysis</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../recognitions/index.html">Speech Recognition</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Websocket API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/index.html">Websocket API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/speech_recording/index.html">Speech Recording</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/pronunciation_analyses/index.html">Pronunciation Analyses</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/choice_recognitions/index.html">Choice Recognitions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/audio/index.html">Audio</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Internal API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../permissions/index.html">Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../architecture/index.html">Infrastructure Architecture</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">ITSLanguage API</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>REST API &raquo;</li>
+        
+      
+    
+    <li>Speech Analysis</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/itslanguage/itslanguage-docs/edit/master/docs/api/analyses.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="analyses"><a class="toclink" href="#analyses">Analyses</a></h1>
+<p>Speech analyses can be applied to user submitted audio using the ITSLanguage Speech API.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pronunciation</code></td>
+<td>Compares reference audio to user submitted audio and provides an analysis on phoneme level.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create-a-pronunciation-analysis"><a class="toclink" href="#create-a-pronunciation-analysis">Create a pronunciation analysis</a></h2>
+<h3 id="url"><a class="toclink" href="#url">URL</a></h3>
+<pre><code class="http">POST /challenges/pronunciation/:challenge/analyses HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The challenge identifier.</li>
+</ul>
+<h3 id="request-parameters"><a class="toclink" href="#request-parameters">Request parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> A unique identifier for the analysis.</td>
+</tr>
+<tr>
+<td>studentId</td>
+<td><code>string</code></td>
+<td><strong>Required</strong> The id of the student that supplied the audio.</td>
+</tr>
+<tr>
+<td>audio</td>
+<td><code>blob</code></td>
+<td><strong>Required</strong> The actual audio. (Ogg Opus or WAV)</td>
+</tr>
+<tr>
+<td>score</td>
+<td><code>float</code></td>
+<td><strong>Optional</strong> The overall score of the pronunciation between 0 and 1. Required if <code>words</code> is given.</td>
+</tr>
+<tr>
+<td>words</td>
+<td><code>json</code></td>
+<td><strong>Optional</strong> A JSON encoded list of analysed words, forming the spoken sentence. Required if <code>score</code> is given.</td>
+</tr>
+</tbody>
+</table>
+<p>A word is represented as a list of graphemes. Each grapheme contains of the
+following attributes:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>graphemes</td>
+<td><code>string</code></td>
+<td><strong>Required</strong> A string containing the assessed graphemes.</td>
+</tr>
+<tr>
+<td>phonemes</td>
+<td><code>object[]</code></td>
+<td><strong>Required</strong> A list of phonemes found in the assessed grapheme.</td>
+</tr>
+<tr>
+<td>score</td>
+<td><code>float</code></td>
+<td><strong>Required</strong> The score of the assessed graphemes between 0 and 1.</td>
+</tr>
+<tr>
+<td>verdict</td>
+<td><code>string</code></td>
+<td><strong>Required</strong> The textual representation of the score. This should be <code>bad</code>, <code>good</code> or `moderate,</td>
+</tr>
+</tbody>
+</table>
+<p>Each phoneme should have the following properties:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ipa</td>
+<td><code>string</code></td>
+<td><strong>Required</strong> IPA representation of the analysed graphemes.</td>
+</tr>
+<tr>
+<td>score</td>
+<td><code>float</code></td>
+<td><strong>Required</strong> The score of the assessed phoneme between 0 and 1.</td>
+</tr>
+<tr>
+<td>verdict</td>
+<td><code>string</code></td>
+<td><strong>Required</strong> The textual representation of the score. This should be <code>bad</code>, <code>good</code> or <code>moderate</code>.</td>
+</tr>
+<tr>
+<td>start</td>
+<td><code>float</code></td>
+<td><strong>Required</strong> Starting point offset from the beginning of the audio.</td>
+</tr>
+<tr>
+<td>end</td>
+<td><code>float</code></td>
+<td><strong>Required</strong> Ending point offset from the beginning of the audio.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request"><a class="toclink" href="#request">Request</a></h3>
+<p>The request should be a <code>multipart/form-data</code>.</p>
+<pre><code class="http">POST /challenges/pronunciation/test/analyses HTTP/1.1
+Accept: application/json
+Content-Type: multipart/form-data; boundary=&quot;4c1plRsNM5mLpzT7UvYG&quot;
+
+--4c1plRsNM5mLpzT7UvYG
+Content-Disposition: form-data; name=&quot;id&quot;
+
+35
+--4c1plRsNM5mLpzT7UvYG
+Content-Disposition: form-data; name=&quot;audio&quot;; filename=&quot;blob&quot;
+Content-Type: audio/ogg
+
+&lt;audio blob&gt;
+--4c1plRsNM5mLpzT7UvYG
+Content-Disposition: form-data; name=&quot;studentId&quot;
+
+24
+--4c1plRsNM5mLpzT7UvYG
+Content-Disposition: form-data; name=&quot;score&quot;
+
+0.75
+--4c1plRsNM5mLpzT7UvYG
+Content-Disposition: form-data; name=&quot;words&quot;
+Content-Type: application/json:
+
+[
+  {
+    &quot;chunks&quot;: [
+      {
+        &quot;score&quot;: 0.9,
+        &quot;verdict&quot;: &quot;good&quot;,
+        &quot;graphemes&quot;: &quot;b&quot;,
+        &quot;phonemes&quot;: [
+          {
+            &quot;ipa&quot;: &quot;b&quot;,
+            &quot;score&quot;: 0.9,
+            &quot;verdict&quot;: &quot;good&quot;,
+            &quot;start&quot;: 0.112,
+            &quot;end&quot;: 0.171
+          }
+        ]
+      },
+      {
+        &quot;score&quot;: 0.4,
+        &quot;verdict&quot;: &quot;bad&quot;,
+        &quot;graphemes&quot;: &quot;o&quot;,
+        &quot;phonemes&quot;: [
+          {
+            &quot;ipa&quot;: &quot;\u0251&quot;,
+            &quot;score&quot;: 0.4,
+            &quot;verdict&quot;: &quot;bad&quot;,
+            &quot;start&quot;: 0.171,
+            &quot;end&quot;: 0.227
+          }
+        ]
+      },
+      {
+        &quot;score&quot;: 0.5,
+        &quot;verdict&quot;: &quot;moderate&quot;,
+        &quot;graphemes&quot;: &quot;x&quot;,
+        &quot;phonemes&quot;: [
+          {
+            &quot;ipa&quot;: &quot;k&quot;,
+            &quot;score&quot;: 0.4,
+            &quot;verdict&quot;: &quot;bad&quot;,
+            &quot;start&quot;: 0.227,
+            &quot;end&quot;: 0.264
+          },
+          {
+            &quot;ipa&quot;: &quot;s&quot;,
+            &quot;score&quot;: 0.6,
+            &quot;verdict&quot;: &quot;moderate&quot;,
+            &quot;start&quot;: 0.264,
+            &quot;end&quot;: 0.339
+          }
+        ]
+      }
+    ]
+  }
+]
+
+--4c1plRsNM5mLpzT7UvYG--
+</code></pre>
+
+<h3 id="response"><a class="toclink" href="#response">Response</a></h3>
+<p>The analysed audio can be downloaded by opening the <code>audioUrl</code> in the
+response.</p>
+<pre><code class="http">HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;35&quot;,
+  &quot;updated&quot;: &quot;2014-02-13T09:39:40Z&quot;,
+  &quot;created&quot;: &quot;2014-02-13T09:39:37Z&quot;,
+  &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/challenges/pronunciation/test/analyses/35/audio&quot;,
+  &quot;studentId&quot;: &quot;24&quot;,
+  &quot;score&quot;: 0.75,
+  &quot;words&quot;: [
+    {
+      &quot;chunks&quot;: [
+        {
+          &quot;score&quot;: 0.9,
+          &quot;verdict&quot;: &quot;good&quot;,
+          &quot;graphemes&quot;: &quot;b&quot;,
+          &quot;phonemes&quot;: [
+            {
+              &quot;ipa&quot;: &quot;b&quot;,
+              &quot;score&quot;: 0.9,
+              &quot;verdict&quot;: &quot;good&quot;,
+              &quot;start&quot;: 0.112,
+              &quot;end&quot;: 0.171
+            }
+          ]
+        },
+        {
+          &quot;score&quot;: 0.4,
+          &quot;verdict&quot;: &quot;bad&quot;,
+          &quot;graphemes&quot;: &quot;o&quot;,
+          &quot;phonemes&quot;: [
+            {
+              &quot;ipa&quot;: &quot;\u0251&quot;,
+              &quot;score&quot;: 0.4,
+              &quot;verdict&quot;: &quot;bad&quot;,
+              &quot;start&quot;: 0.171,
+              &quot;end&quot;: 0.227
+            }
+          ]
+        },
+        {
+          &quot;score&quot;: 0.5,
+          &quot;verdict&quot;: &quot;moderate&quot;,
+          &quot;graphemes&quot;: &quot;x&quot;,
+          &quot;phonemes&quot;: [
+            {
+              &quot;ipa&quot;: &quot;k&quot;,
+              &quot;score&quot;: 0.4,
+              &quot;verdict&quot;: &quot;bad&quot;,
+              &quot;start&quot;: 0.227,
+              &quot;end&quot;: 0.264
+            },
+            {
+              &quot;ipa&quot;: &quot;s&quot;,
+              &quot;score&quot;: 0.6,
+              &quot;verdict&quot;: &quot;moderate&quot;,
+              &quot;start&quot;: 0.264,
+              &quot;end&quot;: 0.339
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+
+<h2 id="list-pronunciation-analyses"><a class="toclink" href="#list-pronunciation-analyses">List pronunciation analyses</a></h2>
+<h3 id="url_1"><a class="toclink" href="#url_1">URL</a></h3>
+<pre><code class="http">GET /challenges/pronunciation/:challenge/analyses HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The challenge identifier.</li>
+</ul>
+<h3 id="request-parameters_1"><a class="toclink" href="#request-parameters_1">Request parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>studentId</code></td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> The id of the student that supplied the audio.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request_1"><a class="toclink" href="#request_1">Request</a></h3>
+<pre><code class="http">GET /challenges/pronunciation/test/analyses?studentId=24 HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response_1"><a class="toclink" href="#response_1">Response</a></h3>
+<p>The response is a JSON list with pronunciation analyses of <code>studentId</code> '24'.</p>
+<p>Note:</p>
+<ul>
+<li>The apostrophe in <em>Bob's</em> is included in the <code>graphemes</code> field of the <em>s</em>.</li>
+<li>When a phoneme represents more than one grapheme like <em>yo</em> in <em>your</em>, they're grouped in the same <code>graphemes</code> field.</li>
+<li>The <em>c</em> in <em>uncle</em> exists of two phonemes. The <code>score</code> and <code>verdict</code> are shown
+  per phoneme, along with the <code>ipa</code> notation.</li>
+</ul>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;id&quot;: &quot;34&quot;,
+    &quot;updated&quot;: &quot;2014-02-13T09:39:40Z&quot;,
+    &quot;created&quot;: &quot;2014-02-13T09:39:37Z&quot;,
+    &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/challenges/pronunciation/test/analyses/34/audio&quot;,
+    &quot;studentId&quot;: &quot;24&quot;,
+    &quot;score&quot;: 0.75,
+    &quot;words&quot;: [
+      {
+        &quot;chunks&quot;: [
+          {
+            &quot;score&quot;: 0.99,
+            &quot;verdict&quot;: &quot;good&quot;,
+            &quot;graphemes&quot;: &quot;B&quot;,
+            &quot;phonemes&quot;: [
+              {
+                &quot;ipa&quot;: &quot;b&quot;,
+                &quot;score&quot;: 0.99,
+                &quot;verdict&quot;: &quot;good&quot;,
+                &quot;start&quot;: 1.07,
+                &quot;end&quot;: 1.15
+              }
+            ]
+          },
+          {
+            &quot;score&quot;: 0.77,
+            &quot;verdict&quot;: &quot;good&quot;,
+            &quot;graphemes&quot;: &quot;O&quot;,
+            &quot;phonemes&quot;: [
+              {
+                &quot;ipa&quot;: &quot;oh&quot;,
+                &quot;score&quot;: 0.77,
+                &quot;verdict&quot;: &quot;good&quot;,
+                &quot;start&quot;: 1.15,
+                &quot;end&quot;: 1.22
+              }
+            ]
+          },
+          {
+            &quot;score&quot;: 0.92,
+            &quot;verdict&quot;: &quot;good&quot;,
+            &quot;graphemes&quot;: &quot;B&quot;,
+            &quot;phonemes&quot;: [
+              {
+                &quot;ipa&quot;: &quot;b&quot;,
+                &quot;score&quot;: 0.92,
+                &quot;verdict&quot;: &quot;good&quot;,
+                &quot;start&quot;: 1.22,
+                &quot;end&quot;: 1.35
+              }
+            ]
+          },
+          {
+            &quot;score&quot;: 0.59,
+            &quot;verdict&quot;: &quot;moderate&quot;,
+            &quot;graphemes&quot;: &quot;'S&quot;,
+            &quot;phonemes&quot;: [
+              {
+                &quot;ipa&quot;: &quot;z&quot;,
+                &quot;score&quot;: 0.59,
+                &quot;verdict&quot;: &quot;moderate&quot;,
+                &quot;start&quot;: 1.35,
+                &quot;end&quot;: 1.42
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;35&quot;,
+    &quot;updated&quot;: &quot;2014-02-13T09:39:40Z&quot;,
+    &quot;created&quot;: &quot;2014-02-13T09:39:37Z&quot;,
+    &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/challenges/pronunciation/test/analyses/35/audio&quot;,
+    &quot;studentId&quot;: &quot;24&quot;,
+    &quot;score&quot;: 0.75,
+    &quot;words&quot;: [
+      {
+        &quot;chunks&quot;: [
+          {
+            &quot;score&quot;: 0.89,
+            &quot;verdict&quot;: &quot;good&quot;,
+            &quot;graphemes&quot;: &quot;YO&quot;,
+            &quot;phonemes&quot;: [
+              {
+                &quot;ipa&quot;: &quot;y&quot;,
+                &quot;score&quot;: 0.89,
+                &quot;verdict&quot;: &quot;good&quot;,
+                &quot;start&quot;: 1.42,
+                &quot;end&quot;: 1.51
+              }
+            ]
+          },
+          {
+            &quot;score&quot;: 0.48,
+            &quot;verdict&quot;: &quot;moderate&quot;,
+            &quot;graphemes&quot;: &quot;UR&quot;,
+            &quot;phonemes&quot;: [
+              {
+                &quot;ipa&quot;: &quot;ao&quot;,
+                &quot;score&quot;: 0.48,
+                &quot;verdict&quot;: &quot;moderate&quot;,
+                &quot;start&quot;: 1.51,
+                &quot;end&quot;: 1.61
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;36&quot;,
+    &quot;updated&quot;: &quot;2014-02-13T09:39:40Z&quot;,
+    &quot;created&quot;: &quot;2014-02-13T09:39:37Z&quot;,
+    &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/challenges/pronunciation/test/analyses/36/audio&quot;,
+    &quot;studentId&quot;: &quot;24&quot;,
+    &quot;score&quot;: 0.75,
+    &quot;words&quot;: [
+      {
+        &quot;chunks&quot;: [
+          {
+            &quot;score&quot;: 0.81,
+            &quot;verdict&quot;: &quot;good&quot;,
+            &quot;graphemes&quot;: &quot;U&quot;,
+            &quot;phonemes&quot;: [
+              {
+                &quot;ipa&quot;: &quot;ah&quot;,
+                &quot;score&quot;: 0.81,
+                &quot;verdict&quot;: &quot;good&quot;,
+                &quot;start&quot;: 1.61,
+                &quot;end&quot;: 1.69
+              }
+            ]
+          },
+          {
+            &quot;score&quot;: 0.95,
+            &quot;verdict&quot;: &quot;good&quot;,
+            &quot;graphemes&quot;: &quot;N&quot;,
+            &quot;phonemes&quot;: [
+              {
+                &quot;ipa&quot;: &quot;ng&quot;,
+                &quot;score&quot;: 0.95,
+                &quot;verdict&quot;: &quot;good&quot;,
+                &quot;start&quot;: 1.69,
+                &quot;end&quot;: 1.74
+              }
+            ]
+          },
+          {
+            &quot;score&quot;: 0.99,
+            &quot;verdict&quot;: &quot;good&quot;,
+            &quot;graphemes&quot;: &quot;C&quot;,
+            &quot;phonemes&quot;: [
+              {
+                &quot;ipa&quot;: &quot;k&quot;,
+                &quot;score&quot;: 0.99,
+                &quot;verdict&quot;: &quot;good&quot;,
+                &quot;start&quot;: 1.74,
+                &quot;end&quot;: 1.83
+              },
+              {
+                &quot;ipa&quot;: &quot;ax&quot;,
+                &quot;score&quot;: 0.94,
+                &quot;verdict&quot;: &quot;good&quot;,
+                &quot;start&quot;: 1.83,
+                &quot;end&quot;: 1.88
+              }
+            ]
+          },
+          {
+            &quot;score&quot;: 0.97,
+            &quot;verdict&quot;: &quot;good&quot;,
+            &quot;graphemes&quot;: &quot;LE&quot;,
+            &quot;phonemes&quot;: [
+              {
+                &quot;ipa&quot;: &quot;l&quot;,
+                &quot;score&quot;: 0.97,
+                &quot;verdict&quot;: &quot;good&quot;,
+                &quot;start&quot;: 1.88,
+                &quot;end&quot;: 2.08
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+</code></pre>
+
+<h2 id="get-a-single-pronunciation-analysis"><a class="toclink" href="#get-a-single-pronunciation-analysis">Get a single pronunciation analysis</a></h2>
+<h3 id="url_2"><a class="toclink" href="#url_2">URL</a></h3>
+<pre><code class="http">GET /challenges/pronunciation/:challenge/analyses/:analysis HTTP/1.1
+</code></pre>
+
+<ul>
+<li><code>challenge</code> - <strong>Required</strong> The challenge identifier.</li>
+<li><code>analysis</code> - <strong>Required</strong> The analysis identifier.</li>
+</ul>
+<h3 id="request_2"><a class="toclink" href="#request_2">Request</a></h3>
+<pre><code class="http">GET /challenges/pronunciation/test/analyses/25 HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response_2"><a class="toclink" href="#response_2">Response</a></h3>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;25&quot;,
+  &quot;updated&quot;: &quot;2014-02-13T09:37:40Z&quot;,
+  &quot;created&quot;: &quot;2014-02-13T09:37:37Z&quot;,
+  &quot;audioUrl&quot;: &quot;https://api.itslanguage.nl/challenges/pronunciation/test/analyses/25/audio&quot;,
+  &quot;studentId&quot;: &quot;24&quot;,
+  &quot;score&quot;: 0.75,
+  &quot;words&quot;: [
+    {
+      &quot;chunks&quot;: [
+        {
+          &quot;score&quot;: 0.9,
+          &quot;verdict&quot;: &quot;good&quot;,
+          &quot;graphemes&quot;: &quot;b&quot;,
+          &quot;phonemes&quot;: [
+            {
+              &quot;ipa&quot;: &quot;b&quot;,
+              &quot;score&quot;: 0.9,
+              &quot;verdict&quot;: &quot;good&quot;
+            }
+          ]
+        },
+        {
+          &quot;score&quot;: 0.4,
+          &quot;verdict&quot;: &quot;bad&quot;,
+          &quot;graphemes&quot;: &quot;o&quot;,
+          &quot;phonemes&quot;: [
+            {
+              &quot;ipa&quot;: &quot;\u0251&quot;,
+              &quot;score&quot;: 0.4,
+              &quot;verdict&quot;: &quot;bad&quot;
+            }
+          ]
+        },
+        {
+          &quot;score&quot;: 0.5,
+          &quot;verdict&quot;: &quot;moderate&quot;,
+          &quot;graphemes&quot;: &quot;x&quot;,
+          &quot;phonemes&quot;: [
+            {
+              &quot;ipa&quot;: &quot;k&quot;,
+              &quot;score&quot;: 0.4,
+              &quot;verdict&quot;: &quot;bad&quot;
+            },
+            {
+              &quot;ipa&quot;: &quot;s&quot;,
+              &quot;score&quot;: 0.6,
+              &quot;verdict&quot;: &quot;moderate&quot;
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../recognitions/index.html" class="btn btn-neutral float-right" title="Speech Recognition">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../recordings/index.html" class="btn btn-neutral" title="Speech Recordings"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2013-2015</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/itslanguage/itslanguage-docs/" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../recordings/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../recognitions/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

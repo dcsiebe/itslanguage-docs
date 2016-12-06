@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>The REST API - ITSLanguage API</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "The REST API";
+    var mkdocs_page_input_path = "api/index.md";
+    var mkdocs_page_url = "/api/index.html";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> ITSLanguage API</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Home</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../index.html">ITSLanguage Speech API</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API basics</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">The REST API</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#urls">URLs</a></li>
+                
+                    <li><a class="toctree-l4" href="#dtap-environments">DT(A)P environments</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#request-and-response-format">Request and Response Format</a></li>
+                
+                    <li><a class="toctree-l4" href="#json">JSON</a></li>
+                
+                    <li><a class="toctree-l4" href="#multipart-form-data">Multipart form data</a></li>
+                
+                    <li><a class="toctree-l4" href="#url-encoded-forms">URL encoded forms</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#data-representation">Data representation</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#timestamps">Timestamps</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#securing-your-connection">Securing Your Connection</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#summary-representations">Summary Representations</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#detailed-representations">Detailed Representations</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#parameters">Parameters</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#pagination">Pagination</a></li>
+                
+                    <li><a class="toctree-l4" href="#link-header">Link Header</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#cross-origin-resource-sharing">Cross Origin Resource Sharing</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#json-p-callbacks">JSON-P Callbacks</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="authentication/index.html">Authentication</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="permissions/index.html">Roles and Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="errors/index.html">Error handling</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="oauth2/index.html">OAuth2</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="organisations/index.html">Organisations</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="students/index.html">Students</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="challenges/index.html">Challenges</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="recordings/index.html">Speech Recordings</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="analyses/index.html">Speech Analysis</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="recognitions/index.html">Speech Recognition</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Websocket API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../websocket/index.html">Websocket API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../websocket/speech_recording/index.html">Speech Recording</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../websocket/pronunciation_analyses/index.html">Pronunciation Analyses</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../websocket/choice_recognitions/index.html">Choice Recognitions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../websocket/audio/index.html">Audio</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Internal API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="permissions/index.html">Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="architecture/index.html">Infrastructure Architecture</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">ITSLanguage API</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>REST API basics &raquo;</li>
+        
+      
+    
+    <li>The REST API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/itslanguage/itslanguage-docs/edit/master/docs/api/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="urls"><a class="toclink" href="#urls">URLs</a></h2>
+<p>API actions are usually performed by accessing our production servers on the <code>api.itslanguage.nl</code> domain.
+For example:</p>
+<pre><code class="sh">curl -i https://api.itslanguage.nl/organisations
+</code></pre>
+
+<pre><code class="http">HTTP/1.1 200 OK
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+Vary: Accept-Encoding
+Date: Wed, 20 Nov 2013 17:10:22 GMT
+Server: Google Frontend
+Alternate-Protocol: 443:quic
+Transfer-Encoding: chunked
+
+[]
+</code></pre>
+
+<h3 id="dtap-environments"><a class="toclink" href="#dtap-environments">DT(A)P environments</a></h3>
+<p>There are three environments. In most cases you'll only use the production environment.
+When instructed to test on any other environment, these are their characteristics:</p>
+<h4 id="development"><a class="toclink" href="#development">Development</a></h4>
+<p>The latest features may be tested in the development environment: <code>https://api-dot-dev.itslanguage.nl</code>.</p>
+<p>This environment may become unstable and data may be reset at any time.</p>
+<p>This documentation matching this environment is available at: <code>https://help-dot-dev.itslanguage.nl</code>.</p>
+<h4 id="testing"><a class="toclink" href="#testing">Testing</a></h4>
+<p>More mature features may be tested in the test environment: <code>https://api-dot-test.itslanguage.nl</code>.</p>
+<p>This environment may become unstable and data may be reset at any time.</p>
+<p>This documentation matching this environment is available at: <code>https://help-dot-test.itslanguage.nl</code>.</p>
+<h4 id="production"><a class="toclink" href="#production">Production</a></h4>
+<p>Stable features may be used in the production environment: <code>https://api.itslanguage.nl</code>.</p>
+<p>This environment will store data it receives for a longer time.</p>
+<p>This documentation matching this environment is available at: <code>https://help.itslanguage.nl</code>.</p>
+<h2 id="request-and-response-format"><a class="toclink" href="#request-and-response-format">Request and Response Format</a></h2>
+<p>All endpoints accept and return JSON, with the exception of a few special cases that require submitting blobs.</p>
+<h3 id="json"><a class="toclink" href="#json">JSON</a></h3>
+<p>All endpoints accept and return JSON, with the exception of a few special cases designed for use from a web browser or containing blobs.</p>
+<p>As described in <a href="http://www.ietf.org/rfc/rfc4627.txt">RFC 4627</a>:
+<em>JSON text SHALL be encoded in Unicode. The default encoding is UTF-8.</em>
+Therefore, specifying the encoding with <code>charset=utf-8</code> in the header is optional, it's an implicit default.</p>
+<p>When sending JSON the appropriate Content-Type header needs to be set.</p>
+<pre><code class="bash">curl -d '{&quot;name&quot;: &quot;sheffield&quot;}' -H &quot;Content-Type: application/json&quot; https://api.itslanguage.nl/organisations
+</code></pre>
+
+<p>Blank fields are included as <code>null</code> instead of being omitted.</p>
+<h3 id="multipart-form-data"><a class="toclink" href="#multipart-form-data">Multipart form data</a></h3>
+<p>When submitted forms contains binary data like audio fragments, this request format needs to be used.
+An example form POST looks like this:</p>
+<pre><code class="http">POST /organisation/crimson/challenges/choice HTTP/1.1
+Accept: application/json
+Content-Type: multipart/form-data; boundary=jhgd87g7Gy3d78
+
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;choices&quot;
+
+located
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;choices&quot;
+
+sited
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;audio&quot;; filename=&quot;blob&quot;
+Content-Type: audio/ogg
+
+&lt;spoken audio: located&gt;
+--jhgd87g7Gy3d78
+Content-Disposition: form-data; name=&quot;audio&quot;; filename=&quot;blob&quot;
+Content-Type: audio/wav
+
+&lt;spoken audio: sited&gt;
+--jhgd87g7Gy3d78--
+</code></pre>
+
+<p>Repeated fieldnames are accepted and transformed as lists in the given order.</p>
+<h3 id="url-encoded-forms"><a class="toclink" href="#url-encoded-forms">URL encoded forms</a></h3>
+<p>This content type is unsupported for most API calls, it may be supported for legacy reasons.</p>
+<pre><code class="http">POST /organisations/crimson/challenges/choice HTTP/1.1
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+question=The%20Pitcairn%20Islands%20are%20...%20in%20the%20South%20Pacific%20Ocean&amp;choices=located&amp;choices=sited&amp;choices=stationed&amp;choices=settled
+</code></pre>
+
+<h2 id="data-representation"><a class="toclink" href="#data-representation">Data representation</a></h2>
+<h2 id="timestamps"><a class="toclink" href="#timestamps">Timestamps</a></h2>
+<p>All timestamps are returned in ISO 8601 format <code>YYYY-MM-DDTHH:MM:SSZ</code>.</p>
+<h2 id="securing-your-connection"><a class="toclink" href="#securing-your-connection">Securing Your Connection</a></h2>
+<p>ITSLanguage's API is available over both secure (HTTPS) and unsecure connections. The section on <a href="authentication/index.html">authentication</a> goes into more detail on when you should use one or the other. Note that cross-domain requests from a web browser should match the protocol (HTTP or HTTPS) used by the page the browser is displaying to avoid security warnings.</p>
+<h2 id="summary-representations"><a class="toclink" href="#summary-representations">Summary Representations</a></h2>
+<p>When you fetch a list of resources, the response includes a <em>subset</em> of the
+attributes for that resource. This is the "summary" representation of the
+resource. (Some attributes are computationally expensive for the API to provide.
+For performance reasons, the summary representation excludes those attributes.
+To obtain those attributes, fetch the "detailed" representation.)</p>
+<p><strong>Example</strong>: When you get a list of students, you get the summary
+representation of each student. Here, we fetch the list of students owned
+by the <a href="">sheffield</a> organisation:</p>
+<pre><code class="http">GET /organisations/sheffield/students HTTP/1.1
+</code></pre>
+
+<h2 id="detailed-representations"><a class="toclink" href="#detailed-representations">Detailed Representations</a></h2>
+<p>When you fetch an individual resource, the response typically includes <em>all</em>
+attributes for that resource. This is the "detailed" representation of the
+resource. (Note that authorization sometimes influences the amount of detail
+included in the representation.)</p>
+<p><strong>Example</strong>: When you get an individual repository, you get the detailed
+representation of the repository. Here, we fetch the
+<a href="">sheffield/amy</a> student:</p>
+<pre><code class="http">GET /organisations/sheffield/students/amy HTTP/1.1
+</code></pre>
+
+<p>The documentation provides an example response for each API method. The example
+response illustrates all attributes that are returned by that method.</p>
+<h2 id="parameters"><a class="toclink" href="#parameters">Parameters</a></h2>
+<p>Many API methods take optional parameters. For GET requests, any parameters not
+specified as a segment in the path can be passed as an HTTP query string
+parameter:</p>
+<pre><code class="bash">curl -i &quot;https://api.itslanguage.nl/organisations/sheffield/students/?first_name=mauro&quot;
+</code></pre>
+
+<p>In this example, the 'sheffield' value is provided for the <code>:organisation</code>
+parameter in the path while <code>:first_name</code> is passed in the query
+string.</p>
+<p>For POST, PUT, and DELETE requests, parameters not included in the URL should
+be encoded as form data with a Content-Type of 'application/x-www-form-urlencoded':</p>
+<pre><code class="bash">curl -i -d 'first_name=Mauro' https://api.itslanguage.nl/organisations/sheffield/students
+</code></pre>
+
+<p>Or the parameters should be encoded as JSON with a Content-Type of 'application/json':</p>
+<pre><code class="bash">curl -i -d '{&quot;firstName&quot;: &quot;Mauro&quot;}' -H 'application/json' https://api.itslanguage.nl/organisations/sheffield/students
+</code></pre>
+
+<h2 id="pagination"><a class="toclink" href="#pagination">Pagination</a></h2>
+<p>Requests that return multiple items will be paginated to 20 items by
+default.  You can set a custom page size up to 100 with the <code>?per_page</code> parameter.</p>
+<pre><code class="bash">curl &quot;https://api.itslanguage.nl/resources?per_page=100&quot;
+</code></pre>
+
+<h3 id="link-header"><a class="toclink" href="#link-header">Link Header</a></h3>
+<p>The pagination info is included in
+<a href="http://tools.ietf.org/html/rfc5988">the Link header</a>. It is important to
+follow these Link header values instead of constructing your own URLs. In some
+instances, pagination is not based on page number.</p>
+<pre><code class="http">HTTP/1.1 200 OK
+Link: &lt;https://api.itslanguage.nl/resources?page=for12c&amp;per_page=100&gt;; rel=&quot;next&quot;,
+      &lt;https://api.itslanguage.nl/resources?page=back12c&amp;per_page=100&gt;; rel=&quot;prev&quot;
+</code></pre>
+
+<p><em>Linebreak is included for readability.</em></p>
+<p>The possible <code>rel</code> values are:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>next</code></td>
+<td>The immediate next page of results.</td>
+</tr>
+<tr>
+<td><code>prev</code></td>
+<td>The immediate previous page of results.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cross-origin-resource-sharing"><a class="toclink" href="#cross-origin-resource-sharing">Cross Origin Resource Sharing</a></h2>
+<p>The API supports Cross Origin Resource Sharing (CORS) for AJAX requests.
+you can read the <a href="http://www.w3.org/TR/cors">CORS W3C working draft</a>, or
+<a href="http://code.google.com/p/html5security/wiki/CrossOriginRequestSecurity">this intro</a> from the
+HTML 5 Security Guide.</p>
+<p>Here's a sample request sent from a browser hitting
+<code>http://example.com</code>:</p>
+<pre><code class="bash">curl -i https://api.itslanguage.nl -H &quot;Origin: http://example.com&quot;
+</code></pre>
+
+<pre><code class="http">HTTP/1.1 302 Found
+</code></pre>
+
+<p>This is what the CORS preflight request looks like:</p>
+<pre><code class="bash">curl -i https://api.itslanguage.nl -H &quot;Origin: http://example.com&quot; -X OPTIONS
+</code></pre>
+
+<pre><code class="http">HTTP/1.1 204 No Content
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: Content-Type
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+Access-Control-Max-Age: 86400
+Access-Control-Allow-Credentials: true
+</code></pre>
+
+<h2 id="json-p-callbacks"><a class="toclink" href="#json-p-callbacks">JSON-P Callbacks</a></h2>
+<p>You can send a <code>?callback</code> parameter to any GET call to have the results
+wrapped in a JavaScript function.  This is typically used when browsers want
+to embed content in web pages by getting around cross domain
+issues.  The response includes the same data output as the regular API,
+plus the relevant HTTP Header information.</p>
+<pre><code class="bash">curl &quot;https://api.itslanguage.nl?callback=foo&quot;
+</code></pre>
+
+<pre><code class="js">foo({
+  &quot;meta&quot;: {
+    &quot;status&quot;: 200,
+    &quot;Link&quot;: [ // pagination headers and other links
+      [&quot;https://api.itslanguage.nl?cursor=next2&quot;, {&quot;rel&quot;: &quot;next&quot;}]
+    ]
+  },
+  &quot;data&quot;: {
+    // the data
+  }
+})
+</code></pre>
+
+<p>You can write a JavaScript handler to process the callback like this:</p>
+<pre><code class="js">function foo(response) {
+  var meta = response.meta
+  var data = response.data
+  console.log(meta)
+  console.log(data)
+}
+</code></pre>
+
+<p>All of the headers are the same String value as the HTTP Headers with one
+notable exception: Link.  Link headers are pre-parsed for you and come
+through as an array of <code>[url, options]</code> tuples.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="authentication/index.html" class="btn btn-neutral float-right" title="Authentication">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="ITSLanguage Speech API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2013-2015</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/itslanguage/itslanguage-docs/" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="authentication/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

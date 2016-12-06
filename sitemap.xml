@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+        
+    <url>
+     <loc>/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/api/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/api/authentication/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/api/permissions/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/api/errors/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/api/oauth2/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/api/organisations/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/api/students/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/api/challenges/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/api/recordings/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/api/analyses/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/api/recognitions/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/websocket/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/websocket/speech_recording/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/websocket/pronunciation_analyses/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/websocket/choice_recognitions/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/websocket/audio/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>/api/permissions/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/api/architecture/index.html</loc>
+     <lastmod>2016-12-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+</urlset>

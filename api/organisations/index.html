@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Organisations - ITSLanguage API</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Organisations";
+    var mkdocs_page_input_path = "api/organisations.md";
+    var mkdocs_page_url = "/api/organisations/index.html";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="icon icon-home"> ITSLanguage API</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Home</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../index.html">ITSLanguage Speech API</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API basics</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../index.html">The REST API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../authentication/index.html">Authentication</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../permissions/index.html">Roles and Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../errors/index.html">Error handling</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>REST API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../oauth2/index.html">OAuth2</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">Organisations</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#organisations">Organisations</a></li>
+                
+                    <li><a class="toctree-l4" href="#list-all-organisations">List all organisations</a></li>
+                
+                    <li><a class="toctree-l4" href="#get-a-single-organisation">Get a single organisation</a></li>
+                
+                    <li><a class="toctree-l4" href="#create-an-organisation">Create an organisation</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../students/index.html">Students</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../challenges/index.html">Challenges</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../recordings/index.html">Speech Recordings</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../analyses/index.html">Speech Analysis</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../recognitions/index.html">Speech Recognition</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Websocket API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/index.html">Websocket API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/speech_recording/index.html">Speech Recording</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/pronunciation_analyses/index.html">Pronunciation Analyses</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/choice_recognitions/index.html">Choice Recognitions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../websocket/audio/index.html">Audio</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Internal API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../permissions/index.html">Permissions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../architecture/index.html">Infrastructure Architecture</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">ITSLanguage API</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>REST API &raquo;</li>
+        
+      
+    
+    <li>Organisations</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/itslanguage/itslanguage-docs/edit/master/docs/api/organisations.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="organisations"><a class="toclink" href="#organisations">Organisations</a></h1>
+<h2 id="list-all-organisations"><a class="toclink" href="#list-all-organisations">List all organisations</a></h2>
+<h3 id="url"><a class="toclink" href="#url">URL</a></h3>
+<pre><code class="http">GET /organisations HTTP/1.1
+</code></pre>
+
+<h3 id="request-parameters"><a class="toclink" href="#request-parameters">Request parameters</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sort</td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> What to sort results by. Can be either <code>created</code>, <code>updated</code> or <code>name</code>. Default: <code>created</code>.</td>
+</tr>
+<tr>
+<td>direction</td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> The direction of the sort. Can be either <code>asc</code> or <code>desc</code>. Default: <code>desc</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="response"><a class="toclink" href="#response">Response</a></h3>
+<p>The response contains a list of organisations.</p>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    &quot;id&quot;: &quot;23&quot;,
+    &quot;created&quot;: &quot;2008-08-06T19:37:40Z&quot;,
+    &quot;updated&quot;: &quot;2010-09-21T14:26:15Z&quot;,
+    &quot;name&quot;: &quot;School of silly walks&quot;
+  },
+  {
+    &quot;id&quot;: &quot;walamaloo&quot;,
+    &quot;created&quot;: &quot;2002-06-19T11:19:52Z&quot;,
+    &quot;updated&quot;: &quot;2011-03-12T16:20:17Z&quot;,
+    &quot;name&quot;: &quot;University of Walamaloo&quot;
+  }
+]
+</code></pre>
+
+<h2 id="get-a-single-organisation"><a class="toclink" href="#get-a-single-organisation">Get a single organisation</a></h2>
+<h3 id="url_1"><a class="toclink" href="#url_1">URL</a></h3>
+<pre><code class="http">GET /organisations/:organisation HTTP/1.1
+</code></pre>
+
+<ul>
+<li>organisation - <strong>Required</strong> The identifier of the organisation.</li>
+</ul>
+<h3 id="request"><a class="toclink" href="#request">Request</a></h3>
+<pre><code class="http">GET /organisations/23 HTTP/1.1
+Accept: application/json
+</code></pre>
+
+<h3 id="response_1"><a class="toclink" href="#response_1">Response</a></h3>
+<pre><code class="http">HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;23&quot;,
+  &quot;created&quot;: &quot;2000-04-17T19:20:23Z&quot;,
+  &quot;updated&quot;: &quot;2001-12-14T07:38:45Z&quot;,
+  &quot;name&quot;: &quot;School of silly walks&quot;
+}
+</code></pre>
+
+<h2 id="create-an-organisation"><a class="toclink" href="#create-an-organisation">Create an organisation</a></h2>
+<h3 id="url_2"><a class="toclink" href="#url_2">URL</a></h3>
+<pre><code class="http">POST /organisation HTTP/1.1
+</code></pre>
+
+<h3 id="input"><a class="toclink" href="#input">Input</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td><code>string</code></td>
+<td><strong>Optional</strong> The organisation identifier. If none is given, one is generated.</td>
+</tr>
+<tr>
+<td>name</td>
+<td><code>string</code></td>
+<td><strong>Required</strong> The name of the organisation.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request_1"><a class="toclink" href="#request_1">Request</a></h3>
+<pre><code class="http">POST /organisation HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;walamaloo&quot;,
+  &quot;name&quot;: &quot;University of Walamaloo&quot;
+}
+</code></pre>
+
+<h3 id="response_2"><a class="toclink" href="#response_2">Response</a></h3>
+<pre><code class="http">HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;walamaloo&quot;,
+  &quot;created&quot;: &quot;2002-06-19T11:19:52Z&quot;,
+  &quot;updated&quot;: &quot;2011-03-12T16:20:17Z&quot;,
+  &quot;name&quot;: &quot;University of Walamaloo&quot;
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../students/index.html" class="btn btn-neutral float-right" title="Students">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../oauth2/index.html" class="btn btn-neutral" title="OAuth2"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>2013-2015</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/itslanguage/itslanguage-docs/" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../oauth2/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../students/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
